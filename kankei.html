@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>関・峠・岬 三角形計算器 — 天城岩戸ログ</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; background: #080e1d; color: #e2e8f0; min-height: 100vh; }
+a { color: inherit; }
+input, button { font-family: inherit; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const { useState, useMemo } = React;
+
+// ── 計算 ──
+const DEG = Math.PI / 180;
+const brng = (a,b,c,d) => { const[f1,f2,l1,l2]=[a,c,b,d].map(x=>x*DEG),dl=l2-l1,x=Math.sin(dl)*Math.cos(f2),y=Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl);return((Math.atan2(x,y)/DEG)+360)%360; };
+const dkm  = (a,b,c,d) => { const R=6371,[f1,f2,l1,l2]=[a,c,b,d].map(x=>x*DEG),e=Math.sin((f2-f1)/2)**2+Math.cos(f1)*Math.cos(f2)*Math.sin((l2-l1)/2)**2;return R*2*Math.asin(Math.sqrt(e)); };
+const ctr  = pts => { const s=pts.map(([a,b])=>{const f=a*DEG,l=b*DEG;return[Math.cos(f)*Math.cos(l),Math.cos(f)*Math.sin(l),Math.sin(f)];}); const[cx,cy,cz]=s.reduce(([ax,ay,az],[x,y,z])=>[ax+x,ay+y,az+z],[0,0,0]).map(v=>v/s.length); return{lat:Math.atan2(cz,Math.sqrt(cx**2+cy**2))/DEG,lon:Math.atan2(cy,cx)/DEG}; };
+const d16  = deg => { const D=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"],i=Math.round(deg/22.5)%16;let e=Math.abs(deg-i*22.5);if(e>180)e=360-e;return{dir:D[i],err:e}; };
+
+// ── データベース ──
+const DB = [
+  // 陸の三関
+  {id:"suzuka",    name:"鈴鹿関",              lat:34.9833,lon:136.5167,cat:"関",  myth:"[記紀]三関のひとつ。[岩戸]天城からW272.4°誤差2.4°。壬申の乱で機能。"},
+  {id:"fuwa",      name:"不破関（関ケ原）",    lat:35.3667,lon:136.4667,cat:"関",  myth:"[記紀]三関のひとつ。天下分け目。[岩戸]天城からWNW282.9°誤差9.6°。"},
+  {id:"arahaka",   name:"愛発関（福井）",      lat:35.7167,lon:136.0167,cat:"関",  myth:"[記紀]三関のひとつ。越の国の玄関口。[岩戸]天城からWNW288.8°誤差3.8°。"},
+  // 消された海の関
+  {id:"sagaseki",  name:"佐賀関（大分）",      lat:33.2500,lon:131.8800,cat:"関",  myth:"[岩戸]天城→佐賀関ライン（256.3°）の終点。前方後円墳14基が並ぶライン。"},
+  {id:"naruto",    name:"鳴門海峡",            lat:34.2167,lon:134.6333,cat:"関",  myth:"[記紀]淡路島・四国の境界。[岩戸]天城からW260.8°誤差9.3°。渦潮が境界を象徴。"},
+  {id:"kanmon",    name:"関門海峡",            lat:33.9500,lon:130.9667,cat:"関",  myth:"[記紀]本州と九州の境界。[岩戸]天城からW264.0°誤差6.0°。壇ノ浦。"},
+  {id:"tsushima_str",name:"対馬海峡",          lat:34.4000,lon:129.4000,cat:"関",  myth:"[岩戸]天城からW267.6°誤差2.4°。魏志倭人伝のルート。消された海の関・最西。"},
+  {id:"noto",      name:"能登・珠洲（外浦）",  lat:37.4333,lon:137.3333,cat:"関",  myth:"[岩戸]天城からNNW331.1°誤差6.4°。記紀が沈黙した海の関。三種の神器重心が指す。"},
+  {id:"nezugaseki",name:"鼠ヶ関（山形）",      lat:38.4500,lon:139.5667,cat:"関",  myth:"[岩戸]天城からN6.8°誤差6.8°。越後と出羽の境界。N方向の消された海の関。"},
+  {id:"tsugaru_str",name:"津軽海峡",           lat:41.5000,lon:141.0000,cat:"関",  myth:"[岩戸]天城からNNE11.5°。本州と蝦夷の境界。記紀が「向こう側」とした最北の関。"},
+  // 峠
+  {id:"hakone",    name:"箱根峠",              lat:35.2333,lon:138.9667,cat:"峠",  myth:"[岩戸]天城山の真北34km・誤差0.0°。計算上の特異点。坂東と畿内の分水嶺。"},
+  {id:"amagi_pass",name:"天城峠",              lat:34.8833,lon:138.9500,cat:"峠",  myth:"[岩戸]天城山の南西11km。伊豆半島の分水嶺。川端康成「伊豆の踊子」のトンネル。"},
+  {id:"usui",      name:"碓氷峠",              lat:36.3333,lon:138.6500,cat:"峠",  myth:"[記紀]ヤマトタケルが「吾妻はや」と嘆いた地。[秘伝]宮下文書の東征ルート上。"},
+  {id:"ashigara",  name:"足柄峠",              lat:35.3500,lon:139.0167,cat:"峠",  myth:"[記紀]ヤマトタケルが東征時に越えた峠。[岩戸]天城から真北方向52km。"},
+  {id:"mikuni",    name:"三国峠",              lat:36.8833,lon:138.9500,cat:"峠",  myth:"[語源]越後・上野・信濃の三国の境。越の国と坂東の境界点。"},
+  {id:"shiojiri",  name:"塩尻峠（塩の道）",    lat:36.1000,lon:137.9500,cat:"峠",  myth:"[語源]縄文時代から続く塩の交易路の要衝。諏訪（タケミナカタの地）からの街道。"},
+  {id:"toriikoge", name:"鳥居峠（中山道）",    lat:36.0167,lon:137.8167,cat:"峠",  myth:"[語源]木曽路と伊那谷の分岐。御嶽山（天城NW308°）入口。木曽義仲の出陣路。"},
+  {id:"daibosatsu",name:"大菩薩峠",            lat:35.7667,lon:138.7500,cat:"峠",  myth:"[語源]甲斐と武蔵の境。多摩川源流域。中里介山の長編小説の舞台。"},
+  // 岬・海峡
+  {id:"noroshi",   name:"狼煙（珠洲・能登）",  lat:37.5167,lon:137.3333,cat:"岬",  myth:"[岩戸]天城からNNW331.1°の「消された海の関」能登外浦の最先端。"},
+  {id:"irozaki",   name:"石廊崎（伊豆）",      lat:34.6167,lon:138.8500,cat:"岬",  myth:"[岩戸]伊豆半島最南端。天城山（原点）の南11km。伊豆大島を望む岬。"},
+  {id:"erimomisaki",name:"襟裳岬",             lat:42.0000,lon:143.2500,cat:"岬",  myth:"[語源]エンルム＝アイヌ語「頭が突き出た所」。北海道南端。太平洋と日本海の境。"},
+  {id:"tsushima",  name:"対馬",                lat:34.4667,lon:129.3500,cat:"岬",  myth:"[記紀]魏志倭人伝のルートが通過。[岩戸]天城からW267.6°誤差2.4°。消された海の関・最西端。"},
+  {id:"tojinbo",   name:"東尋坊（福井）",      lat:36.1667,lon:136.0833,cat:"岬",  myth:"[岩戸]愛発関（天城WNW）の北方。越の国の西端の断崖。柱状節理。"},
+  {id:"oma",       name:"大間崎（青森）",       lat:41.5500,lon:140.9000,cat:"岬",  myth:"[語源]本州最北端。津軽海峡の東口。蝦夷と本州の境界の最前線。"},
+  {id:"okinoshima",name:"沖ノ島（福岡）",      lat:34.2333,lon:130.1000,cat:"岬",  myth:"[記紀]海の正倉院。宗像大社の沖津宮。女人禁制。大陸との交流の最前線。"},
+  {id:"tsuruga_hanto",name:"敦賀半島",         lat:35.6500,lon:136.0667,cat:"岬",  myth:"[記紀]ツヌガアラシト（渡来人）伝説の地。氣比神宮（越の国の神）の聖域。"},
+  {id:"muroto",    name:"室戸岬（高知）",       lat:33.2500,lon:134.1667,cat:"岬",  myth:"[記紀]空海がここで修行し悟りを開いた。明星が口に飛び込んだ体験。"},
+  {id:"sata",      name:"佐多岬（鹿児島）",     lat:31.0000,lon:130.6667,cat:"岬",  myth:"[語源]本州・四国・九州の最南端。古代南海路の起点。"},
+  {id:"ashizuri",  name:"足摺岬（高知）",       lat:32.7333,lon:133.0167,cat:"岬",  myth:"[語源]四国最南端。補陀落渡海（観音浄土へ向かう渡海行）の出発点のひとつ。"},
+  {id:"nojima",    name:"野島崎（千葉）",       lat:34.9000,lon:139.9000,cat:"岬",  myth:"[語源]房総半島最南端。[岩戸]鹿島（天城NE）への海上ルートの南端。"},
+  // 聖地
+  {id:"amagi",     name:"天城山（原点）",       lat:34.9200,lon:139.0180,cat:"聖地",myth:"[岩戸]天城岩戸ログの原点。34.920°N / 139.018°E。"},
+  {id:"motomiya",  name:"元晃大国魂宮（弟子屈）",lat:43.5025,lon:144.4242,cat:"聖地",myth:"[岩戸]天城からNNE24.3°誤差1.8°。"},
+  {id:"fugen",     name:"雲仙普賢岳",           lat:32.7500,lon:130.2930,cat:"聖地",myth:"[岩戸]天城からWSW255.8°。三種の神器・剣。"},
+  // 神社
+  {id:"izumo",     name:"出雲大社",             lat:35.4014,lon:132.6855,cat:"神社",myth:"[岩戸]天城からW277.1°誤差7.1°。国津神の封印地。"},
+  {id:"kashima",   name:"鹿島神宮",             lat:35.9673,lon:140.6346,cat:"神社",myth:"[岩戸]天城からNE50.9°。タケミカヅチ。書き換えの最前線。"},
+  {id:"katori",    name:"香取神宮",             lat:35.8979,lon:140.5271,cat:"神社",myth:"[岩戸]天城からNE51.0°。鹿島と0.1°差で並ぶ特異点。"},
+  {id:"ise_naiku", name:"伊勢神宮 内宮",        lat:34.4552,lon:136.7252,cat:"神社",myth:"[岩戸]天城からWSW256.9°誤差9.4°。三種の神器・鏡。"},
+  {id:"suwa",      name:"諏訪大社 上社",        lat:36.0404,lon:138.0724,cat:"神社",myth:"[岩戸]天城からNW324.7°。タケミナカタが封じられた地。"},
+  {id:"togakushi", name:"戸隠神社 奥社",        lat:36.7883,lon:138.0639,cat:"神社",myth:"[岩戸]天城からNNW337.9°誤差0.4°。天岩戸を投げた地。"},
+  {id:"kono",      name:"籠神社（丹後）",       lat:35.5884,lon:135.1901,cat:"神社",myth:"[岩戸]天城からWNW286.0°。天火明命の元宮。"},
+  // 山
+  {id:"fuji",      name:"富士山",               lat:35.3606,lon:138.7274,cat:"山",  myth:"[岩戸]天城からNNW331.8°誤差5.7°。宮下文書の高天原。"},
+  {id:"togakushi_mt",name:"戸隠山",             lat:36.7883,lon:138.0639,cat:"山",  myth:"[岩戸]天城からNNW337.9°誤差0.4°。"},
+  {id:"suwa_moriya",name:"守屋山（諏訪）",      lat:35.9867,lon:138.0983,cat:"山",  myth:"[記紀]洩矢神（ミシャグジ）の山。諏訪大社上社の背後。"},
+  // 東北三角形
+  {id:"sendai",    name:"仙台",                 lat:38.2682,lon:140.8694,cat:"都市",myth:"[街道]奥州街道の要衝。名取川・広瀬川（太平洋水系）の合流点付近。内角58.6°（正三角形60°との差−1.4°）。"},
+  {id:"shinjo",    name:"新庄",                 lat:38.7626,lon:140.3027,cat:"都市",myth:"[街道]最上川（日本海水系）の中流。出羽への横断ルートの要衝。内角63.2°（60°との差+3.2°）。唯一60°を超える頂点。"},
+  {id:"ichinoseki",name:"一関",                 lat:38.9350,lon:141.1300,cat:"都市",myth:"[街道]北上川（内陸水系）の中流。奥州街道の関所。内角58.2°（60°との差−1.8°）。"},
+  // フォッサマグナ
+  {id:"itoigawa",  name:"糸魚川（フォッサマグナ西端）",lat:37.0500,lon:137.8667,cat:"遺跡",myth:"[岩戸]三種の神器三角形の重心（37.1960°N/137.5882°E）最近傍陸地。日本列島の地質的縫い目。"},
+  {id:"shizuoka_ft",name:"静岡（フォッサマグナ東端）",lat:35.1000,lon:138.3000,cat:"遺跡",myth:"フォッサマグナの東端・柏崎静岡構造線。日本列島の地質的境界。"},
+];
+
+const CATS = [
+  {key:"関",  label:"🚧 関",    color:"#f43f5e"},
+  {key:"峠",  label:"⛰ 峠",    color:"#f97316"},
+  {key:"岬",  label:"🌅 岬",    color:"#2dd4bf"},
+  {key:"神社",label:"⛩ 神社",  color:"#fb923c"},
+  {key:"山",  label:"🗻 山",    color:"#4ade80"},
+  {key:"聖地",label:"⛩ 聖地",  color:"#fbbf24"},
+  {key:"都市",label:"🏙 都市",  color:"#e879f9"},
+  {key:"遺跡",label:"🪨 その他",color:"#94a3b8"},
+];
+
+const IWATO = [
+  {name:"ストーンヘンジ",          b:336.7},
+  {name:"戸隠山（天岩戸）",        b:337.9},
+  {name:"富士山（宮下文書）",      b:331.8},
+  {name:"籠神社（天火明命）",      b:286.0},
+  {name:"三種の神器重心（確定版）",b:333.5},
+];
+
+const PRESETS = [
+  {label:"🚧 陸の三関",       ids:["suzuka","fuwa","arahaka"]},
+  {label:"🌊 消された海の関", ids:["sagaseki","noto","nezugaseki"]},
+  {label:"🏙 東北三角形",     ids:["sendai","shinjo","ichinoseki"]},
+  {label:"⛰ 峠の三関",       ids:["hakone","usui","ashigara"]},
+];
+
+const SLOT_COLORS = ["#f43f5e","#38bdf8","#4ade80"];
+
+function parseCoord(s) {
+  s = (s||"").trim();
+  const m1 = s.match(/^(-?\d+\.?\d*)[,\s]+(-?\d+\.?\d*)$/);
+  if (m1) return { lat: parseFloat(m1[1]), lon: parseFloat(m1[2]) };
+  return null;
+}
+
+function App() {
+  const initSlots = () => ["suzuka","fuwa","arahaka"].map(id => ({
+    site: DB.find(x => x.id === id), input: ""
+  }));
+
+  const [slots, setSlots] = useState(initSlots);
+  const [q, setQ]         = useState(["","",""]);
+  const [open, setOpen]   = useState(null);
+  const [tab, setTab]     = useState("関");
+
+  const updSlot = (i, patch) =>
+    setSlots(prev => prev.map((s,j) => j===i ? {...s,...patch} : s));
+
+  const pickSite = (i, site) => {
+    updSlot(i, {site, input:""});
+    setOpen(null);
+    setQ(prev => { const n=[...prev]; n[i]=""; return n; });
+  };
+
+  const handleInput = (i, val) => {
+    const p = parseCoord(val);
+    if (p) {
+      updSlot(i, {input:val, site:{id:"custom",name:`(${p.lat.toFixed(3)}, ${p.lon.toFixed(3)})`,lat:p.lat,lon:p.lon,cat:"座標入力",myth:""}});
+    } else {
+      updSlot(i, {input:val});
+    }
+  };
+
+  const applyPreset = (ids) => {
+    setSlots(ids.map(id => ({site: DB.find(x=>x.id===id), input:""})));
+    setOpen(null);
+  };
+
+  const pts = slots.map(s => s.site).filter(Boolean);
+  const ready = pts.length === 3;
+
+  const result = useMemo(() => {
+    if (!ready) return null;
+    const c = ctr(pts.map(s => [s.lat, s.lon]));
+    const edges = [[pts[0],pts[1]],[pts[1],pts[2]],[pts[2],pts[0]]].map(([a,b])=>({
+      from:a.name, to:b.name,
+      b:brng(a.lat,a.lon,b.lat,b.lon),
+      d:dkm(a.lat,a.lon,b.lat,b.lon)
+    }));
+    const toC = pts.map((s,i) => {
+      const b=brng(s.lat,s.lon,c.lat,c.lon), d=dkm(s.lat,s.lon,c.lat,c.lon);
+      return {...s, b, d, ...d16(b)};
+    });
+    const am = DB.find(x=>x.id==="amagi");
+    const fa = {
+      b: brng(am.lat,am.lon,c.lat,c.lon),
+      d: dkm(am.lat,am.lon,c.lat,c.lon),
+      ...d16(brng(am.lat,am.lon,c.lat,c.lon))
+    };
+    return {c, edges, toC, fa};
+  }, [slots]);
+
+  const getFiltered = (i) => {
+    const qq = (q[i]||"").toLowerCase();
+    if (!qq) return DB.filter(s => s.cat === tab);
+    return DB.filter(s =>
+      s.name.toLowerCase().includes(qq) ||
+      (s.myth && s.myth.toLowerCase().includes(qq)) ||
+      s.cat.includes(qq)
+    );
+  };
+
+  // ── スタイル ──
+  const S = {
+    root:   {fontFamily:"sans-serif",background:"#080e1d",color:"#e2e8f0",minHeight:"100vh",padding:14},
+    wrap:   {maxWidth:860,margin:"0 auto"},
+    grid3:  {display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:14},
+    card:   {background:"#111827",border:"1px solid #1e3a5f",borderRadius:12,padding:14},
+    result: {background:"#111827",border:"2px solid #f43f5e",borderRadius:12,padding:16},
+    panel:  {background:"#0d1829",border:"1px solid #1e3a5f",borderRadius:12,padding:14,marginBottom:16},
+  };
+
+  return React.createElement("div", {style:S.root},
+    React.createElement("div", {style:S.wrap},
+
+      // タ이틀
+      React.createElement("div", {style:{textAlign:"center",marginBottom:12}},
+        React.createElement("h1", {style:{fontSize:18,color:"#f43f5e",margin:0,letterSpacing:2}}, "🚧 関・峠・岬 三角形計算器"),
+        React.createElement("p",  {style:{fontSize:11,color:"#475569",marginTop:4}}, "地名を選ぶ / 座標を直打ち → 3点の重心と天城岩戸ログ照合")
+      ),
+
+      // プリセット
+      React.createElement("div", {style:{display:"flex",gap:6,flexWrap:"wrap",justifyContent:"center",marginBottom:14}},
+        PRESETS.map(p =>
+          React.createElement("button", {
+            key:p.label,
+            onClick:()=>applyPreset(p.ids),
+            style:{background:"#111827",border:"1px solid #334155",borderRadius:6,
+              padding:"5px 12px",color:"#94a3b8",fontSize:11,cursor:"pointer"}
+          }, p.label)
+        )
+      ),
+
+      // スロット
+      React.createElement("div", {style:S.grid3},
+        slots.map((s, i) =>
+          React.createElement("div", {key:i},
+            // カード
+            React.createElement("div", {
+              onClick:()=>setOpen(open===i?null:i),
+              style:{background:open===i?"#1a1030":"#111827",
+                border:`2px solid ${SLOT_COLORS[i]}`,
+                borderRadius:10,padding:"10px 12px",cursor:"pointer",marginBottom:6}
+            },
+              React.createElement("div",{style:{fontSize:10,color:SLOT_COLORS[i],fontWeight:"bold",marginBottom:3}},`点 ${i+1}`),
+              React.createElement("div",{style:{fontSize:13,color:"#f1f5f9",fontWeight:"bold",lineHeight:1.3}},
+                s.site ? s.site.name : "未選択"
+              ),
+              s.site && React.createElement("div",{style:{fontSize:10,color:"#475569",marginTop:2}},
+                `${s.site.lat.toFixed(4)}N  ${s.site.lon.toFixed(4)}E  `,
+                React.createElement("span",{style:{color:"#334155"}}, s.site.cat)
+              ),
+              s.site?.myth && React.createElement("div",{style:{fontSize:9,color:"#64748b",marginTop:3,lineHeight:1.4}},
+                s.site.myth.slice(0,50)+"…"
+              ),
+              React.createElement("div",{style:{fontSize:9,color:"#334155",marginTop:3}},
+                open===i?"▲ 閉じる":"▼ 変更"
+              )
+            ),
+            // 座標入力
+            React.createElement("input", {
+              value: s.input,
+              onChange: e=>handleInput(i,e.target.value),
+              placeholder:"座標直打ち: 34.920, 139.018",
+              style:{width:"100%",background:"#0d1829",
+                border:`1px solid ${parseCoord(s.input)?"#4ade80":"#1e293b"}`,
+                borderRadius:6,padding:"5px 8px",color:"#e2e8f0",fontSize:11,outline:"none"}
+            })
+          )
+        )
+      ),
+
+      // ピッカー
+      open !== null && React.createElement("div", {style:S.panel},
+        // ヘッダー
+        React.createElement("div",{style:{display:"flex",gap:8,marginBottom:10,alignItems:"center"}},
+          React.createElement("span",{style:{color:SLOT_COLORS[open],fontWeight:"bold",fontSize:12}},`点 ${open+1} を選択`),
+          React.createElement("input",{
+            value:q[open],
+            onChange:e=>{const n=[...q];n[open]=e.target.value;setQ(n);},
+            placeholder:"名前・神話・[岩戸][記紀] で検索…",
+            style:{flex:1,background:"#1e293b",border:"1px solid #334155",borderRadius:6,
+              padding:"5px 10px",color:"#e2e8f0",fontSize:12,outline:"none"}
+          }),
+          q[open] && React.createElement("button",{
+            onClick:()=>{const n=[...q];n[open]="";setQ(n);},
+            style:{background:"none",border:"none",color:"#64748b",cursor:"pointer",fontSize:14}
+          },"✕")
+        ),
+        // カテゴリタブ
+        !q[open] && React.createElement("div",{style:{display:"flex",gap:4,flexWrap:"wrap",marginBottom:10}},
+          CATS.map(c =>
+            React.createElement("button",{
+              key:c.key, onClick:()=>setTab(c.key),
+              style:{background:tab===c.key?c.color:"#1e293b",
+                color:tab===c.key?"#080e1d":"#94a3b8",
+                border:`1px solid ${tab===c.key?c.color:"#334155"}`,
+                borderRadius:5,padding:"3px 9px",fontSize:10,cursor:"pointer",
+                fontWeight:tab===c.key?"bold":"normal"}
+            }, c.label)
+          )
+        ),
+        // リスト
+        React.createElement("div",{style:{maxHeight:260,overflowY:"auto",display:"flex",flexWrap:"wrap",gap:5}},
+          getFiltered(open).map(s =>
+            React.createElement("button",{
+              key:s.id, onClick:()=>pickSite(open,s),
+              style:{background:slots[open]?.site?.id===s.id?"#fbbf24":"#1e293b",
+                color:slots[open]?.site?.id===s.id?"#080e1d":"#e2e8f0",
+                border:"1px solid #334155",borderRadius:6,
+                padding:"5px 10px",fontSize:11,cursor:"pointer",textAlign:"left",maxWidth:230}
+            },
+              React.createElement("div",{style:{fontWeight:"bold"}},
+                React.createElement("span",{style:{fontSize:9,color:"#64748b",marginRight:4}},s.cat),
+                s.name
+              ),
+              s.myth && React.createElement("div",{style:{fontSize:9,color:"#64748b",marginTop:2}},
+                s.myth.slice(0,38)+"…"
+              )
+            )
+          )
+        )
+      ),
+
+      // 結果
+      ready && result && React.createElement("div",{style:{display:"grid",gap:12}},
+
+        // 重心
+        React.createElement("div",{style:S.result},
+          React.createElement("div",{style:{fontSize:11,color:"#f43f5e",fontWeight:"bold",marginBottom:6}},"★ 三角形の重心"),
+          React.createElement("div",{style:{fontSize:24,fontWeight:"bold",color:"#f1f5f9"}},
+            `${result.c.lat.toFixed(4)}°N / ${result.c.lon.toFixed(4)}°E`
+          ),
+          React.createElement("div",{style:{marginTop:6,fontSize:12}},
+            React.createElement("span",{style:{color:"#64748b"}},"天城（原点）→重心: "),
+            React.createElement("span",{style:{color:"#f43f5e",fontWeight:"bold"}},
+              `${result.fa.b.toFixed(1)}°（${result.fa.dir}、誤差${result.fa.err.toFixed(1)}°）`
+            ),
+            React.createElement("span",{style:{color:"#64748b",marginLeft:6}},`${result.fa.d.toFixed(0)}km`)
+          ),
+          React.createElement("div",{style:{marginTop:10,display:"flex",gap:8,flexWrap:"wrap"}},
+            React.createElement("a",{
+              href:`https://maps.gsi.go.jp/#12/${result.c.lat.toFixed(4)}/${result.c.lon.toFixed(4)}`,
+              target:"_blank",rel:"noopener",
+              style:{fontSize:11,color:"#60a5fa",background:"#080e1d",padding:"4px 12px",borderRadius:5,textDecoration:"none"}
+            },"🗾 地理院地図"),
+            React.createElement("a",{
+              href:`https://www.google.com/maps/@${result.c.lat.toFixed(4)},${result.c.lon.toFixed(4)},10z`,
+              target:"_blank",rel:"noopener",
+              style:{fontSize:11,color:"#4ade80",background:"#080e1d",padding:"4px 12px",borderRadius:5,textDecoration:"none"}
+            },"📍 Googleマップ")
+          )
+        ),
+
+        // 各点→重心
+        React.createElement("div",{style:S.card},
+          React.createElement("div",{style:{fontSize:11,color:"#64748b",marginBottom:8,fontWeight:"bold"}},"各点 → 重心"),
+          result.toC.map((t,i) =>
+            React.createElement("div",{key:i,style:{padding:"7px 0",borderBottom:"1px solid #080e1d"}},
+              React.createElement("div",{style:{display:"flex",alignItems:"center",gap:8}},
+                React.createElement("span",{style:{background:SLOT_COLORS[i],color:"#080e1d",borderRadius:4,
+                  padding:"2px 7px",fontSize:10,fontWeight:"bold",whiteSpace:"nowrap"}},`点${i+1}`),
+                React.createElement("span",{style:{fontSize:12,color:"#cbd5e1",flex:1,overflow:"hidden",
+                  textOverflow:"ellipsis",whiteSpace:"nowrap"}},t.name),
+                React.createElement("span",{style:{fontSize:12,color:"#fbbf24",fontWeight:"bold",whiteSpace:"nowrap"}},
+                  `${t.b.toFixed(1)}°`),
+                React.createElement("span",{style:{fontSize:11,color:"#60a5fa",whiteSpace:"nowrap"}},
+                  `(${t.dir} ±${t.err.toFixed(1)}°)`),
+                React.createElement("span",{style:{fontSize:11,color:"#475569",whiteSpace:"nowrap"}},
+                  `${t.d.toFixed(0)}km`)
+              ),
+              t.myth && React.createElement("div",{style:{fontSize:9,color:"#475569",marginTop:3,
+                marginLeft:8,paddingLeft:8,borderLeft:"2px solid #1e3a5f"}},
+                t.myth.slice(0,70)+"…"
+              )
+            )
+          )
+        ),
+
+        // 辺
+        React.createElement("div",{style:S.card},
+          React.createElement("div",{style:{fontSize:11,color:"#64748b",marginBottom:8,fontWeight:"bold"}},"辺の方位・距離"),
+          result.edges.map((e,i) =>
+            React.createElement("div",{key:i,style:{display:"flex",justifyContent:"space-between",
+              padding:"4px 0",borderBottom:"1px solid #080e1d",fontSize:12}},
+              React.createElement("span",{style:{color:"#94a3b8",flex:1,overflow:"hidden",
+                textOverflow:"ellipsis",whiteSpace:"nowrap"}},`${e.from} → ${e.to}`),
+              React.createElement("span",{style:{color:"#fbbf24",whiteSpace:"nowrap",marginLeft:8}},
+                `${e.b.toFixed(1)}° / ${e.d.toFixed(0)}km`)
+            )
+          )
+        ),
+
+        // 岩戸ログ照合
+        React.createElement("div",{style:{background:"#080e1d",border:"1px solid #1e293b",borderRadius:10,padding:12}},
+          React.createElement("div",{style:{fontSize:11,color:"#475569",marginBottom:6}},
+            "天城岩戸ログ 方位照合（天城原点→重心）"
+          ),
+          [...IWATO,{name:"今回の重心",b:result.fa.b,hi:true}].map(r =>
+            React.createElement("div",{key:r.name,style:{display:"flex",justifyContent:"space-between",
+              fontSize:11,color:r.hi?"#f43f5e":"#475569",fontWeight:r.hi?"bold":"normal",padding:"2px 0"}},
+              React.createElement("span",null,r.name),
+              React.createElement("span",null,r.b.toFixed(1)+"°")
+            )
+          )
+        )
+      ),
+
+      !ready && React.createElement("div",{style:{textAlign:"center",color:"#334155",fontSize:12,marginTop:24}},
+        "3点を選ぶか座標を入力すると重心を計算します"
+      ),
+
+      React.createElement("div",{style:{fontSize:9,color:"#1e293b",textAlign:"center",marginTop:18}},
+        "大円航路初期方位角・球面重心 / 天城岩戸ログ連動 — 関編"
+      )
+    )
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+</script>
+</body>
+</html>
