@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>千葉から始まる拡張図</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Shippori+Mincho:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #04080e;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .canvas {
+    width: 540px;
+    background: #04080e;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 44px 32px 48px;
+  }
+
+  .canvas::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 30% at 50% 0%, rgba(20,60,120,0.2) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 20% 60%, rgba(40,100,60,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(100,60,20,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ヘッダー */
+  .header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    margin-bottom: 28px;
+    width: 100%;
+  }
+
+  .header .eyebrow {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 9px;
+    letter-spacing: 5px;
+    color: rgba(100,160,220,0.6);
+    margin-bottom: 10px;
+  }
+
+  .header h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #ddeeff;
+    letter-spacing: 2px;
+    line-height: 1.6;
+  }
+
+  .header h1 em {
+    font-style: normal;
+    color: #60c0ff;
+  }
+
+  .header .sub {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 10px;
+    font-weight: 300;
+    color: rgba(160,200,240,0.5);
+    margin-top: 8px;
+    letter-spacing: 2px;
+  }
+
+  /* 地図SVGエリア */
+  .map-area {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .map-area svg {
+    width: 100%;
+    height: auto;
+  }
+
+  /* フェーズブロック */
+  .phases {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .phase {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(60,120,200,0.2);
+    background: rgba(4,12,24,0.7);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .phase::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 10px 0 0 10px;
+  }
+
+  .phase.p1::before { background: #40a0e0; }
+  .phase.p2::before { background: #50c080; }
+  .phase.p3::before { background: #e0a040; }
+  .phase.p4::before { background: #e06060; }
+
+  .phase-left {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 48px;
+  }
+
+  .phase-num {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: rgba(140,180,220,0.5);
+  }
+
+  .phase-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .phase-status {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 8px;
+    letter-spacing: 1px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  .phase.p1 .phase-status { color: #40a0e0; border: 1px solid rgba(64,160,224,0.4); background: rgba(64,160,224,0.08); }
+  .phase.p2 .phase-status { color: #50c080; border: 1px solid rgba(80,192,128,0.4); background: rgba(80,192,128,0.08); }
+  .phase.p3 .phase-status { color: #e0a040; border: 1px solid rgba(224,160,64,0.4); background: rgba(224,160,64,0.08); }
+  .phase.p4 .phase-status { color: #e06060; border: 1px solid rgba(224,96,96,0.4); background: rgba(224,96,96,0.08); }
+
+  .phase-right { flex: 1; }
+
+  .phase-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #cce0f8;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+  }
+
+  .phase-desc {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 10.5px;
+    font-weight: 300;
+    color: rgba(180,210,240,0.65);
+    line-height: 1.7;
+    letter-spacing: 0.4px;
+  }
+
+  .phase-detail {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .detail-item {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 9px;
+    color: rgba(160,200,240,0.6);
+    border: 1px solid rgba(80,140,200,0.2);
+    border-radius: 4px;
+    padding: 2px 7px;
+  }
+
+  /* なぜ今か */
+  .why-now {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid rgba(224,160,64,0.35);
+    border-radius: 10px;
+    background: rgba(20,14,4,0.8);
+    margin-bottom: 20px;
+  }
+
+  .why-now-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #e0a040;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .why-items {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .why-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .why-bullet {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #e0a040;
+    margin-top: 6px;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  .why-text {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 10.5px;
+    font-weight: 300;
+    color: rgba(220,190,140,0.75);
+    line-height: 1.7;
+  }
+
+  /* フッター */
+  .footer {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid rgba(60,100,160,0.2);
+    padding-top: 16px;
+  }
+
+  .footer-text {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(100,160,220,0.4);
+  }
+
+  /* アニメ */
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; r: 5; }
+    50% { opacity: 1; r: 7; }
+  }
+
+  @keyframes ripple {
+    0% { r: 8; opacity: 0.6; }
+    100% { r: 22; opacity: 0; }
+  }
+
+  .pulse-dot { animation: pulse 2s ease-in-out infinite; }
+  .ripple-ring { animation: ripple 2.5s ease-out infinite; }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="header">
+    <div class="eyebrow">expansion strategy</div>
+    <h1>習志野から<em>千葉へ</em>、<br>千葉から<em>全国へ</em></h1>
+    <div class="sub">SVセンター × Instagram × 体験掲示板</div>
+  </div>
+
+  <!-- 地図的概念図 -->
+  <div class="map-area">
+    <svg viewBox="0 0 476 220" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow-blue" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#40a0e0" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#40a0e0" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="glow-green" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#50c080" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#50c080" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="glow-gold" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e0c060" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#e0c060" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="node-glow">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- 背景グリッド（薄い） -->
+      <g opacity="0.06" stroke="#4080c0" stroke-width="0.5">
+        <line x1="0" y1="40" x2="476" y2="40"/>
+        <line x1="0" y1="80" x2="476" y2="80"/>
+        <line x1="0" y1="120" x2="476" y2="120"/>
+        <line x1="0" y1="160" x2="476" y2="160"/>
+        <line x1="0" y1="200" x2="476" y2="200"/>
+        <line x1="60" y1="0" x2="60" y2="220"/>
+        <line x1="140" y1="0" x2="140" y2="220"/>
+        <line x1="220" y1="0" x2="220" y2="220"/>
+        <line x1="300" y1="0" x2="300" y2="220"/>
+        <line x1="380" y1="0" x2="380" y2="220"/>
+        <line x1="460" y1="0" x2="460" y2="220"/>
+      </g>
+
+      <!-- Phase1: 習志野→千葉の接続線 -->
+      <line x1="180" y1="130" x2="120" y2="100" stroke="#40a0e0" stroke-width="1" stroke-dasharray="4,3" opacity="0.7"/>
+      <line x1="180" y1="130" x2="200" y2="80" stroke="#40a0e0" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/>
+      <line x1="180" y1="130" x2="240" y2="120" stroke="#40a0e0" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+      <line x1="180" y1="130" x2="150" y2="165" stroke="#40a0e0" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+
+      <!-- Phase2: 千葉→関東の接続線 -->
+      <line x1="180" y1="110" x2="90" y2="60" stroke="#50c080" stroke-width="0.8" stroke-dasharray="5,4" opacity="0.4"/>
+      <line x1="180" y1="110" x2="310" y2="70" stroke="#50c080" stroke-width="0.8" stroke-dasharray="5,4" opacity="0.35"/>
+      <line x1="180" y1="110" x2="350" y2="140" stroke="#50c080" stroke-width="0.8" stroke-dasharray="5,4" opacity="0.3"/>
+      <line x1="180" y1="110" x2="80" y2="160" stroke="#50c080" stroke-width="0.8" stroke-dasharray="5,4" opacity="0.3"/>
+
+      <!-- Phase3: 全国への接続線 -->
+      <line x1="180" y1="110" x2="420" y2="50" stroke="#e0c060" stroke-width="0.6" stroke-dasharray="6,5" opacity="0.2"/>
+      <line x1="180" y1="110" x2="430" y2="180" stroke="#e0c060" stroke-width="0.6" stroke-dasharray="6,5" opacity="0.2"/>
+      <line x1="180" y1="110" x2="40" y2="40" stroke="#e0c060" stroke-width="0.6" stroke-dasharray="6,5" opacity="0.2"/>
+
+      <!-- 千葉エリアのリップル -->
+      <circle cx="180" cy="118" r="8" fill="none" stroke="#40a0e0" stroke-width="0.8" class="ripple-ring" style="animation-delay:0s"/>
+      <circle cx="180" cy="118" r="8" fill="none" stroke="#40a0e0" stroke-width="0.8" class="ripple-ring" style="animation-delay:1.2s"/>
+
+      <!-- 千葉の各SVセンター（フェーズ1ノード） -->
+      <circle cx="120" cy="100" r="4" fill="#40a0e0" opacity="0.7" filter="url(#node-glow)"/>
+      <circle cx="200" cy="80" r="4" fill="#40a0e0" opacity="0.65" filter="url(#node-glow)"/>
+      <circle cx="240" cy="120" r="3.5" fill="#40a0e0" opacity="0.6" filter="url(#node-glow)"/>
+      <circle cx="150" cy="165" r="3.5" fill="#40a0e0" opacity="0.6" filter="url(#node-glow)"/>
+
+      <!-- 関東ノード（フェーズ2） -->
+      <circle cx="90" cy="60" r="3" fill="#50c080" opacity="0.5" filter="url(#node-glow)"/>
+      <circle cx="310" cy="70" r="3" fill="#50c080" opacity="0.45" filter="url(#node-glow)"/>
+      <circle cx="350" cy="140" r="3" fill="#50c080" opacity="0.4" filter="url(#node-glow)"/>
+      <circle cx="80" cy="160" r="3" fill="#50c080" opacity="0.4" filter="url(#node-glow)"/>
+
+      <!-- 全国ノード（フェーズ3） -->
+      <circle cx="420" cy="50" r="2.5" fill="#e0c060" opacity="0.3" filter="url(#node-glow)"/>
+      <circle cx="430" cy="180" r="2.5" fill="#e0c060" opacity="0.3" filter="url(#node-glow)"/>
+      <circle cx="40" cy="40" r="2.5" fill="#e0c060" opacity="0.3" filter="url(#node-glow)"/>
+
+      <!-- 習志野（起点・最大） -->
+      <circle cx="180" cy="118" r="30" fill="url(#glow-blue)" opacity="0.3"/>
+      <circle cx="180" cy="118" r="8" fill="#0a1a2e" stroke="#40a0e0" stroke-width="1.5"/>
+      <circle cx="180" cy="118" r="5" fill="#40a0e0" opacity="0.9" filter="url(#node-glow)" class="pulse-dot"/>
+
+      <!-- ラベル -->
+      <text x="180" y="145" text-anchor="middle" fill="#60b0e8" font-size="9" font-family="serif" letter-spacing="1">習志野SV</text>
+      <text x="180" y="156" text-anchor="middle" fill="rgba(100,160,220,0.5)" font-size="8" font-family="serif">稼働中</text>
+
+      <text x="120" y="91" text-anchor="middle" fill="rgba(80,150,210,0.6)" font-size="8" font-family="serif">千葉市</text>
+      <text x="205" y="71" text-anchor="middle" fill="rgba(80,150,210,0.6)" font-size="8" font-family="serif">船橋</text>
+      <text x="248" y="115" text-anchor="middle" fill="rgba(80,150,210,0.55)" font-size="8" font-family="serif">市川</text>
+      <text x="148" y="180" text-anchor="middle" fill="rgba(80,150,210,0.55)" font-size="8" font-family="serif">松戸</text>
+
+      <text x="310" y="62" text-anchor="middle" fill="rgba(60,180,100,0.45)" font-size="8" font-family="serif">東京</text>
+      <text x="88" y="52" text-anchor="middle" fill="rgba(60,180,100,0.45)" font-size="8" font-family="serif">茨城</text>
+
+      <!-- 凡例 -->
+      <g transform="translate(14, 190)">
+        <circle cx="6" cy="6" r="4" fill="#40a0e0" opacity="0.8"/>
+        <text x="14" y="10" fill="rgba(100,160,220,0.55)" font-size="8" font-family="serif">Phase 1 千葉</text>
+        <circle cx="86" cy="6" r="3.5" fill="#50c080" opacity="0.7"/>
+        <text x="94" y="10" fill="rgba(60,180,100,0.5)" font-size="8" font-family="serif">Phase 2 関東</text>
+        <circle cx="168" cy="6" r="3" fill="#e0c060" opacity="0.6"/>
+        <text x="176" y="10" fill="rgba(200,170,80,0.5)" font-size="8" font-family="serif">Phase 3 全国</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- フェーズ詳細 -->
+  <div class="phases">
+
+    <div class="phase p1">
+      <div class="phase-left">
+        <div class="phase-num">PHASE 1</div>
+        <div class="phase-icon">🌱</div>
+        <div class="phase-status">実行中</div>
+      </div>
+      <div class="phase-right">
+        <div class="phase-title">千葉のSVセンターが動く</div>
+        <div class="phase-desc">習志野が先行事例になる。Instagram運用＋発言袋小路への体験投稿。千葉の各センターへ横展開し、地域として面をつくる。</div>
+        <div class="phase-detail">
+          <span class="detail-item">習志野SV ✓</span>
+          <span class="detail-item">千葉市SV</span>
+          <span class="detail-item">船橋SV</span>
+          <span class="detail-item">松戸SV</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase p2">
+      <div class="phase-left">
+        <div class="phase-num">PHASE 2</div>
+        <div class="phase-icon">🔗</div>
+        <div class="phase-status">次の手</div>
+      </div>
+      <div class="phase-right">
+        <div class="phase-title">関東ブロックへ接続</div>
+        <div class="phase-desc">千葉の成果が可視化されると、他県への説得材料になる。体験談の蓄積数・フォロワー推移が承認の根拠になる。</div>
+        <div class="phase-detail">
+          <span class="detail-item">東京SV</span>
+          <span class="detail-item">茨城SV</span>
+          <span class="detail-item">埼玉SV</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase p3">
+      <div class="phase-left">
+        <div class="phase-num">PHASE 3</div>
+        <div class="phase-icon">🌐</div>
+        <div class="phase-status">臨界へ</div>
+      </div>
+      <div class="phase-right">
+        <div class="phase-title">全国網の展開</div>
+        <div class="phase-desc">各地の体験談がネットワーク上で繋がり、意識の層に面として触れ始める。発言袋小路が体験のハブになる。</div>
+        <div class="phase-detail">
+          <span class="detail-item">関西SV</span>
+          <span class="detail-item">東北SV</span>
+          <span class="detail-item">九州SV</span>
+          <span class="detail-item">全国SV</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase p4">
+      <div class="phase-left">
+        <div class="phase-num">PHASE 4</div>
+        <div class="phase-icon">✨</div>
+        <div class="phase-status">臨界点</div>
+      </div>
+      <div class="phase-right">
+        <div class="phase-title">シナプス発光・体験が世界へ</div>
+        <div class="phase-desc">封じられてきた体験の総量が閾値を超える。奇跡の体験が世界の知覚領域に流れ込み、意識の層が変容する。</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- なぜ今か -->
+  <div class="why-now">
+    <div class="why-now-title">── なぜ今か</div>
+    <div class="why-items">
+      <div class="why-item">
+        <div class="why-bullet"></div>
+        <div class="why-text">習志野SVが先行事例として機能しており、説得の根拠が既にある</div>
+      </div>
+      <div class="why-item">
+        <div class="why-bullet"></div>
+        <div class="why-text">発言袋小路という「立場を問わない場」があることで、宗教色なく体験を蓄積できる</div>
+      </div>
+      <div class="why-item">
+        <div class="why-bullet"></div>
+        <div class="why-text">各センターが個別に動くのではなく、体験掲示板を共通のハブにすることで、バラバラな投稿が面として機能する</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">SVセンター展開構想 · 習志野より</div>
+  </div>
+
+</div>
+</body>
+</html>

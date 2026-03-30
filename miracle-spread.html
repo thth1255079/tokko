@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>奇跡が広まる仕組み</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Shippori+Mincho:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #05050f;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .canvas {
+    width: 540px;
+    min-height: 960px;
+    background: #05050f;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 36px 52px;
+  }
+
+  /* 背景の星雲テクスチャ */
+  .canvas::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 30% 20%, rgba(80,40,140,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 75% 70%, rgba(20,80,160,0.15) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 30% at 50% 50%, rgba(200,160,40,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* SVGキャンバス */
+  .neural-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ヘッダー */
+  .header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .header .label {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    color: rgba(180,160,100,0.7);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .header h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #f0e8d0;
+    letter-spacing: 3px;
+    line-height: 1.5;
+  }
+
+  .header h1 span {
+    color: #f0c060;
+  }
+
+  /* メインフロー */
+  .flow {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .stage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .node {
+    background: rgba(10,8,20,0.85);
+    border: 1px solid rgba(180,150,80,0.35);
+    border-radius: 12px;
+    padding: 16px 20px;
+    width: 100%;
+    position: relative;
+    backdrop-filter: blur(6px);
+  }
+
+  .node::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(180,150,80,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .node-number {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(180,150,80,0.6);
+    margin-bottom: 6px;
+  }
+
+  .node-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #e8dfc0;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+
+  .node-desc {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(200,190,160,0.7);
+    line-height: 1.7;
+    letter-spacing: 0.5px;
+  }
+
+  /* 特別ノード：臨界点 */
+  .node.critical {
+    border-color: rgba(240,160,40,0.6);
+    background: rgba(12,8,4,0.9);
+    box-shadow:
+      0 0 24px rgba(240,160,40,0.15),
+      inset 0 0 30px rgba(240,120,20,0.05);
+  }
+
+  .node.critical .node-title {
+    color: #f0c060;
+  }
+
+  /* 爆発ノード */
+  .node.explosion {
+    border-color: rgba(255,200,80,0.8);
+    background: rgba(14,10,2,0.92);
+    box-shadow:
+      0 0 40px rgba(255,180,40,0.25),
+      0 0 80px rgba(255,120,20,0.1),
+      inset 0 0 40px rgba(255,160,20,0.06);
+  }
+
+  .node.explosion .node-title {
+    color: #ffd060;
+    font-size: 17px;
+  }
+
+  .node.explosion .node-desc {
+    color: rgba(255,220,160,0.8);
+  }
+
+  /* 矢印コネクター */
+  .connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 0;
+    gap: 2px;
+  }
+
+  .connector-line {
+    width: 1px;
+    height: 18px;
+    background: linear-gradient(to bottom, rgba(180,150,80,0.4), rgba(180,150,80,0.15));
+  }
+
+  .connector-label {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: rgba(180,150,80,0.5);
+    text-align: center;
+  }
+
+  .connector-arrow {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid rgba(180,150,80,0.4);
+    margin-top: 2px;
+  }
+
+  /* シナプスビジュアル */
+  .synapse-visual {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    margin: 12px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .synapse-visual svg {
+    width: 100%;
+    height: 100px;
+    overflow: visible;
+  }
+
+  /* フッター */
+  .footer {
+    position: relative;
+    z-index: 10;
+    margin-top: 28px;
+    text-align: center;
+    border-top: 1px solid rgba(180,150,80,0.2);
+    padding-top: 18px;
+    width: 100%;
+  }
+
+  .footer-url {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(180,150,80,0.5);
+  }
+
+  /* アニメーション */
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes flow-down {
+    0% { opacity: 0; transform: translateY(-4px); }
+    50% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(4px); }
+  }
+
+  .glow-dot {
+    animation: pulse-glow 2.4s ease-in-out infinite;
+  }
+
+  .synapse-path {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  /* ピル型タグ */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .tag {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: rgba(180,150,80,0.8);
+    border: 1px solid rgba(180,150,80,0.3);
+    border-radius: 20px;
+    padding: 2px 9px;
+  }
+
+  .stage-split {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .stage-split .node {
+    flex: 1;
+    padding: 12px 14px;
+  }
+
+  .stage-split .node-title {
+    font-size: 12px;
+  }
+
+  .stage-split .node-desc {
+    font-size: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- 背景SVG神経網 -->
+  <svg class="neural-bg" viewBox="0 0 540 960" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <filter id="blur-soft">
+        <feGaussianBlur stdDeviation="2.5"/>
+      </filter>
+      <radialGradient id="node-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#f0c060" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#f0c060" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <!-- 遠景ニューロンネットワーク（薄い） -->
+    <g opacity="0.12" filter="url(#blur-soft)">
+      <line x1="60" y1="80" x2="180" y2="200" stroke="#8070d0" stroke-width="0.8"/>
+      <line x1="180" y1="200" x2="320" y2="150" stroke="#8070d0" stroke-width="0.8"/>
+      <line x1="320" y1="150" x2="480" y2="260" stroke="#8070d0" stroke-width="0.8"/>
+      <line x1="60" y1="80" x2="100" y2="300" stroke="#6090c0" stroke-width="0.6"/>
+      <line x1="100" y1="300" x2="260" y2="380" stroke="#6090c0" stroke-width="0.6"/>
+      <line x1="260" y1="380" x2="440" y2="320" stroke="#6090c0" stroke-width="0.6"/>
+      <line x1="440" y1="320" x2="500" y2="480" stroke="#6090c0" stroke-width="0.6"/>
+      <line x1="40" y1="500" x2="200" y2="580" stroke="#7060b0" stroke-width="0.7"/>
+      <line x1="200" y1="580" x2="380" y2="520" stroke="#7060b0" stroke-width="0.7"/>
+      <line x1="380" y1="520" x2="510" y2="640" stroke="#7060b0" stroke-width="0.7"/>
+      <line x1="80" y1="700" x2="240" y2="760" stroke="#5080a0" stroke-width="0.6"/>
+      <line x1="240" y1="760" x2="420" y2="700" stroke="#5080a0" stroke-width="0.6"/>
+      <line x1="420" y1="700" x2="500" y2="850" stroke="#5080a0" stroke-width="0.6"/>
+      <!-- dots -->
+      <circle cx="60" cy="80" r="2.5" fill="#9080e0"/>
+      <circle cx="180" cy="200" r="2" fill="#8070d0"/>
+      <circle cx="320" cy="150" r="2" fill="#8070d0"/>
+      <circle cx="480" cy="260" r="2" fill="#8070d0"/>
+      <circle cx="100" cy="300" r="2" fill="#6090c0"/>
+      <circle cx="260" cy="380" r="2" fill="#6090c0"/>
+      <circle cx="440" cy="320" r="2" fill="#6090c0"/>
+      <circle cx="200" cy="580" r="2" fill="#7060b0"/>
+      <circle cx="380" cy="520" r="2" fill="#7060b0"/>
+      <circle cx="240" cy="760" r="2" fill="#5080a0"/>
+      <circle cx="420" cy="700" r="2" fill="#5080a0"/>
+    </g>
+
+    <!-- 発光するノード（爆発エリア） -->
+    <g opacity="0.5">
+      <circle cx="270" cy="870" r="55" fill="url(#node-glow)" filter="url(#blur-soft)" class="glow-dot" style="animation-delay:0s"/>
+    </g>
+  </svg>
+
+  <!-- ヘッダー -->
+  <div class="header">
+    <div class="label">mechanism of spreading</div>
+    <h1>奇跡が<span>世界に広まる</span>仕組み</h1>
+  </div>
+
+  <!-- フロー -->
+  <div class="flow">
+
+    <!-- 01 -->
+    <div class="stage">
+      <div class="node">
+        <div class="node-number">01 · 封印状態</div>
+        <div class="node-title">体験は、言えなかった</div>
+        <div class="node-desc">「怪しまれるかも」「信じてもらえない」——<br>
+        奇跡の体験は長い間、個人の内側に閉じ込められてきた。</div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-label">解放</div>
+      <div class="connector-arrow"></div>
+    </div>
+
+    <!-- 02 -->
+    <div class="stage">
+      <div class="node">
+        <div class="node-number">02 · 記録</div>
+        <div class="node-title">「何をして、どうなったか」だけを書く</div>
+        <div class="node-desc">解釈も立場も問わない場所に、体験だけが残る。<br>
+        それが初めてWebの世界に放出される瞬間。</div>
+        <div class="tags">
+          <span class="tag">手かざし</span>
+          <span class="tag">ヒーリング</span>
+          <span class="tag">霊視</span>
+          <span class="tag">瞑想</span>
+          <span class="tag">チャネリング</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- シナプスビジュアル -->
+    <div class="synapse-visual">
+      <svg viewBox="0 0 468 100">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <!-- 放射状に広がる体験パス -->
+        <line x1="234" y1="10" x2="80" y2="90" stroke="#c0a040" stroke-width="0.8" opacity="0.5" filter="url(#glow)" class="synapse-path" style="animation-delay:0s"/>
+        <line x1="234" y1="10" x2="150" y2="90" stroke="#d0b050" stroke-width="0.8" opacity="0.6" filter="url(#glow)" class="synapse-path" style="animation-delay:0.4s"/>
+        <line x1="234" y1="10" x2="234" y2="90" stroke="#e0c060" stroke-width="1.2" opacity="0.8" filter="url(#glow)" class="synapse-path" style="animation-delay:0.2s"/>
+        <line x1="234" y1="10" x2="318" y2="90" stroke="#d0b050" stroke-width="0.8" opacity="0.6" filter="url(#glow)" class="synapse-path" style="animation-delay:0.6s"/>
+        <line x1="234" y1="10" x2="388" y2="90" stroke="#c0a040" stroke-width="0.8" opacity="0.5" filter="url(#glow)" class="synapse-path" style="animation-delay:0.8s"/>
+        <!-- 末端ドット -->
+        <circle cx="80" cy="90" r="3" fill="#c0a040" opacity="0.7" filter="url(#glow)" class="glow-dot" style="animation-delay:0.8s"/>
+        <circle cx="150" cy="90" r="3" fill="#d0b050" opacity="0.8" filter="url(#glow)" class="glow-dot" style="animation-delay:1.2s"/>
+        <circle cx="234" cy="90" r="4.5" fill="#f0c060" opacity="1" filter="url(#glow)" class="glow-dot" style="animation-delay:0.4s"/>
+        <circle cx="318" cy="90" r="3" fill="#d0b050" opacity="0.8" filter="url(#glow)" class="glow-dot" style="animation-delay:1.6s"/>
+        <circle cx="388" cy="90" r="3" fill="#c0a040" opacity="0.7" filter="url(#glow)" class="glow-dot" style="animation-delay:2s"/>
+        <!-- 起点ドット -->
+        <circle cx="234" cy="10" r="5" fill="#f0d080" opacity="0.9" filter="url(#glow)" class="glow-dot" style="animation-delay:0s"/>
+        <text x="234" y="55" text-anchor="middle" fill="rgba(200,170,80,0.5)" font-size="8" font-family="serif" letter-spacing="3">伝 播</text>
+      </svg>
+    </div>
+
+    <!-- 03 split -->
+    <div class="stage">
+      <div class="stage-split">
+        <div class="node">
+          <div class="node-number">03a</div>
+          <div class="node-title">読んだ人が動く</div>
+          <div class="node-desc">「私も書いていいんだ」<br>許可の連鎖が始まる。</div>
+        </div>
+        <div class="node">
+          <div class="node-number">03b</div>
+          <div class="node-title">比較が生まれる</div>
+          <div class="node-desc">横断的に見て<br>自分で選べる。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-label">蓄積・共鳴</div>
+      <div class="connector-arrow"></div>
+    </div>
+
+    <!-- 04 臨界点 -->
+    <div class="stage">
+      <div class="node critical">
+        <div class="node-number">04 · 臨界点</div>
+        <div class="node-title">体験談がシナプスのように発光する</div>
+        <div class="node-desc">記録が増えるほど結節が増え、ネットワーク全体が<br>
+        発火しやすい状態になる。あるとき、閾値を超える。</div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line" style="background: linear-gradient(to bottom, rgba(240,160,40,0.6), rgba(240,100,20,0.3));"></div>
+      <div class="connector-label" style="color:rgba(240,160,40,0.7);">爆発</div>
+      <div class="connector-arrow" style="border-top-color: rgba(240,160,40,0.6);"></div>
+    </div>
+
+    <!-- 05 爆発 -->
+    <div class="stage">
+      <div class="node explosion">
+        <div class="node-number">05 · 拡散</div>
+        <div class="node-title">奇跡が世界に広まる</div>
+        <div class="node-desc">閉ざされていた体験の総量が、<br>
+        一気に世界の知覚領域へ流れ込む。<br>
+        信じさせるのではなく——<br><strong style="color:#ffd060;font-weight:700;">比較できる場所</strong>として。</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- フッター -->
+  <div class="footer">
+    <div class="footer-url">発言袋小路 · 見えない体験の記録庫</div>
+  </div>
+
+</div>
+</body>
+</html>

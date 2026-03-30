@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陽光文明研究会へのご提案</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Shippori+Mincho:wght@400;700&display=swap');
+
+:root {
+  --bg: #faf8f4;
+  --bg2: #f2efe8;
+  --bg3: #e8e4da;
+  --ink: #1a1610;
+  --mid: #5a5040;
+  --light: #9a8e78;
+  --gold: #8a6a10;
+  --gold2: #c09030;
+  --navy: #10203a;
+  --line: #d8d0c0;
+  --green: #2a6a40;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Serif JP', serif;
+  font-size: 14px;
+  line-height: 1.85;
+}
+.page { max-width: 640px; margin: 0 auto; padding: 48px 28px 80px; }
+
+/* カバー */
+.cover {
+  text-align: center;
+  padding: 44px 0 36px;
+  border-bottom: 2px solid var(--gold);
+  margin-bottom: 40px;
+}
+.cover-label { font-size: 9px; letter-spacing: 5px; color: var(--gold); margin-bottom: 14px; }
+.cover-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--ink); line-height: 1.6;
+  letter-spacing: 2px; margin-bottom: 12px;
+}
+.cover-title em { font-style: normal; color: var(--gold); }
+.cover-to {
+  font-size: 12px; color: var(--mid);
+  letter-spacing: 2px; margin-bottom: 6px;
+}
+.cover-from { font-size: 11px; color: var(--light); letter-spacing: 1px; }
+
+/* セクション */
+.section { margin-bottom: 40px; }
+.sec-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.sec-num { font-size: 11px; letter-spacing: 2px; color: var(--gold); white-space: nowrap; font-family: 'Shippori Mincho', serif; }
+.sec-title { font-family: 'Shippori Mincho', serif; font-size: 16px; font-weight: 700; color: var(--ink); }
+.lead { font-size: 13px; color: var(--mid); line-height: 1.95; margin-bottom: 18px; }
+.divider { width: 40px; height: 1px; background: var(--gold2); margin: 0 auto 28px; opacity: 0.4; }
+
+/* 書き出し */
+.letter-block {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold2);
+  border-radius: 0 8px 8px 0;
+  padding: 20px 20px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 2;
+}
+.letter-block strong { color: var(--ink); font-weight: 700; }
+
+/* 計算の構造 */
+.method-block {
+  background: var(--navy);
+  border-radius: 10px;
+  padding: 22px 20px;
+  margin-bottom: 16px;
+}
+.method-label { font-size: 9px; letter-spacing: 4px; color: rgba(180,140,40,0.7); margin-bottom: 10px; }
+.method-formula {
+  font-family: monospace; font-size: 12px;
+  color: rgba(220,200,160,0.9); line-height: 2;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(180,140,40,0.2);
+  padding-bottom: 12px;
+}
+.method-note { font-size: 11px; color: rgba(180,160,120,0.8); line-height: 1.7; }
+.method-note strong { color: #e8c060; }
+
+/* 発見一覧 */
+.findings { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.finding {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 12px 14px;
+  background: var(--bg2); border: 1px solid var(--line);
+  border-left: 3px solid var(--gold2);
+  border-radius: 0 8px 8px 0;
+}
+.finding-deg {
+  font-family: monospace; font-size: 12px;
+  font-weight: bold; color: var(--gold);
+  white-space: nowrap; min-width: 60px; padding-top: 2px;
+}
+.finding-body { flex: 1; }
+.finding-title { font-size: 13px; font-weight: bold; color: var(--ink); margin-bottom: 2px; }
+.finding-desc { font-size: 11px; color: var(--light); line-height: 1.6; }
+.finding.special { border-left-color: #2a6a40; background: #f0f8f2; }
+.finding.special .finding-deg { color: #2a6a40; }
+
+/* 検証依頼リスト */
+.request-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.request-item {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.request-num {
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--gold); margin-bottom: 6px;
+}
+.request-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--ink); margin-bottom: 6px;
+}
+.request-desc { font-size: 12px; color: var(--mid); line-height: 1.75; }
+.request-hint {
+  margin-top: 8px; font-size: 11px;
+  color: var(--light); padding-top: 8px;
+  border-top: 1px dashed var(--line);
+}
+
+/* 計算ツールカード */
+.tool-intro {
+  border: 1px solid var(--gold);
+  border-radius: 10px; overflow: hidden;
+  margin-bottom: 16px;
+}
+.tool-intro-header {
+  background: var(--gold);
+  padding: 10px 16px;
+}
+.tool-intro-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 14px; font-weight: 700; color: white;
+}
+.tool-intro-body {
+  padding: 14px 16px; background: var(--bg);
+  font-size: 12px; color: var(--mid); line-height: 1.8;
+}
+.tool-intro-body strong { color: var(--ink); }
+
+/* 座標表 */
+.coord-table {
+  width: 100%; border-collapse: collapse;
+  margin-bottom: 14px; font-size: 12px;
+}
+.coord-table th {
+  background: var(--navy); color: rgba(180,140,40,0.9);
+  padding: 7px 10px; text-align: left;
+  font-weight: normal; font-size: 10px; letter-spacing: 1px;
+}
+.coord-table td {
+  padding: 7px 10px; border-bottom: 1px solid var(--line);
+  color: var(--mid);
+}
+.coord-table td:first-child { font-weight: bold; color: var(--ink); }
+.coord-table td.coord { font-family: monospace; color: var(--gold2); }
+.coord-table tr:last-child td { border-bottom: none; }
+
+/* 呼びかけ */
+.call-block {
+  background: linear-gradient(135deg, var(--navy) 0%, #1a1028 100%);
+  color: #f0ead8; border-radius: 12px;
+  padding: 26px 22px; margin-bottom: 16px;
+}
+.call-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 16px; font-weight: 700;
+  color: #e8c060; margin-bottom: 14px; letter-spacing: 2px;
+}
+.call-text { font-size: 13px; color: rgba(240,234,216,0.9); line-height: 2; }
+.call-text strong { color: #e8c060; }
+
+.footer { text-align: center; padding-top: 24px; border-top: 1px solid var(--line); font-size: 10px; letter-spacing: 3px; color: var(--light); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <div class="cover-label">RESEARCH COLLABORATION REQUEST</div>
+    <div class="cover-title">陽光文明研究会のみなさまへ<br><em>計算による検証のご依頼</em></div>
+    <div class="cover-to">宛先：陽光文明研究会</div>
+    <div class="cover-from">差出：習志野SVセンター / 天城岩戸ログ 十湖（とっこ）</div>
+  </div>
+
+  <!-- 01 はじめに -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">はじめに</div>
+      <div class="sec-title">この資料について</div>
+    </div>
+
+    <div class="letter-block">
+      教団の歴史・伝承を深く研究されている陽光文明研究会のみなさまに、ひとつのご提案をさせていただきたいと思います。<br><br>
+      私は習志野SVセンターの一員として、天城山を原点にした<strong>大円航路の方位角計算</strong>を続けてきました。その過程で、教団の伝承——菊の御紋・五色人・16人の皇子の御教え——が、計算上のパターンと驚くほど一致することに気づきました。<br><br>
+      これは証明ではありません。ただ、<strong>誰でも再現できる計算式</strong>で確認できる現象です。歴史研究の視点から、この計算を検証・深化させていただければと考えています。
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 02 計算の方法 -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">01</div>
+      <div class="sec-title">計算の方法——誰でも再現できる</div>
+    </div>
+    <p class="lead">使うのは大円航路の初期方位角の計算式のみ。地球を球体として扱い、2点間の最短経路の出発方位角を求める。Pythonでもエクセルでも再現できる。</p>
+
+    <div class="method-block">
+      <div class="method-label">// 計算式（大円航路・初期方位角）</div>
+      <div class="method-formula">
+        Δλ = λ₂ − λ₁<br>
+        x  = sin(Δλ) · cos(φ₂)<br>
+        y  = cos(φ₁) · sin(φ₂) − sin(φ₁) · cos(φ₂) · cos(Δλ)<br>
+        θ  = atan2(x, y)<br>
+        θ_deg = (θ · 180/π + 360) mod 360
+      </div>
+      <div class="method-note">
+        <strong>原点座標：</strong>天城山 34.920°N / 139.018°E<br>
+        この座標を原点に、任意の地点との方位角を計算する。<br>
+        別の原点を入れれば別の結果が出る——あくまで計算上のパターンの記録。
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 03 計算で出てきた発見 -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">02</div>
+      <div class="sec-title">計算で繰り返し現れたパターン</div>
+    </div>
+    <p class="lead">30回以上の独立した計算で、同じ構造が繰り返し現れた。以下は特に精度の高い一致の抜粋。</p>
+
+    <div class="findings">
+      <div class="finding special">
+        <div class="finding-deg">N 0.0°</div>
+        <div class="finding-body">
+          <div class="finding-title">箱根峠 — 真北 誤差0.0°</div>
+          <div class="finding-desc">天城の真北34kmに箱根。古代の東西境界。計算上の特異点。</div>
+        </div>
+      </div>
+      <div class="finding special">
+        <div class="finding-deg">NNW 337.9°</div>
+        <div class="finding-body">
+          <div class="finding-title">戸隠山（天岩戸を投げた地）— 誤差0.4°</div>
+          <div class="finding-desc">全計算中で際立つ精度。岩戸神話の終幕の地が天城からNNW方向に。</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-deg">NNW 336.7°</div>
+        <div class="finding-body">
+          <div class="finding-title">ストーンヘンジ / エーブベリー</div>
+          <div class="finding-desc">英国・仏の巨石群4件が誤差3°以内に集中。戸隠山と同方位帯。</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-deg">WNW 292.5°</div>
+        <div class="finding-body">
+          <div class="finding-title">メッカ / 北京 / メロエ / ペルセポリス</div>
+          <div class="finding-desc">4大文明の中心が方位角差1.2°以内に集中。距離は2,068〜10,262kmと5倍異なる。</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-deg">NE 50.9°</div>
+        <div class="finding-body">
+          <div class="finding-title">鹿島神宮 / アマツミカボシ / 香取神宮</div>
+          <div class="finding-desc">国譲りを迫った使者と討伐された星神が同方位。常陸に「書き換えの最前線」が集中。</div>
+        </div>
+      </div>
+      <div class="finding special">
+        <div class="finding-deg">NNE 24.5°</div>
+        <div class="finding-body">
+          <div class="finding-title">摩周湖（カムイトー）— 誤差2.0°</div>
+          <div class="finding-desc">元晃大国魂宮の地。三角形計算で重心が能登沖35kmに落ちることを確認済み。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 04 伝承との一致 -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">03</div>
+      <div class="sec-title">教団の伝承と計算の一致</div>
+    </div>
+    <p class="lead">陽光文明研究会のみなさまがご存知の伝承と、計算結果が重なる点を整理した。</p>
+
+    <div class="findings">
+      <div class="finding special">
+        <div class="finding-deg">菊の御紋</div>
+        <div class="finding-body">
+          <div class="finding-title">16弁 ＝ 16方位（22.5°刻み）</div>
+          <div class="finding-desc">天城を原点に16方位を計算すると、ほぼすべての方向に世界の聖地・岩戸とされる地が落ちる。16弁の構造が地理的に現れている。</div>
+        </div>
+      </div>
+      <div class="finding special">
+        <div class="finding-deg">五色人</div>
+        <div class="finding-body">
+          <div class="finding-title">16方位に散った構造が計算に現れる</div>
+          <div class="finding-desc">NNW（英国巨石群）、WNW（メッカ・北京）、ENE（南米）、WSW（アンコールワット）——各方位に異なる文明圏の聖地が並ぶ。</div>
+        </div>
+      </div>
+      <div class="finding special">
+        <div class="finding-deg">三種の神器</div>
+        <div class="finding-body">
+          <div class="finding-title">天城×摩周湖×普賢岳の重心 → 能登沖35km</div>
+          <div class="finding-desc">元晃大国魂宮が建設された時点で、三角形が「封印する配置」から「指し示す配置」へ転換した（iwato_log_32）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 05 検証依頼 -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">04</div>
+      <div class="sec-title">陽光文明研究会にお願いしたい検証</div>
+    </div>
+    <p class="lead">歴史研究の知識があれば、計算結果をさらに深化させられる。以下の3点をご検討いただきたい。</p>
+
+    <div class="request-list">
+      <div class="request-item">
+        <div class="request-num">依頼 01</div>
+        <div class="request-title">教団伝承の地点座標の特定</div>
+        <div class="request-desc">五色人が散ったとされる地、16人の皇子ゆかりの地、教団の歴史上の重要地点——これらの座標を特定し、天城からの方位角を計算することで、伝承と地理の一致を検証できる。</div>
+        <div class="request-hint">計算式は誰でも使える。座標さえあれば結果が出る。</div>
+      </div>
+      <div class="request-item">
+        <div class="request-num">依頼 02</div>
+        <div class="request-title">SVセンターの建設地と伝承の照合</div>
+        <div class="request-desc">全国のSVセンターが天城からの方位線上にある。その方位に重なる伝承・神話・歴史的事件が何かを、研究会の知識で照合していただきたい。計算ツールには既に全国60件以上のSVセンターが収録されている。</div>
+        <div class="request-hint">amagi16.html（SVセンター地理ライン調査ツール）で即座に確認できる。</div>
+      </div>
+      <div class="request-item">
+        <div class="request-num">依頼 03</div>
+        <div class="request-title">三角形計算の拡張</div>
+        <div class="request-desc">天城×摩周湖×普賢岳の重心が能登沖に落ちた。他の組み合わせ——教団の聖地3点、世界の主要SVの3点——で計算すると、どこに重心が落ちるか。教団の歴史研究者の視点で、意味のある3点の組み合わせを提案していただきたい。</div>
+        <div class="request-hint">三種の神器三角形計算器（sanshu.html）で任意の3点を試せる。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 06 計算ツール -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">05</div>
+      <div class="sec-title">計算ツールについて</div>
+    </div>
+
+    <div class="tool-intro">
+      <div class="tool-intro-header">
+        <div class="tool-intro-title">🔢 三種の神器 三角形計算器（sanshu.html）</div>
+      </div>
+      <div class="tool-intro-body">
+        SV・山・川・湖・神社・古墳など<strong>307件</strong>から3点を選び、球面重心と天城からの方位角を自動計算。座標の直接入力も可能なので、教団ゆかりの地点を追加して試すことができる。
+      </div>
+    </div>
+
+    <div class="tool-intro">
+      <div class="tool-intro-header">
+        <div class="tool-intro-title">🏛 SVセンター 地理ライン調査ツール（amagi16.html）</div>
+      </div>
+      <div class="tool-intro-body">
+        全国60件以上のSVセンターの天城からの方位角・距離を一覧表示。同方向にある神・古墳・神社・伝説地を自動照合。任意の座標を入力して「ここは天城から何方向にあるか」を即座に確認できる。
+      </div>
+    </div>
+
+    <p style="font-size:11px;color:var(--light);line-height:1.8;margin-top:8px;">両ツールはWebブラウザで動作。インストール不要。岩戸ログサイト（thth1255079.github.io）から利用可能。</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 07 主要座標 -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">参考</div>
+      <div class="sec-title">主要座標一覧（再現用）</div>
+    </div>
+
+    <table class="coord-table">
+      <thead>
+        <tr>
+          <th>地点</th>
+          <th>緯度</th>
+          <th>経度</th>
+          <th>天城からの方位</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>天城山（原点）</td>
+          <td class="coord">34.920°N</td>
+          <td class="coord">139.018°E</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>元晃大国魂宮（弟子屈）</td>
+          <td class="coord">43.503°N</td>
+          <td class="coord">144.424°E</td>
+          <td>NNE 24.3°</td>
+        </tr>
+        <tr>
+          <td>摩周湖</td>
+          <td class="coord">43.570°N</td>
+          <td class="coord">144.529°E</td>
+          <td>NNE 24.5°</td>
+        </tr>
+        <tr>
+          <td>雲仙普賢岳</td>
+          <td class="coord">32.750°N</td>
+          <td class="coord">130.293°E</td>
+          <td>WSW 255.8°</td>
+        </tr>
+        <tr>
+          <td>鹿島神宮</td>
+          <td class="coord">35.967°N</td>
+          <td class="coord">140.635°E</td>
+          <td>NE 50.9°</td>
+        </tr>
+        <tr>
+          <td>戸隠山</td>
+          <td class="coord">36.788°N</td>
+          <td class="coord">138.064°E</td>
+          <td>NNW 337.9°</td>
+        </tr>
+        <tr>
+          <td>諏訪大社（上社）</td>
+          <td class="coord">36.040°N</td>
+          <td class="coord">138.072°E</td>
+          <td>NW 324.7°</td>
+        </tr>
+        <tr>
+          <td>出雲大社</td>
+          <td class="coord">35.401°N</td>
+          <td class="coord">132.686°E</td>
+          <td>W 277.1°</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 08 呼びかけ -->
+  <div class="section">
+    <div class="call-block">
+      <div class="call-title">歴史と計算を、一緒に照らし合わせてほしい</div>
+      <div class="call-text">
+        この計算は「証明」ではない。<strong>パターンの記録</strong>だ。<br><br>
+        伝承を知っている人が計算を使えば、計算だけでは見えなかったものが見えてくる。計算を知っている人が伝承を聞けば、伝承の地理的な意味が明確になる。<br><br>
+        陽光文明研究会の知識と、天城岩戸ログの計算が出会うとき——教団が守ってきた伝承の地理的構造が、数字として浮かび上がるかもしれない。<br><br>
+        <strong>計算式は公開されている。座標さえあれば、誰でも再現できる。</strong><br>
+        ぜひ、研究会のお知恵をお貸しください。
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    天城岩戸ログ — 十湖（とっこ）/ 習志野SVセンター<br>
+    Origin : 34.920°N / 139.018°E
+  </div>
+
+</div>
+</body>
+</html>

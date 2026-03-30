@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天城・関・SVセンター　地理的意味の資料</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Shippori+Mincho:wght@400;700&display=swap');
+
+:root {
+  --bg: #faf8f4;
+  --bg2: #f2efe8;
+  --bg3: #e8e4da;
+  --ink: #1a1610;
+  --mid: #5a5040;
+  --light: #9a8e78;
+  --gold: #8a6a10;
+  --gold2: #c09030;
+  --red: #8a2010;
+  --navy: #10203a;
+  --line: #d8d0c0;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Serif JP', serif;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 28px 80px;
+}
+
+/* カバー */
+.cover {
+  text-align: center;
+  padding: 48px 0 40px;
+  border-bottom: 2px solid var(--gold);
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(to bottom, transparent, var(--gold));
+}
+
+.cover-label {
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.cover-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.5;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.cover-title em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.cover-sub {
+  font-size: 11px;
+  color: var(--light);
+  letter-spacing: 3px;
+}
+
+.cover-coord {
+  margin-top: 20px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold2);
+  font-family: monospace;
+}
+
+/* セクション */
+.section {
+  margin-bottom: 44px;
+}
+
+.sec-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sec-num {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.sec-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 1px;
+}
+
+.lead {
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+
+/* SVセンター方位図 */
+.compass-wrap {
+  background: var(--navy);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.compass-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 30%, rgba(180,140,40,0.08) 0%, transparent 70%);
+}
+
+.compass-svg-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+/* ライン説明リスト */
+.line-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.line-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold2);
+  border-radius: 0 8px 8px 0;
+}
+
+.line-deg {
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--gold);
+  white-space: nowrap;
+  min-width: 50px;
+}
+
+.line-info { flex: 1; }
+
+.line-name {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.line-desc {
+  font-size: 11px;
+  color: var(--light);
+  line-height: 1.6;
+}
+
+.line-item.highlight {
+  border-left-color: var(--red);
+  background: #fdf5f0;
+}
+
+.line-item.highlight .line-deg { color: var(--red); }
+
+/* 関の定義 */
+.kan-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.kan-card {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.kan-card-icon {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.kan-card-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.kan-card-body {
+  font-size: 11px;
+  color: var(--mid);
+  line-height: 1.7;
+}
+
+.kan-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.kan-tag {
+  font-size: 10px;
+  padding: 2px 8px;
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  color: var(--mid);
+}
+
+/* 三関ライン図 */
+.sankan-wrap {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.sankan-title {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+/* メタファーブロック */
+.metaphor-block {
+  background: var(--navy);
+  color: #f0ead8;
+  border-radius: 10px;
+  padding: 24px 22px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.metaphor-block::before {
+  content: '関';
+  position: absolute;
+  right: -10px;
+  bottom: -20px;
+  font-family: 'Shippori Mincho', serif;
+  font-size: 120px;
+  color: rgba(180,140,40,0.06);
+  pointer-events: none;
+}
+
+.metaphor-lead {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(180,140,40,0.8);
+  margin-bottom: 14px;
+}
+
+.metaphor-text {
+  font-size: 14px;
+  line-height: 2.1;
+  color: rgba(240,234,216,0.9);
+}
+
+.metaphor-text strong {
+  color: #e8c060;
+  font-weight: 700;
+}
+
+/* 計算器紹介 */
+.tool-card {
+  border: 2px solid var(--gold);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.tool-header {
+  background: var(--gold);
+  padding: 12px 18px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.tool-header-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+}
+
+.tool-header-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 2px;
+}
+
+.tool-body {
+  padding: 16px 18px;
+  background: var(--bg);
+}
+
+.tool-features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tool-feature {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12px;
+}
+
+.tool-feature-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold2);
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.tool-feature-text {
+  color: var(--mid);
+  line-height: 1.7;
+}
+
+/* まとめ */
+.conclusion {
+  background: linear-gradient(135deg, var(--navy) 0%, #1a1028 100%);
+  color: #f0ead8;
+  border-radius: 12px;
+  padding: 28px 24px;
+  margin-bottom: 20px;
+}
+
+.conclusion-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #e8c060;
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+}
+
+.conclusion-points {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.c-point {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.c-point-num {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 11px;
+  color: rgba(180,140,40,0.8);
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+.c-point-text {
+  font-size: 13px;
+  color: rgba(240,234,216,0.9);
+  line-height: 1.8;
+}
+
+.c-point-text strong {
+  color: #e8c060;
+}
+
+/* フッター */
+.footer {
+  text-align: center;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--light);
+}
+
+/* 区切り */
+.divider {
+  width: 40px;
+  height: 1px;
+  background: var(--gold2);
+  margin: 0 auto 24px;
+  opacity: 0.4;
+}
+
+/* quote */
+.quote-box {
+  border-left: 3px solid var(--gold2);
+  padding: 12px 16px;
+  margin: 16px 0;
+  background: var(--bg2);
+  border-radius: 0 6px 6px 0;
+}
+
+.quote-text {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.9;
+}
+
+.quote-source {
+  font-size: 10px;
+  color: var(--light);
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- カバー -->
+  <div class="cover">
+    <div class="cover-label">PROPOSAL DOCUMENT</div>
+    <div class="cover-title">天城・<em>関</em>・SVセンター<br>地理的意味の記録</div>
+    <div class="cover-sub">天城岩戸ログ 調査報告</div>
+    <div class="cover-coord">Origin : 34.920°N / 139.018°E — 天城・伊豆</div>
+  </div>
+
+  <!-- 01 SVセンターは聖地に建てられている -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">01</div>
+      <div class="sec-title">SVセンターは、聖地・神社・パワースポットの地に建てられている</div>
+    </div>
+
+    <p class="lead">
+      天城（主座世界総本山）を原点として、全国のSVセンターへの大円航路の方位角を計算すると、
+      同じ方向に古代の神・神社・古墳・聖地が一致する事例が相次いで現れる。
+      これは偶然の一致ではなく、地形と歴史が重なる場所にセンターが建てられてきた可能性を示す。
+    </p>
+
+    <!-- 方位コンパス図 -->
+    <div class="compass-wrap">
+      <div class="compass-svg-wrap">
+        <svg viewBox="0 0 580 320" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="cg" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#c09030" stop-opacity="0.15"/>
+              <stop offset="100%" stop-color="#c09030" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="glow2">
+              <feGaussianBlur stdDeviation="1.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- 背景円 -->
+          <circle cx="160" cy="160" r="130" fill="url(#cg)"/>
+          <circle cx="160" cy="160" r="130" fill="none" stroke="rgba(180,140,40,0.15)" stroke-width="1"/>
+          <circle cx="160" cy="160" r="90" fill="none" stroke="rgba(180,140,40,0.1)" stroke-width="1" stroke-dasharray="3,4"/>
+          <circle cx="160" cy="160" r="50" fill="none" stroke="rgba(180,140,40,0.1)" stroke-width="1"/>
+
+          <!-- 天城（中心） -->
+          <circle cx="160" cy="160" r="8" fill="#c09030" filter="url(#glow2)"/>
+          <circle cx="160" cy="160" r="4" fill="#fff"/>
+          <text x="160" y="185" text-anchor="middle" fill="#c09030" font-size="10" font-family="serif">天城</text>
+          <text x="160" y="197" text-anchor="middle" fill="rgba(180,140,40,0.6)" font-size="8" font-family="monospace">原点</text>
+
+          <!-- 方位ライン：習志野SV NNE方向 -->
+          <line x1="160" y1="160" x2="178" y2="34" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7" filter="url(#glow2)"/>
+          <circle cx="178" cy="34" r="4" fill="#60a5fa" opacity="0.8"/>
+
+          <!-- 方位ライン：鹿島神宮 NE -->
+          <line x1="160" y1="160" x2="248" y2="68" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.6"/>
+          <circle cx="248" cy="68" r="3" fill="#fbbf24" opacity="0.7"/>
+
+          <!-- 方位ライン：戸隠 NNW -->
+          <line x1="160" y1="160" x2="126" y2="32" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.6"/>
+          <circle cx="126" cy="32" r="3" fill="#4ade80" opacity="0.7"/>
+
+          <!-- 方位ライン：伊勢 WSW -->
+          <line x1="160" y1="160" x2="38" y2="188" stroke="#fb923c" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.6"/>
+          <circle cx="38" cy="188" r="3" fill="#fb923c" opacity="0.7"/>
+
+          <!-- 方位ライン：諏訪 NW -->
+          <line x1="160" y1="160" x2="68" y2="68" stroke="#c084fc" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.6"/>
+          <circle cx="68" cy="68" r="3" fill="#c084fc" opacity="0.7"/>
+
+          <!-- 方位ライン：出雲 W -->
+          <line x1="160" y1="160" x2="32" y2="160" stroke="#f87171" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.5"/>
+          <circle cx="32" cy="160" r="3" fill="#f87171" opacity="0.6"/>
+
+          <!-- 方位角ラベル -->
+          <text x="182" y="28" fill="#60a5fa" font-size="9" font-family="serif">習志野SV</text>
+          <text x="252" y="65" fill="#fbbf24" font-size="9" font-family="serif">鹿島神宮NE</text>
+          <text x="82" y="28" fill="#4ade80" font-size="9" font-family="serif">戸隠NNW</text>
+          <text x="8" y="185" fill="#fb923c" font-size="9" font-family="serif">伊勢WSW</text>
+          <text x="22" y="62" fill="#c084fc" font-size="9" font-family="serif">諏訪NW</text>
+          <text x="4" y="155" fill="#f87171" font-size="9" font-family="serif">出雲W</text>
+
+          <!-- 右側：説明テキスト -->
+          <text x="340" y="40" fill="rgba(180,140,40,0.9)" font-size="11" font-family="serif" font-weight="bold">計算で判明した主な一致</text>
+
+          <rect x="330" y="52" width="230" height="22" rx="3" fill="rgba(96,165,250,0.1)" stroke="rgba(96,165,250,0.3)" stroke-width="1"/>
+          <text x="340" y="67" fill="#60a5fa" font-size="10" font-family="serif">習志野SV → 将門の首塚 同方向</text>
+
+          <rect x="330" y="80" width="230" height="22" rx="3" fill="rgba(251,191,36,0.1)" stroke="rgba(251,191,36,0.3)" stroke-width="1"/>
+          <text x="340" y="95" fill="#fbbf24" font-size="10" font-family="serif">鹿島SV → タケミカヅチ・NE50.9°</text>
+
+          <rect x="330" y="108" width="230" height="22" rx="3" fill="rgba(74,222,128,0.1)" stroke="rgba(74,222,128,0.3)" stroke-width="1"/>
+          <text x="340" y="123" fill="#4ade80" font-size="10" font-family="serif">戸隠 → 天岩戸投棄地・NNW誤差0.4°</text>
+
+          <rect x="330" y="136" width="230" height="22" rx="3" fill="rgba(251,146,60,0.1)" stroke="rgba(251,146,60,0.3)" stroke-width="1"/>
+          <text x="340" y="151" fill="#fb923c" font-size="10" font-family="serif">伊勢神宮 → WSW256.9°</text>
+
+          <rect x="330" y="164" width="230" height="22" rx="3" fill="rgba(192,132,252,0.1)" stroke="rgba(192,132,252,0.3)" stroke-width="1"/>
+          <text x="340" y="179" fill="#c084fc" font-size="10" font-family="serif">諏訪大社 → タケミナカタ封印地NW</text>
+
+          <rect x="330" y="192" width="230" height="22" rx="3" fill="rgba(248,113,113,0.1)" stroke="rgba(248,113,113,0.3)" stroke-width="1"/>
+          <text x="340" y="207" fill="#f87171" font-size="10" font-family="serif">出雲大社 → W277.1°</text>
+
+          <text x="330" y="240" fill="rgba(180,140,40,0.5)" font-size="9" font-family="serif">※ 全国SVセンター（計算件数 60件以上）</text>
+          <text x="330" y="254" fill="rgba(180,140,40,0.5)" font-size="9" font-family="serif">　 同方向に神・古墳・聖地が一致</text>
+
+          <!-- 円内方位ラベル -->
+          <text x="160" y="42" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="9" font-family="serif">N</text>
+          <text x="278" y="164" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="9" font-family="serif">E</text>
+          <text x="160" y="286" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="9" font-family="serif">S</text>
+          <text x="42" y="164" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="9" font-family="serif">W</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="quote-box">
+      <div class="quote-text">天城を中心に置いて方位角を計算すると、SVセンターと同じ方向に、記紀以前の神々・封じられた神・古代の聖域が並ぶ。</div>
+      <div class="quote-source">天城岩戸ログ — 調査記録より</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 02 関とは何か -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">02</div>
+      <div class="sec-title">「関」とは何か — 4つの層</div>
+    </div>
+
+    <p class="lead">
+      「関」は単なる地名ではない。地形・歴史・言語・霊的構造の4つの層が重なる、
+      境界そのものの概念だ。
+    </p>
+
+    <div class="kan-grid">
+      <div class="kan-card">
+        <div class="kan-card-icon">🏯</div>
+        <div class="kan-card-title">地名の関</div>
+        <div class="kan-card-body">古代の関所・境界地点として歴史に記録された場所。</div>
+        <div class="kan-examples">
+          <span class="kan-tag">鈴鹿関</span>
+          <span class="kan-tag">不破関</span>
+          <span class="kan-tag">愛発関</span>
+          <span class="kan-tag">鼠ヶ関</span>
+        </div>
+      </div>
+      <div class="kan-card">
+        <div class="kan-card-icon">🏔</div>
+        <div class="kan-card-title">地形の関</div>
+        <div class="kan-card-body">峠・海峡・川・岬など、地形が境界を作っている場所。</div>
+        <div class="kan-examples">
+          <span class="kan-tag">箱根峠</span>
+          <span class="kan-tag">関門海峡</span>
+          <span class="kan-tag">津軽海峡</span>
+          <span class="kan-tag">対馬海峡</span>
+        </div>
+      </div>
+      <div class="kan-card">
+        <div class="kan-card-icon">🌐</div>
+        <div class="kan-card-title">言語の関</div>
+        <div class="kan-card-body">世界の言語に「関」と同音・同義の境界語が存在する。</div>
+        <div class="kan-examples">
+          <span class="kan-tag">Kan（日）</span>
+          <span class="kan-tag">Guan（中）</span>
+          <span class="kan-tag">Gate（英）</span>
+          <span class="kan-tag">Khan（蒙）</span>
+        </div>
+      </div>
+      <div class="kan-card">
+        <div class="kan-card-icon">✨</div>
+        <div class="kan-card-title">霊的な関</div>
+        <div class="kan-card-body">結界・境界線・次元の境目として機能する、見えない関。</div>
+        <div class="kan-examples">
+          <span class="kan-tag">結界</span>
+          <span class="kan-tag">禁足地</span>
+          <span class="kan-tag">封印地</span>
+          <span class="kan-tag">聖域の境</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 三関ライン図 -->
+    <div class="sankan-wrap">
+      <div class="sankan-title">天城を原点とした「関」の方位角計算</div>
+      <svg viewBox="0 0 580 200" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow3">
+            <feGaussianBlur stdDeviation="1.2" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- 天城 -->
+        <circle cx="290" cy="100" r="7" fill="#8a6a10" filter="url(#glow3)"/>
+        <circle cx="290" cy="100" r="3.5" fill="#fff"/>
+        <text x="290" y="120" text-anchor="middle" fill="#8a6a10" font-size="9" font-family="serif">天城</text>
+
+        <!-- 陸の三関 W方向 -->
+        <line x1="290" y1="100" x2="80" y2="108" stroke="#c09030" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.8"/>
+        <line x1="290" y1="100" x2="75" y2="85" stroke="#c09030" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.7"/>
+        <line x1="290" y1="100" x2="65" y2="65" stroke="#c09030" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.6"/>
+
+        <circle cx="80" cy="108" r="5" fill="#c09030" opacity="0.9" filter="url(#glow3)"/>
+        <circle cx="75" cy="85" r="5" fill="#c09030" opacity="0.8"/>
+        <circle cx="65" cy="65" r="5" fill="#c09030" opacity="0.7"/>
+
+        <text x="10" y="115" fill="#c09030" font-size="9" font-family="serif">鈴鹿関</text>
+        <text x="10" y="90" fill="#c09030" font-size="9" font-family="serif">不破関</text>
+        <text x="10" y="65" fill="#c09030" font-size="9" font-family="serif">愛発関</text>
+        <text x="8" y="48" fill="rgba(180,140,40,0.5)" font-size="8" font-family="serif">W〜WNW方向</text>
+
+        <!-- 消された海の関 W方向 -->
+        <line x1="290" y1="100" x2="80" y2="130" stroke="#8a2010" stroke-width="1.2" stroke-dasharray="3,4" opacity="0.7"/>
+        <line x1="290" y1="100" x2="58" y2="105" stroke="#8a2010" stroke-width="1.2" stroke-dasharray="3,4" opacity="0.6"/>
+        <line x1="290" y1="100" x2="40" y2="100" stroke="#8a2010" stroke-width="1.2" stroke-dasharray="3,4" opacity="0.5"/>
+
+        <circle cx="80" cy="130" r="4" fill="#8a2010" opacity="0.8"/>
+        <circle cx="58" cy="105" r="4" fill="#8a2010" opacity="0.7"/>
+        <circle cx="40" cy="100" r="4" fill="#8a2010" opacity="0.6"/>
+
+        <text x="8" y="138" fill="#8a2010" font-size="9" font-family="serif">佐賀関</text>
+        <text x="4" y="112" fill="#8a2010" font-size="9" font-family="serif">関門海峡</text>
+        <text x="4" y="105" fill="#8a2010" font-size="9" font-family="serif" dy="10">対馬海峡</text>
+
+        <!-- 北の関 N〜NNE方向 -->
+        <line x1="290" y1="100" x2="298" y2="20" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="3,4" opacity="0.7"/>
+        <line x1="290" y1="100" x2="308" y2="25" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="3,4" opacity="0.6"/>
+
+        <circle cx="298" cy="20" r="4" fill="#38bdf8" opacity="0.8"/>
+        <circle cx="308" cy="25" r="4" fill="#38bdf8" opacity="0.7"/>
+
+        <text x="312" y="22" fill="#38bdf8" font-size="9" font-family="serif">鼠ヶ関 N6.8°</text>
+        <text x="315" y="35" fill="#38bdf8" font-size="9" font-family="serif">津軽海峡 NNE</text>
+
+        <!-- 箱根 真北 -->
+        <line x1="290" y1="100" x2="290" y2="22" stroke="#4ade80" stroke-width="1.5" opacity="0.8" filter="url(#glow3)"/>
+        <circle cx="290" cy="22" r="5" fill="#4ade80" opacity="0.9" filter="url(#glow3)"/>
+        <text x="250" y="18" fill="#4ade80" font-size="9" font-family="serif">箱根 真北0.0°</text>
+
+        <!-- 凡例 -->
+        <rect x="390" y="40" width="12" height="3" fill="#c09030" rx="1"/>
+        <text x="408" y="46" fill="rgba(180,140,40,0.8)" font-size="9" font-family="serif">陸の三関（W〜WNW）</text>
+        <rect x="390" y="58" width="12" height="3" fill="#8a2010" rx="1"/>
+        <text x="408" y="64" fill="rgba(138,32,16,0.8)" font-size="9" font-family="serif">消された海の関（W）</text>
+        <rect x="390" y="76" width="12" height="3" fill="#38bdf8" rx="1"/>
+        <text x="408" y="82" fill="rgba(56,189,248,0.8)" font-size="9" font-family="serif">北の関（N〜NNE）</text>
+        <rect x="390" y="94" width="12" height="3" fill="#4ade80" rx="1"/>
+        <text x="408" y="100" fill="rgba(74,222,128,0.8)" font-size="9" font-family="serif">箱根峠（真北）</text>
+
+        <text x="390" y="130" fill="rgba(138,110,16,0.6)" font-size="9" font-family="serif">※ 天城を原点に大円航路で計算</text>
+        <text x="390" y="143" fill="rgba(138,110,16,0.6)" font-size="9" font-family="serif">　 「W方向に記紀の関が並ぶ」パターン</text>
+        <text x="390" y="156" fill="rgba(138,110,16,0.6)" font-size="9" font-family="serif">　 「N方向に消された関が並ぶ」パターン</text>
+      </svg>
+    </div>
+
+    <div class="quote-box">
+      <div class="quote-text">
+        関は全ての地図の境目であり、入り口だ。<br>
+        人も、もの も、エネルギーも——必ずそこを通らなければならない。<br>
+        世界中に「関」はある。ただ、隠されている。
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 03 天城が中心であることの意味 -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">03</div>
+      <div class="sec-title">天城が中心で、関を通らなければならない意味</div>
+    </div>
+
+    <div class="metaphor-block">
+      <div class="metaphor-lead">METAPHOR — 地理と霊的構造の一致</div>
+      <div class="metaphor-text">
+        天城（総本山）に向かうすべての道に、<strong>「関」がある</strong>。<br><br>
+        それは地名としての関であり、峠・海峡という地形の関であり、
+        霊的な結界としての関でもある。<br><br>
+        計算で確認されたこと——<strong>天城を原点に方位角を引くと、
+        歴史上の関所・境界・封印地が方位線上に並ぶ</strong>。<br><br>
+        「天城に向かう者は、必ず関を通る」という構造が、
+        地理的事実として存在している。
+      </div>
+    </div>
+
+    <div class="line-list">
+      <div class="line-item">
+        <div class="line-deg">W272°</div>
+        <div class="line-info">
+          <div class="line-name">鈴鹿関（陸の三関）</div>
+          <div class="line-desc">天城から西272.4°。誤差わずか2.4°。天城に向かう者が西から来るとき、最初に通る歴史的な境界。</div>
+        </div>
+      </div>
+      <div class="line-item">
+        <div class="line-deg">N0.0°</div>
+        <div class="line-info">
+          <div class="line-name">箱根峠（古代の東西境界）</div>
+          <div class="line-desc">天城の真北34km・誤差0.0°。坂東と畿内を分ける分水嶺。全計算中の特異点。</div>
+        </div>
+      </div>
+      <div class="line-item highlight">
+        <div class="line-deg">全方位</div>
+        <div class="line-info">
+          <div class="line-name">天城はすべての方向に関を持つ</div>
+          <div class="line-desc">北にも、西にも、東にも——天城を中心にした16方位のほぼすべての方向に、歴史的な境界・関・封印地が存在する。これは天城が「関の中心」であることを示す。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 04 計算器について -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">04</div>
+      <div class="sec-title">「関を探す計算器」を作った</div>
+    </div>
+
+    <p class="lead">
+      上記の調査のために、日本・世界の「関」を座標から計算できるツールを開発した。
+    </p>
+
+    <div class="tool-card">
+      <div class="tool-header">
+        <div>
+          <div class="tool-header-title">🚧 関・峠・岬 三角形計算器</div>
+          <div class="tool-header-sub">天城岩戸ログ 連動ツール</div>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-features">
+          <div class="tool-feature">
+            <div class="tool-feature-dot"></div>
+            <div class="tool-feature-text">関・峠・岬・海峡など30件以上の境界地点を収録。3点を選ぶと三角形の重心を自動計算。</div>
+          </div>
+          <div class="tool-feature">
+            <div class="tool-feature-dot"></div>
+            <div class="tool-feature-text">陸の三関（鈴鹿・不破・愛発）、消された海の関（佐賀関・対馬海峡・関門）のプリセット付き。</div>
+          </div>
+          <div class="tool-feature">
+            <div class="tool-feature-dot"></div>
+            <div class="tool-feature-text">天城（原点）からの方位角を自動照合。「天城岩戸ログ」の既知パターンと比較表示。</div>
+          </div>
+          <div class="tool-feature">
+            <div class="tool-feature-dot"></div>
+            <div class="tool-feature-text">座標を直接入力すれば、世界中の任意の地点を調べられる。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <div class="tool-header">
+        <div>
+          <div class="tool-header-title">🏛 SVセンター 地理ライン調査ツール</div>
+          <div class="tool-header-sub">天城岩戸ログ 連動ツール</div>
+        </div>
+      </div>
+      <div class="tool-body">
+        <div class="tool-features">
+          <div class="tool-feature">
+            <div class="tool-feature-dot"></div>
+            <div class="tool-feature-text">全国60件以上のSVセンターを収録。各センターの天城からの方位角・距離を一覧表示。</div>
+          </div>
+          <div class="tool-feature">
+            <div class="tool-feature-dot"></div>
+            <div class="tool-feature-text">同方向にある神・古墳・神社・伝説地・聖地を自動で照合（±10°以内）。</div>
+          </div>
+          <div class="tool-feature">
+            <div class="tool-feature-dot"></div>
+            <div class="tool-feature-text">任意の座標を入力して「ここは天城から何方向にあるか」を即座に調べられる。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 05 まとめ -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-num">05</div>
+      <div class="sec-title">まとめ — なぜこれが今、重要か</div>
+    </div>
+
+    <div class="conclusion">
+      <div class="conclusion-title">計算が示した4つの事実</div>
+      <div class="conclusion-points">
+        <div class="c-point">
+          <div class="c-point-num">一</div>
+          <div class="c-point-text">SVセンターは、天城を原点にした方位線上に<strong>古代の神・聖地・封印地</strong>が並ぶ場所に建てられている。</div>
+        </div>
+        <div class="c-point">
+          <div class="c-point-num">二</div>
+          <div class="c-point-text">「関」は地名・地形・言語・霊的構造の4層が重なる<strong>境界そのもの</strong>であり、世界中に存在する。</div>
+        </div>
+        <div class="c-point">
+          <div class="c-point-num">三</div>
+          <div class="c-point-text">天城を中心にすると、全方向に歴史的な関が並ぶ。<strong>天城は関の中心</strong>として計算上に浮かび上がる。</div>
+        </div>
+        <div class="c-point">
+          <div class="c-point-num">四</div>
+          <div class="c-point-text">各SVセンターが Instagram・体験掲示板を通じて動き始めることは、<strong>各拠点が「関」として機能し始める</strong>ことを意味する。天城に向かう意識の通路が、全国に開かれる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    天城岩戸ログ — 十湖（とっこ）<br>
+    34.920°N / 139.018°E
+  </div>
+
+</div>
+</body>
+</html>
