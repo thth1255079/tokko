@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>世界3点計算器 — 天城岩戸ログ</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:sans-serif;background:#080e1d;color:#e2e8f0;min-height:100vh;padding:16px}
+.wrap{max-width:700px;margin:0 auto}
+h1{font-size:17px;color:#f43f5e;text-align:center;margin-bottom:4px;letter-spacing:2px}
+.sub{font-size:11px;color:#475569;text-align:center;margin-bottom:20px}
+.slots{display:grid;gap:10px;margin-bottom:16px}
+.slot{background:#111827;border:1px solid #1e3a5f;border-radius:10px;padding:12px 14px}
+.slot-label{font-size:10px;color:#60a5fa;letter-spacing:2px;margin-bottom:6px}
+.slot-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.slot-name{flex:1;min-width:120px;background:#0d1829;border:1px solid #334155;border-radius:6px;
+  padding:7px 10px;color:#e2e8f0;font-size:13px;outline:none}
+.slot-name:focus{border-color:#60a5fa}
+.slot-lat,.slot-lon{width:120px;background:#0d1829;border:1px solid #334155;border-radius:6px;
+  padding:7px 10px;color:#e2e8f0;font-size:13px;outline:none}
+.slot-lat:focus,.slot-lon:focus{border-color:#60a5fa}
+.preset-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.preset-btn{background:#111827;border:1px solid #334155;border-radius:6px;
+  padding:5px 12px;color:#94a3b8;font-size:11px;cursor:pointer}
+.preset-btn:hover{border-color:#60a5fa;color:#e2e8f0}
+.calc-btn{width:100%;background:#f43f5e;color:#fff;border:none;border-radius:8px;
+  padding:13px;font-size:15px;font-weight:bold;cursor:pointer;margin-bottom:16px;letter-spacing:1px}
+.calc-btn:hover{background:#e02040}
+.result{display:none}
+.result.show{display:block}
+.r-card{background:#111827;border-radius:12px;padding:16px;margin-bottom:12px}
+.r-card.main{border:2px solid #f43f5e}
+.r-card.anti{border:2px solid #818cf8}
+.r-label{font-size:10px;letter-spacing:3px;margin-bottom:6px}
+.r-label.main{color:#f43f5e}
+.r-label.anti{color:#818cf8}
+.r-coord{font-size:20px;font-weight:bold;color:#f1f5f9;margin-bottom:6px;font-family:monospace}
+.r-bearing{font-size:12px;color:#94a3b8;margin-bottom:4px}
+.r-bearing span{color:#fbbf24;font-weight:bold}
+.r-near{font-size:11px;color:#475569;margin-bottom:8px}
+.r-links{display:flex;gap:8px;flex-wrap:wrap}
+.r-link{font-size:11px;padding:4px 12px;border-radius:5px;text-decoration:none;display:inline-block}
+.r-link.gsi{background:#080e1d;color:#60a5fa;border:1px solid #1e3a5f}
+.r-link.gmap{background:#080e1d;color:#4ade80;border:1px solid #1e3a5f}
+.vertex-card{background:#111827;border:1px solid #1e3a5f;border-radius:10px;padding:14px;margin-bottom:12px}
+.v-title{font-size:11px;color:#64748b;margin-bottom:8px;letter-spacing:1px}
+.v-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #0d1829;font-size:12px}
+.v-row:last-child{border-bottom:none}
+.v-name{color:#cbd5e1;flex:1}
+.v-deg{color:#fbbf24;font-weight:bold;margin-left:8px}
+.v-dir{color:#60a5fa;margin-left:4px}
+.v-km{color:#475569;margin-left:4px}
+.note{font-size:11px;color:#334155;text-align:center;margin-top:12px}
+.iwato-box{background:#080e1d;border:1px solid #1e293b;border-radius:8px;padding:12px;margin-bottom:12px}
+.iwato-title{font-size:10px;color:#475569;margin-bottom:8px;letter-spacing:2px}
+.iwato-row{display:flex;justify-content:space-between;font-size:11px;color:#475569;padding:2px 0}
+.iwato-row.hi{color:#f43f5e;font-weight:bold}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🌐 世界3点計算器</h1>
+  <div class="sub">3点の球面重心と対蹠点を計算 / 天城岩戸ログ連動</div>
+
+  <div class="preset-row">
+    <button class="preset-btn" onclick="applyPreset('colima')">🌋 天城×コリマ×ギザ</button>
+    <button class="preset-btn" onclick="applyPreset('japan')">⛩ 天城×摩周湖×普賢岳</button>
+    <button class="preset-btn" onclick="applyPreset('stone')">🪨 天城×ストーンヘンジ×メッカ</button>
+    <button class="preset-btn" onclick="applyPreset('clear')">✕ クリア</button>
+  </div>
+
+  <div class="slots">
+    <div class="slot">
+      <div class="slot-label">POINT 1</div>
+      <div class="slot-row">
+        <input class="slot-name" id="n1" placeholder="地点名（任意）" value="天城山">
+        <input class="slot-lat" id="lat1" placeholder="緯度" type="number" step="0.0001" value="34.920">
+        <input class="slot-lon" id="lon1" placeholder="経度" type="number" step="0.0001" value="139.018">
+      </div>
+    </div>
+    <div class="slot">
+      <div class="slot-label">POINT 2</div>
+      <div class="slot-row">
+        <input class="slot-name" id="n2" placeholder="地点名（任意）" value="コリマ火山">
+        <input class="slot-lat" id="lat2" placeholder="緯度" type="number" step="0.0001" value="19.514">
+        <input class="slot-lon" id="lon2" placeholder="経度" type="number" step="0.0001" value="-103.617">
+      </div>
+    </div>
+    <div class="slot">
+      <div class="slot-label">POINT 3</div>
+      <div class="slot-row">
+        <input class="slot-name" id="n3" placeholder="地点名（任意）" value="ギザ">
+        <input class="slot-lat" id="lat3" placeholder="緯度" type="number" step="0.0001" value="29.979">
+        <input class="slot-lon" id="lon3" placeholder="経度" type="number" step="0.0001" value="31.134">
+      </div>
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calc()">▶ 計算する</button>
+
+  <div class="result" id="result">
+
+    <div class="r-card main">
+      <div class="r-label main">CENTROID A — 球面重心</div>
+      <div class="r-coord" id="coordA"></div>
+      <div class="r-bearing" id="bearingA"></div>
+      <div class="r-near" id="nearA"></div>
+      <div class="r-links" id="linksA"></div>
+    </div>
+
+    <div class="r-card anti">
+      <div class="r-label anti">CENTROID B — 対蹠点</div>
+      <div class="r-coord" id="coordB"></div>
+      <div class="r-bearing" id="bearingB"></div>
+      <div class="r-near" id="nearB"></div>
+      <div class="r-links" id="linksB"></div>
+    </div>
+
+    <div class="vertex-card">
+      <div class="v-title">各頂点 → 重心A への方位角</div>
+      <div id="vertices"></div>
+    </div>
+
+    <div class="iwato-box">
+      <div class="iwato-title">天城岩戸ログ 方位照合（天城→重心A）</div>
+      <div class="iwato-row"><span>ストーンヘンジ</span><span>336.7°</span></div>
+      <div class="iwato-row"><span>戸隠山（NNW 誤差0.4°）</span><span>337.9°</span></div>
+      <div class="iwato-row"><span>富士山（宮下文書）</span><span>331.8°</span></div>
+      <div class="iwato-row"><span>籠神社（天火明命）</span><span>286.0°</span></div>
+      <div class="iwato-row"><span>三種の神器重心（能登）</span><span>334.2°</span></div>
+      <div class="iwato-row hi" id="iwato-now"><span>今回の重心</span><span>—</span></div>
+    </div>
+
+  </div>
+
+  <div class="note">大円航路初期方位角・球面重心 / 天城岩戸ログ連動</div>
+</div>
+
+<script>
+const DEG = Math.PI/180;
+
+function brng(a,b,c,d){
+  const[f1,f2,l1,l2]=[a,c,b,d].map(x=>x*DEG),dl=l2-l1;
+  const x=Math.sin(dl)*Math.cos(f2),y=Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl);
+  return((Math.atan2(x,y)/DEG)+360)%360;
+}
+function dkm(a,b,c,d){
+  const R=6371,[f1,f2,l1,l2]=[a,c,b,d].map(x=>x*DEG);
+  const e=Math.sin((f2-f1)/2)**2+Math.cos(f1)*Math.cos(f2)*Math.sin((l2-l1)/2)**2;
+  return R*2*Math.asin(Math.sqrt(e));
+}
+function centroid(pts){
+  const xs=[],ys=[],zs=[];
+  pts.forEach(([a,b])=>{const f=a*DEG,l=b*DEG;xs.push(Math.cos(f)*Math.cos(l));ys.push(Math.cos(f)*Math.sin(l));zs.push(Math.sin(f));});
+  const cx=xs.reduce((s,v)=>s+v,0)/3,cy=ys.reduce((s,v)=>s+v,0)/3,cz=zs.reduce((s,v)=>s+v,0)/3;
+  return{lat:Math.atan2(cz,Math.sqrt(cx**2+cy**2))/DEG,lon:Math.atan2(cy,cx)/DEG};
+}
+function antipode(lat,lon){return{lat:-lat,lon:lon>0?lon-180:lon+180};}
+function dir16(b){
+  const D=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+  const i=Math.round(b/22.5)%16;let e=Math.abs(b-i*22.5);if(e>180)e=360-e;
+  return{dir:D[i],err:e};
+}
+
+const AMAGI={lat:34.920,lon:139.018,name:"天城山"};
+
+const LANDMARKS=[
+  {name:"北極点",lat:90,lon:0},
+  {name:"南極点",lat:-90,lon:0},
+  {name:"能登半島",lat:37.4,lon:137.3},
+  {name:"富士山",lat:35.36,lon:138.73},
+  {name:"ストーンヘンジ",lat:51.18,lon:-1.83},
+  {name:"メッカ",lat:21.42,lon:39.83},
+  {name:"エンペラー海山列",lat:38.0,lon:170.0},
+  {name:"ギルフ・ケビール",lat:23.5,lon:26.0},
+  {name:"ハワイ",lat:20.0,lon:-156.0},
+  {name:"タスマン海",lat:-40.0,lon:160.0},
+  {name:"グリーンランド",lat:72.0,lon:-40.0},
+  {name:"ミクロネシア",lat:7.0,lon:158.0},
+  {name:"摩周湖",lat:43.57,lon:144.53},
+  {name:"コリマ火山",lat:19.51,lon:-103.62},
+  {name:"ギザ",lat:29.98,lon:31.13},
+  {name:"ウルル",lat:-25.34,lon:131.04},
+];
+
+function nearest(lat,lon){
+  let best=null,bestD=99999;
+  LANDMARKS.forEach(lm=>{const d=dkm(lat,lon,lm.lat,lm.lon);if(d<bestD){bestD=d;best={name:lm.name,d};}});
+  return best;
+}
+
+function links(lat,lon){
+  const la=lat.toFixed(4),lo=lon.toFixed(4);
+  return `<a class="r-link gsi" href="https://maps.gsi.go.jp/#8/${la}/${lo}" target="_blank">🗾 地理院地図</a>
+          <a class="r-link gmap" href="https://www.google.com/maps/@${la},${lo},5z" target="_blank">📍 Googleマップ</a>`;
+}
+
+const PRESETS={
+  colima:{n1:"天城山",lat1:34.920,lon1:139.018,n2:"コリマ火山",lat2:19.514,lon2:-103.617,n3:"ギザ",lat3:29.979,lon3:31.134},
+  japan:{n1:"天城山",lat1:34.920,lon1:139.018,n2:"摩周湖",lat2:43.570,lon2:144.529,n3:"普賢岳",lat3:32.750,lon3:130.293},
+  stone:{n1:"天城山",lat1:34.920,lon1:139.018,n2:"ストーンヘンジ",lat2:51.18,lon2:-1.83,n3:"メッカ",lat3:21.42,lon3:39.83},
+  clear:{n1:"",lat1:"",lon1:"",n2:"",lat2:"",lon2:"",n3:"",lat3:"",lon3:""},
+};
+
+function applyPreset(key){
+  const p=PRESETS[key];
+  ["1","2","3"].forEach(i=>{
+    document.getElementById("n"+i).value=p["n"+i]||"";
+    document.getElementById("lat"+i).value=p["lat"+i]||"";
+    document.getElementById("lon"+i).value=p["lon"+i]||"";
+  });
+  if(key!=="clear") calc();
+}
+
+function calc(){
+  const pts=["1","2","3"].map(i=>{
+    const lat=parseFloat(document.getElementById("lat"+i).value);
+    const lon=parseFloat(document.getElementById("lon"+i).value);
+    const name=document.getElementById("n"+i).value||`点${i}`;
+    return{lat,lon,name};
+  });
+  if(pts.some(p=>isNaN(p.lat)||isNaN(p.lon))){alert("緯度・経度を入力してください");return;}
+
+  const c=centroid(pts.map(p=>[p.lat,p.lon]));
+  const ap=antipode(c.lat,c.lon);
+
+  // 重心A
+  const bA=brng(AMAGI.lat,AMAGI.lon,c.lat,c.lon);
+  const dA=dkm(AMAGI.lat,AMAGI.lon,c.lat,c.lon);
+  const dirA=dir16(bA);
+  const nearA=nearest(c.lat,c.lon);
+
+  document.getElementById("coordA").textContent=`${c.lat.toFixed(4)}°N / ${c.lon.toFixed(4)}°E`;
+  document.getElementById("bearingA").innerHTML=`天城→重心A: <span>${bA.toFixed(1)}° (${dirA.dir} 誤差${dirA.err.toFixed(1)}°)</span> / ${dA.toFixed(0)}km`;
+  document.getElementById("nearA").textContent=`最近傍: ${nearA.name}（${nearA.d.toFixed(0)}km）`;
+  document.getElementById("linksA").innerHTML=links(c.lat,c.lon);
+
+  // 重心B（対蹠点）
+  const bB=brng(AMAGI.lat,AMAGI.lon,ap.lat,ap.lon);
+  const dB=dkm(AMAGI.lat,AMAGI.lon,ap.lat,ap.lon);
+  const dirB=dir16(bB);
+  const nearB=nearest(ap.lat,ap.lon);
+
+  document.getElementById("coordB").textContent=`${ap.lat.toFixed(4)}°N / ${ap.lon.toFixed(4)}°E`;
+  document.getElementById("bearingB").innerHTML=`天城→重心B: <span>${bB.toFixed(1)}° (${dirB.dir} 誤差${dirB.err.toFixed(1)}°)</span> / ${dB.toFixed(0)}km`;
+  document.getElementById("nearB").textContent=`最近傍: ${nearB.name}（${nearB.d.toFixed(0)}km）`;
+  document.getElementById("linksB").innerHTML=links(ap.lat,ap.lon);
+
+  // 各頂点→重心A
+  const vHtml=pts.map(p=>{
+    const b=brng(p.lat,p.lon,c.lat,c.lon);
+    const d=dkm(p.lat,p.lon,c.lat,c.lon);
+    const dir=dir16(b);
+    return `<div class="v-row"><span class="v-name">${p.name}</span><span class="v-deg">${b.toFixed(1)}°</span><span class="v-dir">(${dir.dir} ±${dir.err.toFixed(1)}°)</span><span class="v-km">${d.toFixed(0)}km</span></div>`;
+  }).join("");
+  document.getElementById("vertices").innerHTML=vHtml;
+
+  // 岩戸照合
+  document.getElementById("iwato-now").innerHTML=`<span>今回の重心A</span><span>${bA.toFixed(1)}°</span>`;
+
+  document.getElementById("result").classList.add("show");
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body>
+</html>

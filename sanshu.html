@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三種の神器 三角形計算器 — 天城岩戸ログ</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:sans-serif;background:#080e1d;color:#e2e8f0;min-height:100vh}
+a{color:inherit}
+input,button{font-family:inherit}
+#loading{display:flex;align-items:center;justify-content:center;height:100vh;color:#475569;font-size:13px}
+</style>
+</head>
+<body>
+<div id="root"><div id="loading">読み込み中...</div></div>
+<script type="text/babel">
+const { useState, useEffect, useMemo } = React;
+
+
+// ============================================================
+// 天城岩戸ログ 三角形計算器 v4
+// 神話レベル: [語源][記紀][秘伝][岩戸]
+// ============================================================
+
+const FIXED=[
+  {id:"amagi",name:"天城山（主座世界総本山）",lat:34.920,lon:139.018,cat:"聖地",myth:"[岩戸]原点。奈良から真東84.1°の追放地。記紀以前（N）と記紀の世界（W）の境界線＝関。フィリピン海プレートが本州に衝突した地点。"},
+  {id:"motomiya",name:"元晃大国魂宮（弟子屈）",lat:43.5025,lon:144.4242,cat:"聖地",myth:"[岩戸]住所:北海道弟子屈町札友内1番。旧ビラオスキー場跡地。天城からNNE24.3°誤差1.8°。摩周湖（カムイトー）の南西。"},
+  {id:"fugen",name:"雲仙普賢岳",lat:32.750,lon:130.293,cat:"聖地",myth:"[語源]ウンゼン＝「温泉（うんぜん）」の転訛。普賢菩薩の聖山。[岩戸]天城からWSW255.8°。三種の神器・剣。封印する配置と指し示す配置の両方で使われる座標。"},
+];
+
+const SV=[
+  {id:"sv_sapporo",name:"札幌SV",lat:43.0624,lon:141.3304,cat:"SV",pref:"北海道",myth:"[語源]サッ・ポロ＝アイヌ語「乾いた大きな川」。石狩川支流・豊平川の扇状地。"},
+  {id:"sv_hakodate",name:"函館SV",lat:41.7863,lon:140.7564,cat:"SV",pref:"北海道",myth:"[語源]ハコダテ＝「箱のような館」。津軽海峡を望む。古代の蝦夷地との境界域。"},
+  {id:"sv_asahikawa",name:"旭川SV",lat:43.7718,lon:142.3237,cat:"SV",pref:"北海道",myth:"[語源]チュクペッ＝アイヌ語「日が当たる川」の和訳。石狩川と忠別川の合流点。"},
+  {id:"sv_aomori",name:"青森SV",lat:40.8046,lon:140.7534,cat:"SV",pref:"青森県",myth:"[語源]青い（松の）森。陸奥湾の最奥。縄文最大集落・三内丸山の近く。"},
+  {id:"sv_morioka",name:"盛岡SV",lat:39.7027,lon:141.1386,cat:"SV",pref:"岩手県",myth:"[語源]守り岡。北上川と中津川の合流点。南部藩の城下町。"},
+  {id:"sv_sendai",name:"仙台SV",lat:38.2833,lon:140.9290,cat:"SV",pref:"宮城県",myth:"[語源]千代の転訛説。伊達政宗が造った城下町。陸奥の中心。"},
+  {id:"sv_furukawa",name:"古川SV",lat:38.5819,lon:140.9650,cat:"SV",pref:"宮城県",myth:"[語源]旧河道のある川沿いの地。大崎平野の中心。"},
+  {id:"sv_akita",name:"秋田SV",lat:39.7195,lon:140.1158,cat:"SV",pref:"秋田県",myth:"[語源]アキ・タ＝アイヌ語「岸辺」説。雄物川河口。出羽の国の中心。"},
+  {id:"sv_yamagata",name:"山形SV",lat:38.2757,lon:140.3342,cat:"SV",pref:"山形県",myth:"[語源]山の方（かた）。最上川流域。出羽三山への入口。"},
+  {id:"sv_yonezawa",name:"米沢SV",lat:37.9241,lon:140.1149,cat:"SV",pref:"山形県",myth:"[語源]米を育てる沢。上杉氏の城下町。置賜盆地。"},
+  {id:"sv_tsuruoka",name:"鶴岡SV",lat:38.7435,lon:139.8271,cat:"SV",pref:"山形県",myth:"[語源]鶴がいる丘。出羽三山（月山・羽黒山・湯殿山）への玄関口。"},
+  {id:"sv_sakata",name:"酒田SV",lat:38.9256,lon:139.8425,cat:"SV",pref:"山形県",myth:"[語源]境の田。最上川河口の港町。日本海交易の要衝。鼠ヶ関の近く。"},
+  {id:"sv_uzen",name:"羽前SV",lat:38.7902,lon:139.9701,cat:"SV",pref:"山形県",myth:"[語源]羽州の前（南）の意。庄内の内陸部。"},
+  {id:"sv_koriyama",name:"郡山SV",lat:37.4005,lon:140.3526,cat:"SV",pref:"福島県",myth:"[語源]郡の山。阿武隈川流域。奥羽山脈と阿武隈山地の間の盆地。"},
+  {id:"sv_iwaki",name:"いわきSV",lat:37.0538,lon:140.9027,cat:"SV",pref:"福島県",myth:"[語源]岩城。常磐炭田。阿武隈川河口付近。常陸との境界域。"},
+  {id:"sv_hitachi",name:"日立SV",lat:36.6504,lon:140.6754,cat:"SV",pref:"茨城県",myth:"[語源]ヒタチ（日立）。常陸国。[岩戸]鹿島・常陸（天城NE）の北端。"},
+  {id:"sv_toride",name:"取手SV",lat:35.9060,lon:140.0669,cat:"SV",pref:"茨城県",myth:"[語源]鳥出（砦）。利根川沿い。縄文の香取の海の西端。"},
+  {id:"sv_kashima",name:"鹿島SV",lat:35.8938,lon:140.6506,cat:"SV",pref:"茨城県",myth:"[記紀]鹿島神宮の神域。タケミカヅチ・アマツミカボシの地。[岩戸]天城からNE50.9°。書き換えの最前線。"},
+  {id:"sv_utsunomiya",name:"宇都宮SV",lat:36.5500,lon:139.8970,cat:"SV",pref:"栃木県",myth:"[語源]宇都の宮。二荒山神社の城下。下野国の中心。"},
+  {id:"sv_kanuma",name:"鹿沼SV",lat:36.5617,lon:139.7411,cat:"SV",pref:"栃木県",myth:"[語源]鹿の沼。思川上流。日光への入口。"},
+  {id:"sv_nasu",name:"那須SV",lat:36.8912,lon:140.0253,cat:"SV",pref:"栃木県",myth:"[語源]那須。那珂川上流。奥州への古道沿い。殺生石伝説の地。"},
+  {id:"sv_maebashi",name:"前橋SV",lat:36.3911,lon:139.0608,cat:"SV",pref:"群馬県",myth:"[語源]前方の橋。利根川沿い。上野国の国府。"},
+  {id:"sv_isesaki",name:"伊勢崎SV",lat:36.3130,lon:139.1972,cat:"SV",pref:"群馬県",myth:"[語源]伊勢（への道の）崎（端）。利根川中流域。"},
+  {id:"sv_omiya",name:"おおみやSV",lat:35.8610,lon:139.6580,cat:"SV",pref:"埼玉県",myth:"[語源]大宮。武蔵一宮・氷川神社の門前町。荒川沿い。"},
+  {id:"sv_koshigaya",name:"越谷SV",lat:35.8886,lon:139.7831,cat:"SV",pref:"埼玉県",myth:"[語源]越（え）ヶ谷。元荒川沿い。低地の水田地帯。"},
+  {id:"sv_musashino",name:"むさしのSV",lat:35.8114,lon:139.4069,cat:"SV",pref:"埼玉県",myth:"[語源]武蔵野。縄文の人々が暮らした広大な洪積台地。"},
+  {id:"sv_chiba",name:"千葉SV",lat:35.6377,lon:140.0864,cat:"SV",pref:"千葉県",myth:"[語源]千葉（台地の端）。下総国。"},
+  {id:"sv_narashino",name:"習志野SV",lat:35.6817,lon:140.0400,cat:"SV",pref:"千葉県",myth:"[語源]習志野。明治天皇の訓練地。谷津・干潟の地。"},
+  {id:"sv_narita",name:"成田SV",lat:35.7816,lon:140.3236,cat:"SV",pref:"千葉県",myth:"[語源]成田（生育する田）。成田山新勝寺門前。不動明王の聖地。"},
+  {id:"sv_togane",name:"東金SV",lat:35.5565,lon:140.3686,cat:"SV",pref:"千葉県",myth:"[語源]東金。上総国。九十九里平野の入口。"},
+  {id:"sv_kashiwa",name:"柏SV",lat:35.8657,lon:139.9734,cat:"SV",pref:"千葉県",myth:"[語源]柏の木が生えた地。利根川南岸の台地。"},
+  {id:"sv_funabashi",name:"船橋SV",lat:35.7631,lon:139.9964,cat:"SV",pref:"千葉県",myth:"[語源]舟を並べた橋。江戸湾奥の港町。"},
+  {id:"sv_tokyo",name:"東京SV",lat:35.6617,lon:139.7476,cat:"SV",pref:"東京都",myth:"[記紀]武蔵国。江戸→東京。[岩戸]将門の首塚（大手町）から近い。江戸城は将門の地の上に建った。"},
+  {id:"sv_asakusabashi",name:"浅草橋SV",lat:35.7014,lon:139.7919,cat:"SV",pref:"東京都",myth:"[語源]浅い草（葦）の原。隅田川沿い。浅草寺は628年創建・東京最古の寺。"},
+  {id:"sv_ueno",name:"上野SV",lat:35.7141,lon:139.7774,cat:"SV",pref:"東京都",myth:"[語源]上野（高台の野）。寛永寺（東叡山）＝江戸城の鬼門封じ。[岩戸]「鬼門（NE）」の制度化と同じ構造。"},
+  {id:"sv_denenchofu",name:"田園調布SV",lat:35.5924,lon:139.6692,cat:"SV",pref:"東京都",myth:"[語源]田園（農村風景）＋調布（絹織物の税）。多摩川沿い。"},
+  {id:"sv_suginami",name:"杉並永福SV",lat:35.6791,lon:139.6351,cat:"SV",pref:"東京都",myth:"[語源]杉並（杉の並木）。善福寺川流域。"},
+  {id:"sv_koenji",name:"高円寺SV",lat:35.6964,lon:139.6481,cat:"SV",pref:"東京都",myth:"[語源]高円寺（寺の名）。中央線沿線。"},
+  {id:"sv_mejiro",name:"目白SV",lat:35.7226,lon:139.7064,cat:"SV",pref:"東京都",myth:"[語源]目白（目白不動）。豊島区。目白押しの語源地。"},
+  {id:"sv_kameari",name:"亀有SV",lat:35.7651,lon:139.8476,cat:"SV",pref:"東京都",myth:"[語源]亀有（亀が有る）。葛飾区。水郷地帯の名残。"},
+  {id:"sv_edogawa",name:"東京江戸川SV",lat:35.6584,lon:139.8633,cat:"SV",pref:"東京都",myth:"[語源]江戸川（江戸への川）。江戸川区。利根川の支流・旧江戸川沿い。"},
+  {id:"sv_hachioji",name:"八王子SV",lat:35.6574,lon:139.3319,cat:"SV",pref:"東京都",myth:"[語源]八王子（牛頭天王の八人の王子）。多摩丘陵の西端。甲州街道の要衝。"},
+  {id:"sv_ome",name:"青梅SV",lat:35.7958,lon:139.3098,cat:"SV",pref:"東京都",myth:"[語源]青梅（青い梅の実）。多摩川上流。武蔵野の奥。"},
+  {id:"sv_koganei",name:"小金井SV",lat:35.7069,lon:139.5086,cat:"SV",pref:"東京都",myth:"[語源]小金井（小さな金属（鉱）が湧く井戸）。多摩川下流域。"},
+  {id:"sv_yokohama",name:"みなとみらいSV",lat:35.4755,lon:139.6225,cat:"SV",pref:"神奈川県",myth:"[語源]横浜（横になった浜）。幕末開港地。[岩戸]天城山の真北箱根（0°）から南に位置。"},
+  {id:"sv_yokosuka",name:"横須賀SV",lat:35.2807,lon:139.6755,cat:"SV",pref:"神奈川県",myth:"[語源]横須賀（横（よこ）の須賀（砂州））。軍港都市。浦賀水道の要衝。"},
+  {id:"sv_odawara",name:"小田原SV",lat:35.2393,lon:139.1457,cat:"SV",pref:"神奈川県",myth:"[語源]小田原（小さな田の原）。北条氏の城下町。箱根峠の東麓。天城→箱根（真北）の延長上。"},
+  {id:"sv_shonan",name:"湘南SV",lat:35.2954,lon:139.5879,cat:"SV",pref:"神奈川県",myth:"[語源]湘南（湘の南）。鎌倉・逗子。[記紀]鎌倉幕府＝源頼朝（伊豆配流→挙兵）の拠点。"},
+  {id:"sv_nagaoka",name:"長岡SV",lat:37.4369,lon:138.7952,cat:"SV",pref:"新潟県",myth:"[語源]長い岡。信濃川中流域。越後平野の中心。[岩戸]越の国（天城WNW〜N）の南部。"},
+  {id:"sv_toyama",name:"富山SV",lat:36.7101,lon:137.2322,cat:"SV",pref:"富山県",myth:"[語源]富山（富んだ山）。神通川河口。立山連峰の麓。[岩戸]飛騨（位山・船山）の水が流れる神通川の河口都市。"},
+  {id:"sv_takaoka",name:"高岡SV",lat:36.7514,lon:137.0178,cat:"SV",pref:"富山県",myth:"[語源]高い岡。越中国府跡。加賀・越中の境界。前田家の城下町。"},
+  {id:"sv_tonami",name:"砺波SV",lat:36.6329,lon:136.9630,cat:"SV",pref:"富山県",myth:"[語源]砺波（砥（と）波（なみ）＝砥石の産地）。散居村（田んぼの中に家が散在）で有名。"},
+  {id:"sv_tateyama",name:"立山SV",lat:36.7050,lon:137.3432,cat:"SV",pref:"富山県",myth:"[記紀]立山（3003m）。越中の霊山。[岩戸]天城からNW325.9°。越の聖山の麓の道場。"},
+  {id:"sv_kanazawa",name:"金沢SV",lat:36.5558,lon:136.6427,cat:"SV",pref:"石川県",myth:"[語源]金沢（金（きん）が沢（さわ）から出た）。加賀百万石・前田家の城下町。[岩戸]越前・越中の境界域。"},
+  {id:"sv_komatsu",name:"小松SV",lat:36.4044,lon:136.4614,cat:"SV",pref:"石川県",myth:"[語源]小松（小さな松）。加賀の南部。白山（天城NW304.5°）への入口。"},
+  {id:"sv_kaga",name:"加賀SV",lat:36.3222,lon:136.3515,cat:"SV",pref:"石川県",myth:"[語源]加賀（加えた賀（よろこび））。越前との境界。山代・山中温泉の地。"},
+  {id:"sv_fukui",name:"福井SV",lat:36.0648,lon:136.2002,cat:"SV",pref:"福井県",myth:"[語源]福井（福（幸福）の井（水源））。越前国の中心。朝倉氏遺跡。愛発関（天城WNW）の近く。"},
+  {id:"sv_tsuruga",name:"敦賀SV",lat:35.6497,lon:136.0829,cat:"SV",pref:"福井県",myth:"[記紀]ツヌガアラシト（角のある渡来人）伝説の地。氣比神宮（越の国の神）。[岩戸]愛発関（陸の三関）に最も近いSV。"},
+  {id:"sv_obama",name:"小浜SV",lat:35.4867,lon:135.7308,cat:"SV",pref:"福井県",myth:"[語源]小浜（小さな浜）。若狭国の国府。御食国（みけつくに）＝皇室への食料供給地。鯖街道の起点。"},
+  {id:"sv_kofu",name:"甲府SV",lat:35.6601,lon:138.5841,cat:"SV",pref:"山梨県",myth:"[語源]甲府（甲斐（かい）の府）。甲斐国の中心。[岩戸]富士山（NNW331.8°）と天城を結ぶ中間にある城下町。"},
+  {id:"sv_minamialps",name:"南アルプスSV",lat:35.6327,lon:138.4959,cat:"SV",pref:"山梨県",myth:"[語源]南アルプス（南の山脈）。赤石山脈。縄文の甲府盆地文化の西端。"},
+  {id:"sv_uenohara",name:"上野原SV",lat:35.6275,lon:139.1133,cat:"SV",pref:"山梨県",myth:"[語源]上野原（上野（こうずけ）方面への原）。相模川上流。甲斐・武蔵・相模の境界。"},
+  {id:"sv_naganoa",name:"長ノ旭SV",lat:36.5686,lon:138.1431,cat:"SV",pref:"長野県",myth:"[語源]長野（長い野原）。善光寺平。千曲川（縄文の神の川）が流れる。"},
+  {id:"sv_matsumoto",name:"松本旭SV",lat:36.2148,lon:137.9774,cat:"SV",pref:"長野県",myth:"[語源]松本（松の本（根元））。安曇野の東。北アルプスへの入口。縄文の縄文海人・安曇氏の地。"},
+  {id:"sv_suwa",name:"諏訪旭SV",lat:36.0350,lon:138.0700,cat:"SV",pref:"長野県",myth:"[記紀]諏訪湖畔。タケミナカタの封印地。[岩戸]国譲り対峙版重心（28km圏内）。ミシャグジ（縄文の蛇神）の本拠地。天城からNNW326°。"},
+  {id:"sv_iida",name:"飯田旭SV",lat:35.4835,lon:137.7644,cat:"SV",pref:"長野県",myth:"[語源]飯田（飯（いい）の田）。天竜川（タケミナカタが走った川）流域。遠山郷（冬祭り・霜月祭）の入口。"},
+  {id:"sv_chikuma",name:"千曲旭SV",lat:36.3872,lon:138.2011,cat:"SV",pref:"長野県",myth:"[語源]千曲（千熊）。千曲川（縄文の神の川）流域。上田・真田氏の地。"},
+  {id:"sv_chino",name:"茅野SV",lat:36.0156,lon:138.1280,cat:"SV",pref:"長野県",myth:"[語源]茅野（茅（かや）が生える野原）。八ヶ岳南麓。縄文土器（井戸尻）の聖地。"},
+  {id:"sv_ina",name:"伊那旭SV",lat:35.8552,lon:137.9596,cat:"SV",pref:"長野県",myth:"[語源]伊那（伊（い）那（な）＝いよいよ那（の）地）。天竜川中流域。"},
+  {id:"sv_gifu",name:"岐阜SV",lat:35.3963,lon:136.7315,cat:"SV",pref:"岐阜県",myth:"[語源]岐阜（岐（岐阜山）＋阜（おか））。信長が命名。長良川沿い。"},
+  {id:"sv_takayama",name:"高山SV",lat:36.1396,lon:137.2500,cat:"SV",pref:"岐阜県",myth:"[語源]高山（高い山）。[秘伝]竹内文書の「天越根国（飛騨）」。[岩戸]位山・船山（天城NW）の麓の城下町。飛騨の神々の中心地。"},
+  {id:"sv_ogaki",name:"大濃SV",lat:35.3201,lon:136.6188,cat:"SV",pref:"岐阜県",myth:"[語源]大垣（大きな垣（壁））。揖斐川沿い。不破関（天城WNW）の近く。松尾芭蕉「奥の細道」の終着地。"},
+  {id:"sv_nakatsugawa",name:"中津川SV",lat:35.5149,lon:137.5309,cat:"SV",pref:"岐阜県",myth:"[語源]中津川（中（なか）の津（みなと）川）。木曽川支流。御嶽山（天城NW308°）の南麓。中山道の宿場町。"},
+  {id:"sv_minokamo",name:"美濃加茂SV",lat:35.4566,lon:137.0467,cat:"SV",pref:"岐阜県",myth:"[語源]美濃（みの）加茂（かも）。木曽川と飛騨川の合流点。加茂＝加茂神社（賀茂系）の地。"},
+  {id:"sv_shizuoka",name:"静岡SV",lat:34.9769,lon:138.3831,cat:"SV",pref:"静岡県",myth:"[語源]静岡（静かな岡）。駿河国の中心。富士山（NNW）と天城山（原点）の中間に位置する。"},
+  {id:"sv_hamamatsu",name:"浜松SV",lat:34.7108,lon:137.7261,cat:"SV",pref:"静岡県",myth:"[語源]浜松（浜の松）。遠江国の中心。天竜川河口。浜名湖の東側。"},
+  {id:"sv_numazu",name:"沼津SV",lat:35.1041,lon:138.8619,cat:"SV",pref:"静岡県",myth:"[語源]沼津（沼の津（港））。狩野川河口。富士山の裾野と伊豆半島の付け根。"},
+  {id:"sv_nagoya",name:"名古屋SV",lat:35.1815,lon:136.9066,cat:"SV",pref:"愛知県",myth:"[語源]那古野（なごの）の転訛。[記紀]熱田神宮（草薙剣）の近く。尾張氏（天火明命の子孫）の聖域。"},
+  {id:"sv_toyota",name:"豊田SV",lat:35.0832,lon:137.1565,cat:"SV",pref:"愛知県",myth:"[語源]豊田（豊かな田）。矢作川上流。三河国。"},
+  {id:"sv_okazaki",name:"岡崎SV",lat:34.9551,lon:137.1745,cat:"SV",pref:"愛知県",myth:"[語源]岡（丘）の崎（端）。矢作川下流。徳川家康の生誕地。"},
+  {id:"sv_tsu",name:"津SV",lat:34.7303,lon:136.5086,cat:"SV",pref:"三重県",myth:"[語源]津（みなと）。伊勢湾に面した港町。鈴鹿関（天城W272.4°）の南。"},
+  {id:"sv_yokkaichi",name:"四日市SV",lat:34.9644,lon:136.6244,cat:"SV",pref:"三重県",myth:"[語源]四日市（毎月4の日に市が立つ町）。鈴鹿関（天城W）の最寄り都市。"},
+  {id:"sv_ise",name:"伊勢SV",lat:34.4877,lon:136.7077,cat:"SV",pref:"三重県",myth:"[記紀]伊勢神宮外宮の門前。豊受大御神（元は丹後から移された神）の地。[岩戸]天城からWSW258°。"},
+  {id:"sv_kyoto",name:"京都SV",lat:35.0116,lon:135.7681,cat:"SV",pref:"京都府",myth:"[語源]京都（みやこ）。平安京。[岩戸]比叡山（鬼門封じ）・鬼門制度化の中心都市。籠神社（WNW286°）の方向の基点。"},
+  {id:"sv_osaka",name:"大阪SV",lat:34.6937,lon:135.5023,cat:"SV",pref:"大阪府",myth:"[語源]大坂（大きな坂）。難波津。仁徳陵・応神陵（天城W）の近く。百舌鳥・古市古墳群の地。"},
+  {id:"sv_kobe",name:"神戸SV",lat:34.6913,lon:135.1830,cat:"SV",pref:"兵庫県",myth:"[語源]神戸（かんべ）＝神社に奉仕する部民。六甲山を背後に持つ港町。"},
+  {id:"sv_nara",name:"奈良SV",lat:34.6851,lon:135.8050,cat:"SV",pref:"奈良県",myth:"[語源]奈良（平らに均す）。大和政権の中心。[岩戸]天城は奈良から真東84.1°の追放地。ここを基点に全方位の計算をした地。"},
+  {id:"sv_wakayama",name:"和歌山SV",lat:34.2304,lon:135.1675,cat:"SV",pref:"和歌山県",myth:"[語源]和歌山（和歌（やまと歌）の山）。紀の国の中心。高野山（空海）・熊野三社への玄関。"},
+  {id:"sv_otsu",name:"大津SV",lat:35.0044,lon:135.8686,cat:"SV",pref:"滋賀県",myth:"[語源]大津（大きな津（港））。琵琶湖南端の港町。[岩戸]琵琶湖（愛発関・不破関の背後）の最南端。"},
+  {id:"sv_hiroshima",name:"広島SV",lat:34.3853,lon:132.4553,cat:"SV",pref:"広島県",myth:"[語源]広島（広い三角州の島）。太田川デルタ。三ツ城古墳（天城W佐賀関ライン上）の近く。"},
+  {id:"sv_okayama",name:"岡山SV",lat:34.6618,lon:133.9344,cat:"SV",pref:"岡山県",myth:"[語源]岡山（丘の山）。吉備国の中心。[岩戸]温羅（桃太郎の鬼）・造山古墳（天城W）の地。"},
+  {id:"sv_matsue",name:"松江SV",lat:35.4680,lon:133.0486,cat:"SV",pref:"島根県",myth:"[語源]松江（松の生える入江）。宍道湖・中海の間。出雲大社（天城W277.1°）の最寄り都市。"},
+  {id:"sv_takamatsu",name:"高松SV",lat:34.3401,lon:134.0434,cat:"SV",pref:"香川県",myth:"[語源]高松（高い松）。讃岐国の中心。金刀比羅宮（大物主）への入口。"},
+  {id:"sv_tokushima",name:"徳島SV",lat:34.0657,lon:134.5593,cat:"SV",pref:"徳島県",myth:"[語源]徳島（徳（とく）の島）。吉野川（四国三郎）河口。忌部氏・剣山信仰の地。"},
+  {id:"sv_kochi",name:"高知SV",lat:33.5597,lon:133.5311,cat:"SV",pref:"高知県",myth:"[語源]高知（高い地）。四万十川・仁淀川の国。室戸岬（空海の修行地）を擁する。"},
+  {id:"sv_matsuyama",name:"松山SV",lat:33.8416,lon:132.7657,cat:"SV",pref:"愛媛県",myth:"[語源]松山（松の山）。石鎚山（四国最高峰・修験道）への入口。道後温泉（日本最古の温泉説）。"},
+  {id:"sv_fukuoka",name:"福岡SV",lat:33.5904,lon:130.4017,cat:"SV",pref:"福岡県",myth:"[語源]福岡（幸福の岡）。太宰府（道真配流）・宗像大社の地。[岩戸]対馬海峡（天城W267.6°）の東端。"},
+  {id:"sv_kitakyushu",name:"北九州SV",lat:33.8834,lon:130.8751,cat:"SV",pref:"福岡県",myth:"[語源]北九州（北の九州）。関門海峡（天城W264.0°）の東側。壇ノ浦の近く。"},
+  {id:"sv_saga",name:"佐賀SV",lat:33.2635,lon:130.3009,cat:"SV",pref:"佐賀県",myth:"[語源]佐賀（砂の賀（岸））。吉野ヶ里遺跡（弥生最大集落）の地。有明海に面する。"},
+  {id:"sv_nagasaki",name:"長崎SV",lat:32.7503,lon:129.8779,cat:"SV",pref:"長崎県",myth:"[語源]長崎（長く突き出た崎）。対馬海峡（天城W）の近く。出島・鎖国時代の唯一の窓口。"},
+  {id:"sv_kumamoto",name:"熊本SV",lat:32.8032,lon:130.7079,cat:"SV",pref:"熊本県",myth:"[語源]熊本（熊の本（根元））。球磨川（天城WSW）上流。阿蘇山カルデラの中心都市。"},
+  {id:"sv_oita",name:"大分SV",lat:33.2382,lon:131.6126,cat:"SV",pref:"大分県",myth:"[語源]大分（おおいた）＝「大きな分（さいわい）の地」。[岩戸]佐賀関（天城W佐賀関ライン末端）の最寄り都市。"},
+  {id:"sv_miyazaki",name:"宮崎SV",lat:31.9111,lon:131.4239,cat:"SV",pref:"宮崎県",myth:"[語源]宮崎（宮（神宮）の崎）。[記紀]ニニギ天孫降臨の地（高千穂）を含む県。[岩戸]投馬国（宮崎説）は天城からWSW247.4°誤差0.1°（全計算中最高精度）。"},
+  {id:"sv_kagoshima",name:"鹿児島SV",lat:31.5966,lon:130.5571,cat:"SV",pref:"鹿児島県",myth:"[語源]鹿児島（鹿（かのこ）の島）。桜島・霧島を擁する。[岩戸]霧島神宮（天城WSW248.6°誤差1.1°）・桜島（WSW246.8°誤差0.7°）の地。"},
+  {id:"sv_naha",name:"那覇SV",lat:26.2124,lon:127.6792,cat:"SV",pref:"沖縄県",myth:"[語源]ナハ＝「那覇（なは）」。[記紀]琉球弧の中心。首里城（尚王朝）。グスク文化。"},
+];
+
+const MOUNTAINS=[
+  {id:"mt_fuji",name:"富士山",lat:35.3606,lon:138.7274,cat:"山",myth:"[語源]不死・不二説。[記紀]コノハナサクヤヒメの聖山。[秘伝]宮下文書の「高天原」。[岩戸]天城からNNW331.8°誗差5.7°。消された記憶の方向の最重要地。"},
+  {id:"mt_hakone",name:"箱根（神山）",lat:35.2378,lon:139.0183,cat:"山",myth:"[語源]函根（箱形の根）。[岩戸]天城の真北34km・誤差0.0°。古代からの東西境界。計算上の特異点。"},
+  {id:"mt_togakushi",name:"戸隠山",lat:36.7883,lon:138.0639,cat:"山",myth:"[記紀]天岩戸を投げた地。[岩戸]天城からNNW337.9°誤差0.4°。全計算中でも際立った精度。封印の最終地点。"},
+  {id:"mt_ontake",name:"御嶽山",lat:35.8931,lon:137.4797,cat:"山",myth:"[記紀]国常立尊（記紀が一行で消した神）の聖山。御嶽教の本山。[岩戸]天城からNW308.1°。2014年噴火。"},
+  {id:"mt_kura",name:"位山",lat:36.2200,lon:137.2000,cat:"山",myth:"[秘伝]竹内文書の第6代神の神殿。「日本の真ん中」の伝承。[岩戸]天城からNW311.8°誤差3.2°。天城と相互指示。"},
+  {id:"mt_funa",name:"船山（高山）",lat:36.2900,lon:137.1700,cat:"山",myth:"[秘伝]竹内文書の第5代神の降臨地。[岩戸]天城からNW312.0°誤差3.0°。位山と0.2°差で並ぶ。"},
+  {id:"mt_hakusan",name:"白山",lat:36.1538,lon:136.7711,cat:"山",myth:"[記紀]菊理媛命（イザナギ・イザナミの争いを仲裁した謎の女神）を祀る。[岩戸]天城からNW304.5°。越の聖山。"},
+  {id:"mt_tateyama",name:"立山（雄山）",lat:36.5731,lon:137.6172,cat:"山",myth:"[記紀]越中の霊山。立山曼荼羅に地獄図。死者が集まる山。[岩戸]天城からNW325.9°。越の国の核心霊山。"},
+  {id:"mt_norikura",name:"乗鞍岳",lat:36.1059,lon:137.5525,cat:"山",myth:"[語源]馬の鞍のような形（3026m）。飛騨・信濃の境。位山・船山と同じ飛騨の神域。"},
+  {id:"mt_yatsugatake",name:"八ヶ岳（赤岳）",lat:35.9698,lon:138.3700,cat:"山",myth:"[語源]八つの峰。縄文文化の中心地帯。諏訪湖（タケミナカタの封印地）の東の壁。"},
+  {id:"mt_suwa_moriya",name:"守屋山（諏訪）",lat:35.9867,lon:138.0983,cat:"山",myth:"[記紀]洩矢神（ミシャグジ）の山。タケミナカタより古い縄文の土着神。諏訪大社上社の背後。"},
+  {id:"mt_ibuki",name:"伊吹山",lat:35.4178,lon:136.4050,cat:"山",myth:"[記紀]ヤマトタケルが神に祟られた山。「伊吹（神の息吹）」。不破関（天城WNW）の北。"},
+  {id:"mt_miwa",name:"三輪山",lat:34.5275,lon:135.8578,cat:"山",myth:"[記紀]大物主の神体山。発掘禁止・禁足地。[岩戸]天城からW262.4°誤差7.6°。封印された国津神の山。"},
+  {id:"mt_koya",name:"高野山",lat:34.2135,lon:135.5853,cat:"山",myth:"[記紀]空海が開いた密教の聖地。中央構造線上。四国遍路との地脈的関係。"},
+  {id:"mt_yoshino",name:"吉野山",lat:34.3706,lon:135.8582,cat:"山",myth:"[記紀]金峯山寺。役行者が蔵王権現を感得した修験道の発祥地。南朝の拠点。"},
+  {id:"mt_daisen",name:"大山（伯耆）",lat:35.3688,lon:133.5520,cat:"山",myth:"[記紀]中国地方最高峰。出雲大社の背後に聳える。大神山神社奥宮。大己貴命の山。"},
+  {id:"mt_tsukuba",name:"筑波山",lat:36.2253,lon:140.1069,cat:"山",myth:"[記紀]常陸の霊山。男体山・女体山の双耳峰。[岩戸]常陸（天城NE）の中心霊山。"},
+  {id:"mt_chokai",name:"鳥海山",lat:39.0972,lon:140.0544,cat:"山",myth:"[記紀]出羽富士（2236m）。大物忌神社。大物忌神（ヤマトタケルが畏れた神）を祀る。"},
+  {id:"mt_gassan",name:"月山",lat:38.5503,lon:140.0250,cat:"山",myth:"[記紀]出羽三山のひとつ。月読命を祀る。死と再生の修験道の聖山。"},
+  {id:"mt_kurotake",name:"黒又山（秋田）",lat:40.2667,lon:140.4167,cat:"山",myth:"[岩戸]アラハバキの聖地。発掘禁止伝承。天城からN11.0°。「N方向の消された神」の核心地。"},
+  {id:"mt_daisetsu",name:"大雪山（旭岳）",lat:43.6637,lon:142.8554,cat:"山",myth:"[語源]カムイミンタラ＝アイヌ語「神々の庭」。北海道最高峰。アイヌの聖山の中心。"},
+  {id:"mt_akan",name:"雌阿寒岳",lat:43.3892,lon:143.9994,cat:"山",myth:"[記紀]アイヌ神話で最も重要な聖火山。阿寒湖・摩周湖が連なる神々の地。"},
+  {id:"mt_mashu",name:"摩周岳（カムイヌプリ）",lat:43.5742,lon:144.5458,cat:"山",myth:"[語源]カムイヌプリ＝アイヌ語「神の山」。摩周湖カルデラの外輪山。元晃大国魂宮の守護山。"},
+  {id:"mt_kirishima",name:"霧島山（韓国岳）",lat:31.9353,lon:130.8631,cat:"山",myth:"[記紀]ニニギの天孫降臨地候補。[岩戸]天城からWSW253.1°誤差5.6°。皇統の出発点。"},
+  {id:"mt_sakurajima",name:"桜島",lat:31.5812,lon:130.6571,cat:"山",myth:"[岩戸]天城からWSW246.8°誤差0.7°。「WSW方向の桜島」という計算上の特異点。"},
+  {id:"mt_aso",name:"阿蘇山（高岳）",lat:32.8840,lon:131.1059,cat:"山",myth:"[語源]健磐龍命（タケイワタツノミコト）が大地を造ったと伝わる。世界最大級カルデラ。"},
+  {id:"mt_nikko_nantai",name:"日光男体山",lat:36.7693,lon:139.4889,cat:"山",myth:"[記紀]二荒山神社の御神体山。「二荒（ふたら）」は観音の補陀落を指すとも。"},
+  {id:"mt_bandai",name:"磐梯山",lat:37.6054,lon:140.0727,cat:"山",myth:"[語源]磐梯（岩の城）。1888年大噴火で北半分が崩壊。五色沼を生んだ。会津の守護神。"},
+  {id:"mt_iwaki",name:"岩木山",lat:40.6556,lon:140.3045,cat:"山",myth:"[語源]岩木（岩の木）山。津軽富士。縄文時代から信仰される北の霊山。"},
+  {id:"mt_amagi",name:"天城山（万三郎岳）",lat:34.9157,lon:139.0072,cat:"山",myth:"[岩戸]天城岩戸ログの原点となった山（34.920°N/139.018°E）。記紀に登場しない追放地の中心。"},
+];
+
+const SHRINES=[
+  {id:"sh_ise_naiku",name:"伊勢神宮 内宮",lat:34.4552,lon:136.7252,cat:"神社",myth:"[記紀]天照大御神の鎮座地。八咫鏡。[岩戸]天城からWSW256.9°誤差9.4°。「W方向に記紀の神」パターン。"},
+  {id:"sh_ise_geku",name:"伊勢神宮 外宮",lat:34.4877,lon:136.7077,cat:"神社",myth:"[岩戸]豊受大御神。元は丹後・籠神社→伊勢へ遷座。奈良からNNW→ESEの正反対移動。外削ぎの謎。"},
+  {id:"sh_izumo",name:"出雲大社",lat:35.4014,lon:132.6855,cat:"神社",myth:"[記紀]大国主が封じられた。[岩戸]天城からW277.1°誤差7.1°。国津神封印のW方向の最重要拠点。"},
+  {id:"sh_kashima",name:"鹿島神宮",lat:35.9673,lon:140.6346,cat:"神社",myth:"[記紀]タケミカヅチ。アマツミカボシを討伐した神。[岩戸]天城からNE50.9°。書き換えの最前線。"},
+  {id:"sh_katori",name:"香取神宮",lat:35.8979,lon:140.5271,cat:"神社",myth:"[記紀]フツヌシ。[岩戸]天城からNE51.0°。鹿島と0.1°差で並ぶ特異点。"},
+  {id:"sh_suwa_kami",name:"諏訪大社 上社",lat:36.0404,lon:138.0724,cat:"神社",myth:"[記紀]タケミナカタ（逃げた神）＋ミシャグジ（縄文の蛇神）。[岩戸]天城からNW324.7°。逃げた神がNW方向に。"},
+  {id:"sh_miwa",name:"大神神社（三輪山）",lat:34.5273,lon:135.8576,cat:"神社",myth:"[記紀]大物主（山に封じられた国津神）。[岩戸]天城からW262.4°誤差7.6°。禁足地・発掘禁止。"},
+  {id:"sh_miho",name:"美保神社",lat:35.5716,lon:133.2316,cat:"神社",myth:"[記紀]事代主。国譲りで海に隠れた神。[岩戸]天城からW279.6°誤差9.6°。消された国津神の封印地。"},
+  {id:"sh_kono",name:"籠神社（丹後）",lat:35.5884,lon:135.1901,cat:"神社",myth:"[記紀]天火明命の本社。豊受大御神の元宮。[岩戸]天城からWNW286.0°誤差6.5°。消された記憶の核心。"},
+  {id:"sh_isonokami",name:"石上神宮",lat:34.6003,lon:135.8470,cat:"神社",myth:"[記紀]天火明命系の武器神・布都御魂。物部氏の総氏神。[岩戸]天城からW263.9°誤差6.1°。"},
+  {id:"sh_atsuta",name:"熱田神宮",lat:35.1282,lon:136.9079,cat:"神社",myth:"[記紀]草薙剣を祀る。尾張氏（天火明命の子孫）の聖地。[岩戸]天城からW277.5°誤差7.5°。"},
+  {id:"sh_togakushi",name:"戸隠神社 奥社",lat:36.7883,lon:138.0639,cat:"神社",myth:"[記紀]天手力雄命。天岩戸を投げた神。[岩戸]天城からNNW337.9°誤差0.4°。全計算中で際立つ精度。"},
+  {id:"sh_fuse",name:"不二阿祖山太神宮跡",lat:35.4472,lon:138.6894,cat:"神社",myth:"[秘伝]宮下文書の元の神宮。富士山北麓。[岩戸]天城からNNW340.5°誤差3.0°。消された高天原の痕跡。"},
+  {id:"sh_mitsumine",name:"三峯神社",lat:35.9946,lon:138.9523,cat:"神社",myth:"[記紀]オモイカネ説あり。[岩戸]天城からN方向。N方向に記紀に書かれなかった神が集まるパターン。"},
+  {id:"sh_keta",name:"気多大社",lat:36.8822,lon:136.7855,cat:"神社",myth:"[記紀]大己貴命（オオクニヌシの別名）。越の国の一宮。[岩戸]天城からNW316.0°誤差1.0°。三種の神器重心（能登）の近傍。"},
+  {id:"sh_izumo2",name:"皇祖皇太神宮（茨城）",lat:36.8480,lon:140.7620,cat:"神社",myth:"[秘伝]竹内文書の第1代神の降臨地。[岩戸]天城からNE35.9°誤差9.1°。常陸（NE）と重なる「NE方向の竹内文書の記憶」。"},
+  {id:"sh_kirishima",name:"霧島神宮",lat:31.8794,lon:130.8696,cat:"神社",myth:"[記紀]ニニギを祀る。天孫降臨の出発点。[岩戸]天城からWSW248.6°誤差1.1°。"},
+  {id:"sh_usa",name:"宇佐神宮",lat:33.5313,lon:131.3763,cat:"神社",myth:"[記紀]八幡神の総本社。応神天皇。佐賀関（天城W佐賀関ライン末端）の近く。"},
+  {id:"sh_munakata",name:"宗像大社",lat:33.8149,lon:130.5309,cat:"神社",myth:"[記紀]宗像三女神。大陸交流の守護神。対馬海峡（天城W267.6°）の守護神。沖ノ島（女人禁制）。"},
+  {id:"sh_nibu",name:"丹生川上神社",lat:34.3580,lon:135.9427,cat:"神社",myth:"[記紀]セオリツヒメ。祓詞に名前があるのに記紀に登場しない消された女神。W方向。"},
+  {id:"sh_kumano",name:"熊野那智大社",lat:33.6670,lon:135.8970,cat:"神社",myth:"[記紀]イザナミ（死の女神）の聖地説。那智の滝（133m）が御神体。修験道の聖地。"},
+  {id:"sh_oyamazumi",name:"大山祇神社",lat:34.2393,lon:132.9975,cat:"神社",myth:"[記紀]山の神の総本社。天火明命と関係が深い。瀬戸内の中心。"},
+  {id:"sh_kotohira",name:"金刀比羅宮",lat:34.2157,lon:133.8157,cat:"神社",myth:"[記紀]大物主命。海の神。讃岐の霊山・象頭山。W方向の大物主の四国版。"},
+];
+
+const KOFUN=[
+  {id:"k_hashihaka",name:"箸墓古墳",lat:34.5430,lon:135.8392,cat:"古墳",myth:"[記紀]卑弥呼の墓説（280m）。[岩戸]天城→佐賀関ライン上262.6°誤差6.3°。ライン上最初の大型古墳。"},
+  {id:"k_honda",name:"誉田御廟山古墳（応神陵）",lat:34.5622,lon:135.6164,cat:"古墳",myth:"[記紀]第15代応神天皇。八幡神の原型（425m）。[岩戸]佐賀関ライン上263.9°誤差7.6°。"},
+  {id:"k_daisen",name:"大仙陵古墳（仁徳陵）",lat:34.5636,lon:135.5996,cat:"古墳",myth:"[記紀]第16代仁徳天皇（486m 日本最大）。[岩戸]佐賀関ライン上264.0°誤差7.7°。ライン上最大。"},
+  {id:"k_tsukuriyama",name:"造山古墳（岡山）",lat:34.7047,lon:133.8313,cat:"古墳",myth:"[記紀]吉備国の大王の墓（350m）。[岩戸]天城からW269.2°誤差12.9°。温羅（桃太郎の鬼）と同じ吉備の地。"},
+  {id:"k_tatefuki",name:"楯築遺跡（吉備）",lat:34.6520,lon:133.9011,cat:"古墳",myth:"[岩戸]天城からW268.1°誤差1.9°。「消された神・温羅がW方向」パターンの核心地。"},
+  {id:"k_sakitama",name:"埼玉古墳群（稲荷山）",lat:36.1357,lon:139.4874,cat:"古墳",myth:"[記紀]稲荷山古墳鉄剣「ワカタケル大王（雄略天皇）」銘文。[岩戸]天城→鼠ヶ関ライン上141km地点。"},
+  {id:"k_ishibutai",name:"石舞台古墳",lat:34.4597,lon:135.8342,cat:"古墳",myth:"[記紀]蘇我馬子の墓説。日本最大の横穴式石室（77トンの天井石）。飛鳥時代権力闘争の象徴。"},
+  {id:"k_takamatsuzuka",name:"高松塚古墳",lat:34.4555,lon:135.8322,cat:"古墳",myth:"[記紀]極彩色壁画。四神相応の宇宙観（白虎・青龍・玄武）。7世紀末〜8世紀初頭。"},
+  {id:"k_kitora",name:"キトラ古墳",lat:34.4528,lon:135.8253,cat:"古墳",myth:"[記紀]天文図壁画（世界最古級）。北極星を中心とした星図。古代の宇宙観・暦の結晶。"},
+  {id:"k_imashirozuka",name:"今城塚古墳",lat:34.8640,lon:135.6420,cat:"古墳",myth:"[記紀]継体天皇（越前から迎えられた謎の天皇）の陵墓候補。[岩戸]越の国（天城WNW〜NW）から来た天皇の墓。"},
+  {id:"k_miharashi",name:"宝塚古墳（三重）",lat:34.5753,lon:136.4969,cat:"古墳",myth:"[岩戸]天城→佐賀関ライン上262.2°誤差5.9°。船形埴輪出土。ライン上最東端の古墳。"},
+  {id:"k_gyotoyama",name:"行灯山古墳（崇神陵）",lat:34.5461,lon:135.8441,cat:"古墳",myth:"[記紀]崇神天皇＝実質的な初代大王説（242m）。三輪山の麓。大物主の祟りを鎮めた天皇。"},
+];
+
+const RUINS=[
+  {id:"r_oyu",name:"大湯環状列石",lat:40.4817,lon:140.7967,cat:"遺跡",myth:"[岩戸]縄文中期の環状列石。日時計機能説。天城からN方向。「N方向の縄文の記憶」。2021年世界遺産。"},
+  {id:"r_sannai",name:"三内丸山遺跡",lat:40.7500,lon:140.6833,cat:"遺跡",myth:"[岩戸]縄文最大集落（35ha）。六本柱建物は天文観測台説。天城からNNE方向。縄文王国の中心。"},
+  {id:"r_yoshinogari",name:"吉野ヶ里遺跡",lat:33.3232,lon:130.3906,cat:"遺跡",myth:"[記紀]弥生最大の環濠集落。邪馬台国候補地。[岩戸]天城からWSW方向。魏志倭人伝の照合地域。"},
+  {id:"r_makimuku",name:"纒向遺跡",lat:34.5349,lon:135.8508,cat:"遺跡",myth:"[記紀]邪馬台国大和説の根拠地。卑弥呼の宮殿跡候補。箸墓古墳と一体の聖域。"},
+  {id:"r_idojiri",name:"井戸尻遺跡",lat:35.8833,lon:138.2833,cat:"遺跡",myth:"[岩戸]諏訪・八ヶ岳南麓。縄文王国の核心。火炎土器の傑作が出土。タケミナカタ封印地の記憶。"},
+  {id:"r_tatetsuki",name:"楯築弥生墳丘墓",lat:34.6520,lon:133.9011,cat:"遺跡",myth:"[岩戸]天城からW268.1°誤差1.9°。「W方向の退治された鬼」パターン。楯築の旋帯文石。"},
+  {id:"r_toro",name:"登呂遺跡",lat:34.9669,lon:138.4133,cat:"遺跡",myth:"[記紀]弥生の水田遺跡（静岡）。天城山の西方向16km。弥生農耕文化が天城付近まで達した証拠。"},
+  {id:"r_nakahara",name:"原の辻遺跡（壱岐）",lat:33.7667,lon:129.8000,cat:"遺跡",myth:"[記紀]魏志倭人伝「一支国（壱岐）」の王都候補。弥生の国際港。消された海の関の中心遺跡。"},
+  {id:"r_isedotai",name:"伊勢堂岱遺跡",lat:40.3000,lon:140.5833,cat:"遺跡",myth:"[岩戸]縄文後期の4基の環状列石。天城からN方向。「N方向の縄文の石の記憶」。2021年世界遺産。"},
+];
+
+// 川・湖・関・峠・岬（data_water.js, data_barriers.js より抜粋統合）
+const RIVERS=[
+  {id:"rv_hii",name:"斐伊川",lat:35.3667,lon:132.9833,cat:"川",myth:"[記紀]スサノオがヤマタノオロチを退治した川。「肥の川」が語源。[岩戸]出雲大社（天城W277°）の近くを流れる。"},
+  {id:"rv_tenryu",name:"天竜川",lat:34.9000,lon:137.8167,cat:"川",myth:"[語源]天の竜の川。[記紀]諏訪湖から太平洋へ。[岩戸]タケミナカタが走った道と交差。天城の近くを流れる。"},
+  {id:"rv_tone",name:"利根川",lat:35.8667,lon:140.5167,cat:"川",myth:"[岩戸]縄文時代は「香取の海」を形成。常陸・下総・武蔵の境界。天城からNE方向の古代常陸文化圏の軸。"},
+  {id:"rv_kitakami",name:"北上川",lat:39.3333,lon:141.1333,cat:"川",myth:"[岩戸]蝦夷の拠点を縦断。アラハバキ信仰圏の流域。天城からN〜NNE方向の「消された北の神々」の地。"},
+  {id:"rv_abukuma",name:"阿武隈川",lat:38.0000,lon:140.7500,cat:"川",myth:"[岩戸]常陸・陸奥の境界川。アマツミカボシの地・常陸（天城NE）の西壁。書き換えの最前線の境界川。"},
+  {id:"rv_jinzu",name:"神通川",lat:36.6833,lon:137.2167,cat:"川",myth:"[語源]神を通す川。[岩戸]位山・船山（竹内文書の神々の地）から富山湾へ注ぐ聖なる川。"},
+  {id:"rv_hime",name:"姫川",lat:37.0600,lon:137.8800,cat:"川",myth:"[岩戸]糸魚川（三種の神器三角形の重心最近傍）を流れフォッサマグナ西端へ注ぐ。縄文翡翠の産地。"},
+  {id:"rv_isuzugawa",name:"五十鈴川（伊勢）",lat:34.4552,lon:136.7252,cat:"川",myth:"[記紀]伊勢神宮内宮の参道を流れる。天照大御神の御手洗い川。[岩戸]天城WSW256.9°。"},
+  {id:"rv_amenoyasukawara",name:"天安河原（高千穂）",lat:32.7048,lon:131.3086,cat:"川",myth:"[記紀]天岩戸神話の舞台。八百万の神が集まり天照大御神を岩戸から引き出す相談をした河原。"},
+  {id:"rv_mogami",name:"最上川",lat:38.9167,lon:139.8333,cat:"川",myth:"[語源]最上（もがみ）。[岩戸]酒田・鶴岡（天城NNW）へ注ぐ。松尾芭蕉「五月雨を集めて早し最上川」。"},
+  {id:"rv_miwagawa",name:"三輪川",lat:34.5273,lon:135.8578,cat:"川",myth:"[記紀]大物主が棲む三輪山の麓を流れる川。禁足地から湧く清水が源。[岩戸]天城W262.4°。"},
+  {id:"rv_kurobe",name:"黒部川",lat:36.9000,lon:137.5500,cat:"川",myth:"[語源]黒部（黒い部族の地）説。越中と飛騨を分けた古代の天然境界。立山連峰の雪解け水。"},
+  {id:"rv_chikuma",name:"千曲川",lat:36.8500,lon:138.2000,cat:"川",myth:"[語源]千熊（多くの熊）＝縄文の神の川。[岩戸]諏訪・長野（天城NW方向）の軸を流れる。"},
+  {id:"rv_fuji",name:"富士川",lat:35.2000,lon:138.5833,cat:"川",myth:"[秘伝]宮下文書の高天原（富士山）の水が流れる川。[岩戸]天城→富士山（NNW）の南麓を流れる。"},
+  {id:"rv_chikugo",name:"筑後川",lat:33.1833,lon:130.5500,cat:"川",myth:"[記紀]九州最大の川。吉野ヶ里遺跡の弥生王国の生命線。有明海へ注ぐ。"},
+  {id:"rv_kuma",name:"球磨川",lat:32.4833,lon:130.7167,cat:"川",myth:"[語源]日本三大急流。球磨の国＝熊野の語源説。九州古代王国の軸。"},
+  {id:"rv_yoshino_nara",name:"吉野川（奈良）",lat:34.3833,lon:135.7333,cat:"川",myth:"[記紀]大和の聖川。役行者が修行した川。上流に天の川・丹生川。水分神の領域。"},
+  {id:"rv_oi",name:"大井川",lat:34.7833,lon:138.2333,cat:"川",myth:"[岩戸]「越すに越されぬ大井川」。古代の東西境界川。天城山の南麓に源を持つ。"},
+  {id:"rv_yodo",name:"淀川",lat:34.7167,lon:135.5833,cat:"川",myth:"[記紀]琵琶湖から大阪湾へ。古代の輸送大動脈。難波津への玄関口。"},
+  {id:"rv_naka_ibaraki",name:"那珂川",lat:36.6000,lon:140.6000,cat:"川",myth:"[岩戸]鹿島・香取（天城NE）の神域の西を流れる。縄文の香取の海へ注いでいた境界川。"},
+  {id:"rv_agano",name:"阿賀野川",lat:37.8500,lon:139.3833,cat:"川",myth:"[語源]越後の大河。越の国（天城WNW〜N）を南北に縦断する生命線。"},
+];
+
+const LAKES=[
+  {id:"lk_mashu",name:"摩周湖",lat:43.5700,lon:144.5290,cat:"湖",myth:"[語源]カムイトー＝アイヌ語「山の神の湖」。[岩戸]天城からNNE24.5°誤差0.1°。「鏡」の象徴。霧の摩周湖。"},
+  {id:"lk_towada",name:"十和田湖",lat:40.4667,lon:140.8667,cat:"湖",myth:"[記紀]八郎太郎（大蛇）が封じられた湖。[岩戸]天城からNNE14.3°。「N方向の消された神」パターンの典型。"},
+  {id:"lk_suwa",name:"諏訪湖",lat:36.0400,lon:138.0800,cat:"湖",myth:"[記紀]タケミナカタが封じられた地。[岩戸]国譲り対峙版の重心が28km圏内。御神渡り神事。ミシャグジの本拠地。"},
+  {id:"lk_kasumigaura",name:"霞ヶ浦",lat:36.0667,lon:140.3833,cat:"湖",myth:"[岩戸]縄文時代は「香取の海」。常陸・鹿島（天城NE）の古代史の舞台。天城からNE42.3°。"},
+  {id:"lk_biwa",name:"琵琶湖",lat:35.3000,lon:136.1167,cat:"湖",myth:"[記紀]近江の海（淡海）。竹生島弁財天。[岩戸]愛発関・不破関（天城WNW）の背後。越と大和の境界。"},
+  {id:"lk_inawashiro",name:"猪苗代湖",lat:37.5000,lon:140.1000,cat:"湖",myth:"[語源]天鏡湖ともいう。磐梯山の噴火で形成。会津盆地の鏡。会津国の中心。"},
+  {id:"lk_tazawa",name:"田沢湖",lat:39.7167,lon:140.6667,cat:"湖",myth:"[記紀]辰子姫が龍になった湖。日本最深（423m）。秋田の深淵に封じられた龍神伝説。"},
+  {id:"lk_kutcharo",name:"屈斜路湖",lat:43.6000,lon:144.3500,cat:"湖",myth:"[語源]クッチャロ＝アイヌ語「喉の所」。日本最大のカルデラ湖。クッシー伝説。"},
+  {id:"lk_hamana",name:"浜名湖",lat:34.7500,lon:137.5833,cat:"湖",myth:"[記紀]遠江（とおつあわうみ）。1498年の大地震で海と繋がった。天城と浜松SVの中間点。"},
+  {id:"lk_shinji",name:"宍道湖",lat:35.4667,lon:133.0667,cat:"湖",myth:"[岩戸]出雲大社・斐伊川（ヤマタノオロチの川）と一体の出雲神話の三角形を形成。"},
+  {id:"lk_toya",name:"洞爺湖",lat:42.5667,lon:140.8000,cat:"湖",myth:"[語源]ト・ヤ＝アイヌ語「湖の岸」。カルデラ湖。有珠山・中島を持つ火山地帯。"},
+  {id:"lk_shikotsu",name:"支笏湖",lat:42.7667,lon:141.3500,cat:"湖",myth:"[語源]シ・コッ＝アイヌ語「大きな窪み」。日本最北の不凍湖（363m）。千歳川の源。"},
+  {id:"lk_akan",name:"阿寒湖",lat:43.4500,lon:144.1000,cat:"湖",myth:"[語源]アカン＝アイヌ語「樽」説。マリモの湖。アイヌ神話でカムイの宿る場所。"},
+  {id:"lk_ikeda",name:"池田湖（鹿児島）",lat:31.2167,lon:130.5667,cat:"湖",myth:"[記紀]九州最大のカルデラ湖。イッシー伝説。霧島・桜島（天城WSW方向）と同じ火山地帯。"},
+];
+
+const BARRIERS=[
+  // 陸の三関
+  {id:"br_suzuka",name:"鈴鹿関",lat:34.9833,lon:136.5167,cat:"関",myth:"[記紀]三関のひとつ。[岩戸]天城からW272.4°誤差2.4°。「W方向に記紀に書かれた関が集まる」パターン。"},
+  {id:"br_fuwa",name:"不破関（関ケ原）",lat:35.3667,lon:136.4667,cat:"関",myth:"[記紀]三関のひとつ。天下分け目の地。[岩戸]天城からWNW282.9°誤差9.6°。越の国への入口。"},
+  {id:"br_arahaka",name:"愛発関（福井）",lat:35.7167,lon:136.0167,cat:"関",myth:"[記紀]三関のひとつ。越の国の玄関口。[岩戸]天城からWNW288.8°誤差3.8°。越の「記紀に書かれた南端の関」。"},
+  // 消された海の関
+  {id:"br_sagaseki",name:"佐賀関（大分）",lat:33.2500,lon:131.8800,cat:"関",myth:"[岩戸]天城→佐賀関ライン（256.3°）の終点。ライン上に主要前方後円墳14基。記紀が沈黙した海の関。"},
+  {id:"br_naruto",name:"鳴門海峡",lat:34.2167,lon:134.6333,cat:"関",myth:"[記紀]淡路島・四国の境界。イザナギ・イザナミのオノゴロ島伝説域。[岩戸]天城からW260.8°誤差9.3°。"},
+  {id:"br_kanmon",name:"関門海峡",lat:33.9500,lon:130.9667,cat:"関",myth:"[記紀]本州と九州の境界。壇ノ浦（平家滅亡）。[岩戸]天城からW264.0°誤差6.0°。魏志倭人伝のルートが通過。"},
+  {id:"br_tsushima_str",name:"対馬海峡",lat:34.4000,lon:129.4000,cat:"関",myth:"[記紀]魏志倭人伝のルートが通過。[岩戸]天城からW267.6°誤差2.4°。消された海の関で最も西。"},
+  {id:"br_noto",name:"能登・珠洲（能登外浦）",lat:37.4333,lon:137.3333,cat:"関",myth:"[岩戸]天城からNNW331.1°誤差6.4°。三種の神器三角形の重心が指し示す能登沖（37.20°N）の近傍。"},
+  {id:"br_nezugaseki",name:"鼠ヶ関（山形）",lat:38.4500,lon:139.5667,cat:"関",myth:"[岩戸]天城からN6.8°誤差6.8°。「N方向の消された海の関」。越後と出羽の境界。"},
+  {id:"br_tsugaru",name:"津軽海峡",lat:41.5000,lon:141.0000,cat:"関",myth:"[岩戸]天城からNNE11.5°。本州と蝦夷の境界。記紀が「向こう側」と認識した最北の海峡。"},
+  // 山の関・峠
+  {id:"br_hakone",name:"箱根峠",lat:35.2333,lon:138.9667,cat:"峠",myth:"[岩戸]天城山の真北34km・誤差0.0°。古代からの東西境界。坂東と畿内の分水嶺。計算上の特異点。"},
+  {id:"br_amagi",name:"天城峠",lat:34.8833,lon:138.9500,cat:"峠",myth:"[岩戸]天城山の南西11km。天城山を挟んで真北に箱根・南西に天城峠。伊豆半島の分水嶺。"},
+  {id:"br_usui",name:"碓氷峠",lat:36.3333,lon:138.6500,cat:"峠",myth:"[記紀]ヤマトタケルが東征後に「吾妻はや」と嘆いた地。[秘伝]宮下文書の東征ルート上。上野・信濃の境。"},
+  {id:"br_ashigara",name:"足柄峠",lat:35.3500,lon:139.0167,cat:"峠",myth:"[記紀]ヤマトタケルが東征時に越えた峠。[岩戸]天城からほぼ真北方向52km。[秘伝]宮下文書の東征ルート上。"},
+  {id:"br_mikuni",name:"三国峠",lat:36.8833,lon:138.9500,cat:"峠",myth:"[語源]越後・上野・信濃の三国の境。越の国（天城WNW〜N）と坂東の境界点。"},
+  // 岬・海峡
+  {id:"br_noroshi",name:"狼煙（珠洲・能登）",lat:37.5167,lon:137.3333,cat:"岬",myth:"[岩戸]天城からNNW331.1°の「消された海の関」能登外浦の最先端。日本海と太平洋の分岐点。"},
+  {id:"br_irozaki",name:"石廊崎（伊豆）",lat:34.6167,lon:138.8500,cat:"岬",myth:"[岩戸]伊豆半島最南端。天城山（原点）の南11km。伊豆大島（役行者の流配地）を望む岬。"},
+  {id:"br_erimomisaki",name:"襟裳岬",lat:42.0000,lon:143.2500,cat:"岬",myth:"[語源]エンルム＝アイヌ語「頭が突き出た所」。北海道南端。太平洋と日本海の境。"},
+  {id:"br_tsushima",name:"対馬",lat:34.4667,lon:129.3500,cat:"岬",myth:"[記紀]魏志倭人伝のルートが通過する境界の島。[岩戸]天城からW267.6°誤差2.4°。消された海の関の最西端。"},
+  {id:"br_tojinbo",name:"東尋坊（福井）",lat:36.1667,lon:136.0833,cat:"岬",myth:"[岩戸]愛発関（天城WNW）の北方海岸。越の国の西端の断崖絶壁。柱状節理。"},
+  {id:"br_oma",name:"大間崎（青森）",lat:41.5500,lon:140.9000,cat:"岬",myth:"[語源]大間（広い間）崎。本州最北端。津軽海峡の東口。蝦夷と本州の境界の最前線。"},
+  {id:"br_okinoshima",name:"沖ノ島（福岡）",lat:34.2333,lon:130.1000,cat:"岬",myth:"[記紀]「海の正倉院」。宗像大社の沖津宮。女人禁制。大陸との交流の最前線。"},
+  {id:"br_tsuruga",name:"敦賀半島",lat:35.6500,lon:136.0667,cat:"岬",myth:"[記紀]ツヌガアラシト（角のある渡来人）伝説の地。氣比神宮（越の国の神）の聖域。愛発関の海側。"},
+];
+
+// 全データ統合
+const ALL=[...FIXED,...SV,...MOUNTAINS,...SHRINES,...KOFUN,...RUINS,...RIVERS,...LAKES,...BARRIERS];
+
+const CATS=[
+  {key:"聖地",label:"⛩ 聖地",  color:"#fbbf24"},
+  {key:"SV",  label:"🏛 SV",   color:"#60a5fa"},
+  {key:"山",  label:"🗻 山",   color:"#4ade80"},
+  {key:"神社",label:"⛩ 神社", color:"#fb923c"},
+  {key:"古墳",label:"🏔 古墳", color:"#c084fc"},
+  {key:"遺跡",label:"🪨 遺跡", color:"#94a3b8"},
+  {key:"川",  label:"🌊 川",   color:"#38bdf8"},
+  {key:"湖",  label:"💧 湖",   color:"#818cf8"},
+  {key:"関",  label:"🚧 関",   color:"#f43f5e"},
+  {key:"峠",  label:"⛰ 峠",   color:"#f97316"},
+  {key:"岬",  label:"🌊 岬",   color:"#2dd4bf"},
+];
+
+// 計算
+const DEG=Math.PI/180;
+const brng=(a,b,c,d)=>{const[f1,f2,l1,l2]=[a,c,b,d].map(x=>x*DEG),dl=l2-l1,x=Math.sin(dl)*Math.cos(f2),y=Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl);return((Math.atan2(x,y)/DEG)+360)%360;};
+const dkm=(a,b,c,d)=>{const R=6371,[f1,f2,l1,l2]=[a,c,b,d].map(x=>x*DEG),e=Math.sin((f2-f1)/2)**2+Math.cos(f1)*Math.cos(f2)*Math.sin((l2-l1)/2)**2;return R*2*Math.asin(Math.sqrt(e));};
+const ctr=pts=>{const s=pts.map(([a,b])=>{const f=a*DEG,l=b*DEG;return[Math.cos(f)*Math.cos(l),Math.cos(f)*Math.sin(l),Math.sin(f)];});const[cx,cy,cz]=s.reduce(([ax,ay,az],[x,y,z])=>[ax+x,ay+y,az+z],[0,0,0]).map(v=>v/s.length);return{lat:Math.atan2(cz,Math.sqrt(cx**2+cy**2))/DEG,lon:Math.atan2(cy,cx)/DEG};};
+const d16=d=>{const D=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"],i=Math.round(d/22.5)%16;let e=Math.abs(d-i*22.5);if(e>180)e=360-e;return{dir:D[i],err:e};};
+
+const SYMS=["勾玉","鏡","剣"];
+const SS={"勾玉":{bg:"#4ade80",txt:"#14532d",em:"🌿"},"鏡":{bg:"#60a5fa",txt:"#1e3a5f",em:"🔵"},"剣":{bg:"#f87171",txt:"#7f1d1d",em:"⚔️"}};
+
+function App(){
+  const[slots,setSlots]=useState({勾玉:"amagi",鏡:"motomiya",剣:"fugen"});
+  const[result,setResult]=useState(null);
+  const[active,setActive]=useState(null);
+  const[q,setQ]=useState("");
+  const[tab,setTab]=useState("SV");
+
+  const get=id=>ALL.find(s=>s.id===id);
+
+  useEffect(()=>{
+    const pts=SYMS.map(s=>get(slots[s])).filter(Boolean);
+    if(pts.length<3)return;
+    const c=ctr(pts.map(s=>[s.lat,s.lon]));
+    const edges=[[pts[0],pts[1]],[pts[1],pts[2]],[pts[2],pts[0]]].map(([a,b])=>({from:a.name,to:b.name,b:brng(a.lat,a.lon,b.lat,b.lon),d:dkm(a.lat,a.lon,b.lat,b.lon)}));
+    const toC=pts.map((s,i)=>{const b=brng(s.lat,s.lon,c.lat,c.lon),d=dkm(s.lat,s.lon,c.lat,c.lon);return{...s,sym:SYMS[i],b,d,...d16(b)};});
+    const am=pts.find(s=>s.id==="amagi"||s.id==="mt_amagi");
+    const fa=am?{b:brng(am.lat,am.lon,c.lat,c.lon),d:dkm(am.lat,am.lon,c.lat,c.lon),...d16(brng(am.lat,am.lon,c.lat,c.lon))}:null;
+    setResult({pts,c,edges,toC,fa});
+  },[slots]);
+
+  const filtered=useMemo(()=>{
+    // 関・峠・岬を統合カテゴリ「関」「峠」「岬」で絞る
+    const matchCat=s=>tab==="関"?["関","峠","岬"].includes(s.cat):s.cat===tab;
+    const base=q?"":ALL.filter(matchCat);
+    if(!q)return base;
+    const lq=q.toLowerCase();
+    return ALL.filter(s=>s.name.toLowerCase().includes(lq)||(s.pref&&s.pref.includes(q))||(s.myth&&s.myth.toLowerCase().includes(lq))||s.cat.includes(q));
+  },[tab,q]);
+
+  const prefGroups=useMemo(()=>{
+    if(tab!=="SV"||q)return null;
+    const m={};filtered.forEach(s=>{if(!m[s.pref])m[s.pref]=[];m[s.pref].push(s);});return m;
+  },[tab,q,filtered]);
+
+  const pick=(sym,id)=>{setSlots(p=>({...p,[sym]:id}));setActive(null);setQ("");};
+
+  return(
+    <div style={{fontFamily:"sans-serif",background:"#080e1d",color:"#e2e8f0",minHeight:"100vh",padding:14}}>
+      <div style={{maxWidth:940,margin:"0 auto"}}>
+
+        <div style={{textAlign:"center",marginBottom:16}}>
+          <h1 style={{fontSize:18,color:"#fbbf24",margin:0,letterSpacing:2}}>⛩ 三種の神器 三角形計算器 v4</h1>
+          <p style={{fontSize:11,color:"#475569",margin:"4px 0 0"}}>SV・山・川・湖・関・峠・岬・古墳・神社・遺跡（307件）× 神話情報付き</p>
+        </div>
+
+        {/* スロット */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:14}}>
+          {SYMS.map(sym=>{
+            const site=get(slots[sym]),s=SS[sym],open=active===sym;
+            return(
+              <div key={sym} onClick={()=>{setActive(open?null:sym);setQ("");}}
+                style={{background:open?"#1a2744":"#111827",border:`2px solid ${s.bg}`,borderRadius:10,padding:"10px 12px",cursor:"pointer"}}>
+                <div style={{fontSize:11,color:s.bg,fontWeight:"bold",marginBottom:2}}>{s.em} {sym}</div>
+                <div style={{fontSize:13,color:"#f1f5f9",fontWeight:"bold",lineHeight:1.3}}>{site?site.name:"—"}</div>
+                {site&&<div style={{fontSize:10,color:"#475569",marginTop:2}}>{site.lat.toFixed(3)}N {site.lon.toFixed(3)}E</div>}
+                {site?.myth&&<div style={{fontSize:9,color:"#64748b",marginTop:3,lineHeight:1.4}}>{site.myth.slice(0,45)}…</div>}
+                <div style={{fontSize:9,color:"#334155",marginTop:3}}>{open?"▲ 閉じる":"▼ 変更"}</div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* 選択パネル */}
+        {active&&(
+          <div style={{background:"#0d1829",border:"1px solid #1e3a5f",borderRadius:12,padding:14,marginBottom:16}}>
+            <div style={{display:"flex",gap:8,marginBottom:10,alignItems:"center"}}>
+              <span style={{color:SS[active].bg,fontWeight:"bold",fontSize:12}}>{SS[active].em} {active}</span>
+              <input value={q} onChange={e=>setQ(e.target.value)}
+                placeholder="名前・神話・都道府県・[記紀][岩戸]で横断検索…"
+                style={{flex:1,background:"#1e293b",border:"1px solid #334155",borderRadius:6,padding:"5px 10px",color:"#e2e8f0",fontSize:12,outline:"none"}}/>
+              {q&&<button onClick={()=>setQ("")} style={{background:"none",border:"none",color:"#64748b",cursor:"pointer",fontSize:14}}>✕</button>}
+            </div>
+            {!q&&(
+              <div style={{display:"flex",gap:4,marginBottom:10,flexWrap:"wrap"}}>
+                {CATS.map(c=>(
+                  <button key={c.key} onClick={()=>setTab(c.key)}
+                    style={{background:tab===c.key?c.color:"#1e293b",color:tab===c.key?"#080e1d":"#94a3b8",
+                      border:`1px solid ${tab===c.key?c.color:"#334155"}`,borderRadius:5,padding:"3px 8px",fontSize:10,cursor:"pointer",fontWeight:tab===c.key?"bold":"normal"}}>
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            )}
+            <div style={{maxHeight:290,overflowY:"auto"}}>
+              {q?(
+                <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+                  {filtered.map(s=>(
+                    <button key={s.id} onClick={()=>pick(active,s.id)}
+                      style={{background:slots[active]===s.id?"#fbbf24":"#1e293b",color:slots[active]===s.id?"#080e1d":"#e2e8f0",
+                        border:"1px solid #334155",borderRadius:6,padding:"4px 9px",fontSize:11,cursor:"pointer",textAlign:"left",maxWidth:220}}>
+                      <div style={{fontWeight:"bold"}}><span style={{fontSize:9,color:"#64748b",marginRight:3}}>{s.cat}</span>{s.name}</div>
+                      {s.myth&&<div style={{fontSize:9,color:"#475569",marginTop:1}}>{s.myth.slice(0,40)}…</div>}
+                    </button>
+                  ))}
+                  {!filtered.length&&<div style={{color:"#475569",fontSize:12}}>該当なし</div>}
+                </div>
+              ):tab==="SV"&&prefGroups?(
+                Object.entries(prefGroups).map(([pref,cs])=>(
+                  <div key={pref} style={{marginBottom:8}}>
+                    <div style={{fontSize:10,color:"#475569",marginBottom:3}}>{pref}</div>
+                    <div style={{display:"flex",flexWrap:"wrap",gap:4}}>
+                      {cs.map(s=>(
+                        <button key={s.id} onClick={()=>pick(active,s.id)}
+                          style={{background:slots[active]===s.id?"#60a5fa":"#1a2744",color:slots[active]===s.id?"#080e1d":"#bfdbfe",
+                            border:"1px solid #1e3a5f",borderRadius:5,padding:"3px 8px",fontSize:11,cursor:"pointer"}}>
+                          {s.name.replace(/SV$|SVセンター$/,"")}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))
+              ):(
+                <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+                  {filtered.map(s=>(
+                    <button key={s.id} onClick={()=>pick(active,s.id)}
+                      style={{background:slots[active]===s.id?"#fbbf24":"#1e293b",color:slots[active]===s.id?"#080e1d":"#e2e8f0",
+                        border:"1px solid #334155",borderRadius:6,padding:"4px 9px",fontSize:11,cursor:"pointer",textAlign:"left",maxWidth:220}}>
+                      <div style={{fontWeight:"bold"}}>{s.name}</div>
+                      {s.myth&&<div style={{fontSize:9,color:"#64748b",marginTop:1}}>{s.myth.slice(0,40)}…</div>}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* 結果 */}
+        {result&&(
+          <div style={{display:"grid",gap:12}}>
+            <div style={{background:"#111827",border:"2px solid #fbbf24",borderRadius:12,padding:16}}>
+              <div style={{fontSize:11,color:"#fbbf24",fontWeight:"bold",marginBottom:6}}>★ 三角形の重心</div>
+              <div style={{fontSize:22,fontWeight:"bold",color:"#f1f5f9"}}>{result.c.lat.toFixed(4)}°N / {result.c.lon.toFixed(4)}°E</div>
+              {result.fa&&(
+                <div style={{marginTop:6,fontSize:12}}>
+                  <span style={{color:"#64748b"}}>天城→重心: </span>
+                  <span style={{color:"#fbbf24",fontWeight:"bold"}}>{result.fa.b.toFixed(1)}°（{result.fa.dir}、誤差{result.fa.err.toFixed(1)}°）</span>
+                  <span style={{color:"#64748b",marginLeft:6}}>{result.fa.d.toFixed(0)}km</span>
+                </div>
+              )}
+              <div style={{marginTop:10,display:"flex",gap:8,flexWrap:"wrap"}}>
+                <a href={`https://maps.gsi.go.jp/#12/${result.c.lat.toFixed(4)}/${result.c.lon.toFixed(4)}`} target="_blank" rel="noopener"
+                  style={{fontSize:11,color:"#60a5fa",background:"#080e1d",padding:"4px 12px",borderRadius:5,textDecoration:"none"}}>🗾 地理院地図</a>
+                <a href={`https://www.google.com/maps/@${result.c.lat.toFixed(4)},${result.c.lon.toFixed(4)},11z`} target="_blank" rel="noopener"
+                  style={{fontSize:11,color:"#4ade80",background:"#080e1d",padding:"4px 12px",borderRadius:5,textDecoration:"none"}}>📍 Googleマップ</a>
+              </div>
+            </div>
+
+            <div style={{background:"#111827",border:"1px solid #1e3a5f",borderRadius:12,padding:14}}>
+              <div style={{fontSize:11,color:"#64748b",marginBottom:8,fontWeight:"bold"}}>各頂点 → 重心</div>
+              {result.toC.map((t,i)=>{
+                const s=SS[t.sym];
+                return(
+                  <div key={i} style={{padding:"6px 0",borderBottom:"1px solid #080e1d"}}>
+                    <div style={{display:"flex",alignItems:"center",gap:8}}>
+                      <span style={{background:s.bg,color:s.txt,borderRadius:4,padding:"2px 6px",fontSize:10,fontWeight:"bold",whiteSpace:"nowrap"}}>{s.em}{t.sym}</span>
+                      <span style={{fontSize:12,color:"#cbd5e1",flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{t.name}</span>
+                      <span style={{fontSize:12,color:"#fbbf24",fontWeight:"bold",whiteSpace:"nowrap"}}>{t.b.toFixed(1)}°</span>
+                      <span style={{fontSize:11,color:"#60a5fa",whiteSpace:"nowrap"}}>({t.dir}±{t.err.toFixed(1)}°)</span>
+                      <span style={{fontSize:11,color:"#475569",whiteSpace:"nowrap"}}>{t.d.toFixed(0)}km</span>
+                    </div>
+                    {t.myth&&<div style={{fontSize:9,color:"#475569",marginTop:3,marginLeft:8,paddingLeft:8,borderLeft:"2px solid #1e3a5f"}}>{t.myth.slice(0,70)}…</div>}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div style={{background:"#111827",border:"1px solid #1e3a5f",borderRadius:12,padding:14}}>
+              <div style={{fontSize:11,color:"#64748b",marginBottom:8,fontWeight:"bold"}}>辺の方位・距離</div>
+              {result.edges.map((e,i)=>(
+                <div key={i} style={{display:"flex",justifyContent:"space-between",padding:"4px 0",borderBottom:"1px solid #080e1d",fontSize:12}}>
+                  <span style={{color:"#94a3b8",flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{e.from.replace(/SV$|SVセンター$/,"")} → {e.to.replace(/SV$|SVセンター$/,"")}</span>
+                  <span style={{color:"#fbbf24",whiteSpace:"nowrap",marginLeft:8}}>{e.b.toFixed(1)}° / {e.d.toFixed(0)}km</span>
+                </div>
+              ))}
+            </div>
+
+            {result.fa&&(
+              <div style={{background:"#080e1d",border:"1px solid #1e293b",borderRadius:10,padding:12}}>
+                <div style={{fontSize:11,color:"#475569",marginBottom:6}}>天城岩戸ログ 方位照合</div>
+                {[{n:"ストーンヘンジ",b:336.7},{n:"富士山・宮下文書高天原",b:331.8},{n:"戸隠山（NNW 誤差0.4°）",b:337.9},{n:"籠神社（天火明命元宮）",b:286.0},{n:"今回の重心",b:result.fa.b,hi:true}]
+                  .map(r=>(
+                    <div key={r.n} style={{display:"flex",justifyContent:"space-between",fontSize:11,color:r.hi?"#fbbf24":"#475569",fontWeight:r.hi?"bold":"normal",padding:"2px 0"}}>
+                      <span>{r.n}</span><span>{r.b.toFixed(1)}°</span>
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+        )}
+        <div style={{fontSize:9,color:"#1e293b",textAlign:"center",marginTop:16}}>大円航路初期方位角・球面重心 / 天城岩戸ログ連動 v4</div>
+      </div>
+    </div>
+  );
+}
+
+
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+</script>
+</body>
+</html>

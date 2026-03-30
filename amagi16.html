@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVセンター 地理ライン調査ツール（世界版）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#fff;color:#111;font-family:'Hiragino Sans','Yu Gothic',sans-serif;font-size:14px;line-height:1.6;-webkit-text-size-adjust:100%;}
+.wrap{max-width:960px;margin:0 auto;padding:24px 14px 80px;}
+h1{font-size:20px;font-weight:700;margin-bottom:6px;}
+h1 span{color:#b8860b;}
+.desc{font-size:12px;color:#666;margin-bottom:16px;line-height:1.8;}
+.tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid #b8860b;}
+.tab{padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;border:none;background:#f5f5f5;color:#666;border-radius:4px 4px 0 0;margin-right:4px;transition:all .15s;}
+.tab.active{background:#b8860b;color:#fff;}
+.panel{display:none;}
+.panel.active{display:block;}
+.filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
+.f-btn{background:#fff;border:2px solid #ccc;color:#555;font-size:12px;font-weight:700;padding:5px 13px;cursor:pointer;border-radius:20px;transition:all .15s;}
+.f-btn.active{background:#b8860b;border-color:#b8860b;color:#fff;}
+.f-btn.world{border-color:#4080c0;color:#4080c0;}
+.f-btn.world.active{background:#4080c0;border-color:#4080c0;color:#fff;}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;font-size:11px;}
+.leg{display:flex;align-items:center;gap:4px;}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;min-width:600px;}
+th{background:#1a0f00;color:#f0c040;padding:10px 8px;font-size:12px;text-align:left;white-space:nowrap;position:sticky;top:0;z-index:2;cursor:pointer;}
+th:hover{background:#2a1800;}
+td{padding:9px 8px;border-bottom:1px solid #eee;vertical-align:top;line-height:1.5;font-size:13px;}
+tr:hover td{background:#fffbf0;}
+tr.world-row td{background:#f0f4ff;}
+tr.world-row:hover td{background:#e0e8ff;}
+.dir-badge{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:3px;color:#fff;white-space:nowrap;}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px;}
+.tag{font-size:11px;padding:2px 7px;border-radius:2px;white-space:nowrap;}
+.tg{background:#fff3e0;border:1px solid #e8a000;color:#6b3a00;}
+.tk{background:#e8f4e8;border:1px solid #3a8a40;color:#1a3a1a;}
+.tl{background:#eaeaf8;border:1px solid #5050b0;color:#20206a;}
+.ts{background:#f5eef8;border:1px solid #8040a0;color:#3a0060;}
+.tw{background:#e8f0ff;border:1px solid #4080c0;color:#103080;}
+.detail-btn{background:#fff;border:1px solid #b8860b;color:#b8860b;font-size:11px;font-weight:700;padding:3px 9px;cursor:pointer;border-radius:2px;}
+.detail-row{display:none;}
+.detail-row.open{display:table-row;}
+.detail-cell{background:#fafaf5;padding:14px 16px;border-bottom:2px solid #d4a017;font-size:12px;line-height:1.9;}
+.ds{margin-bottom:10px;}
+.dt{font-size:11px;font-weight:700;color:#b8860b;letter-spacing:.15em;margin-bottom:5px;border-bottom:1px solid #eee;padding-bottom:3px;}
+.star-note{background:#fff9e0;border:1px solid #e8c000;border-radius:4px;padding:6px 10px;font-size:11px;color:#7a5000;margin-top:6px;}
+.input-box{border:2px solid #b8860b;border-radius:4px;padding:16px 14px;margin-bottom:18px;}
+.input-title{font-size:13px;font-weight:700;color:#b8860b;margin-bottom:10px;}
+.crow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+.cin{flex:1;min-width:120px;border:2px solid #ccc;border-radius:3px;font-size:15px;padding:10px 11px;outline:none;-webkit-appearance:none;}
+.cin:focus{border-color:#b8860b;}
+.nin{width:100%;border:2px solid #ccc;border-radius:3px;font-size:14px;padding:9px 11px;outline:none;margin-bottom:8px;-webkit-appearance:none;}
+.nin:focus{border-color:#b8860b;}
+.gbtn{width:100%;background:#b8860b;color:#fff;border:none;border-radius:3px;font-size:15px;font-weight:700;padding:12px;cursor:pointer;}
+.hint{font-size:11px;color:#888;margin-top:6px;}
+.rc{display:none;margin-top:12px;}
+.rc.show{display:block;}
+.rc-head{background:#1a0f00;color:#fff;padding:14px 16px;border-radius:3px 3px 0 0;}
+.rc-val{font-size:38px;font-weight:700;color:#f0c040;line-height:1;margin-bottom:2px;}
+.rc-dir{font-size:18px;font-weight:700;color:#fff;margin-bottom:3px;}
+.rc-sub{font-size:11px;color:#aaa;}
+.rc-body{border:1px solid #ddd;border-top:none;padding:14px 16px;border-radius:0 0 3px 3px;}
+.rc-sec{margin-bottom:12px;}
+.rc-sec:last-child{margin-bottom:0;}
+.rc-sec-title{font-size:11px;font-weight:700;color:#b8860b;letter-spacing:.12em;margin-bottom:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>SVセンター <span>地理ライン</span> 調査ツール <span style="font-size:14px;color:#4080c0">世界版</span></h1>
+<p class="desc">天城（主座世界総本山 34.920°N / 139.018°E）を原点とした大円航路初期方位角による地理情報。<br>評価・解釈なし。地名・史実の情報のみ記載。日本＋海外SVセンターを収録。</p>
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('tab1',this)">① 天城からの方位と同方向の神・古墳・伝説地</button>
+  <button class="tab" onclick="switchTab('tab2',this)">② 任意の場所を調べる</button>
+</div>
+<div class="panel active" id="tab1">
+  <div class="filters" id="filters1"></div>
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:#e8a000"></div>神（同方向に伝わる）</div>
+    <div class="leg"><div class="leg-dot" style="background:#3a8a40"></div>古墳（ライン上±5°）</div>
+    <div class="leg"><div class="leg-dot" style="background:#5050b0"></div>伝説・聖地</div>
+    <div class="leg"><div class="leg-dot" style="background:#8040a0"></div>神社</div>
+    <div class="leg"><div class="leg-dot" style="background:#4080c0"></div>★注目（世界的な方位の一致）</div>
+  </div>
+  <div class="tbl-wrap">
+    <table id="tbl1">
+      <thead><tr>
+        <th onclick="sortTable(0)">センター ▲</th>
+        <th onclick="sortTable(1)">方位角 ▲</th>
+        <th onclick="sortTable(2)">16方位</th>
+        <th onclick="sortTable(3)">距離 ▲</th>
+        <th>同方向の神・古墳・伝説地</th>
+        <th>詳細</th>
+      </tr></thead>
+      <tbody id="tbody1"></tbody>
+    </table>
+  </div>
+</div>
+<div class="panel" id="tab2">
+  <div class="input-box">
+    <div class="input-title">緯度・経度を入力して調べる</div>
+    <div class="crow">
+      <input class="cin" type="number" id="lat" placeholder="緯度 例: 35.6813" step="0.0001"/>
+      <input class="cin" type="number" id="lon" placeholder="経度 例: 140.0381" step="0.0001"/>
+    </div>
+    <input class="nin" type="text" id="pname" placeholder="場所の名前（任意）"/>
+    <button class="gbtn" onclick="analyzeCustom()">▶ 調べる</button>
+    <p class="hint">Googleマップで場所を長押し → 座標をコピーして入力</p>
+    <div class="rc" id="rc"></div>
+  </div>
+</div>
+</div>
+<script>
+const AM={lat:34.920,lon:139.018};
+const rad=d=>d*Math.PI/180;
+function calcB(a,b,c,d){const f1=rad(a),f2=rad(c),dl=rad(d-b);const x=Math.sin(dl)*Math.cos(f2),y=Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl);return(Math.atan2(x,y)*180/Math.PI+360)%360;}
+function calcD(a,b,c,d){const R=6371,dl=rad(c-a),dg=rad(d-b),k=Math.sin(dl/2)**2+Math.cos(rad(a))*Math.cos(rad(c))*Math.sin(dg/2)**2;return R*2*Math.atan2(Math.sqrt(k),Math.sqrt(1-k));}
+const D16=[{n:'N',c:0},{n:'NNE',c:22.5},{n:'NE',c:45},{n:'ENE',c:67.5},{n:'E',c:90},{n:'ESE',c:112.5},{n:'SE',c:135},{n:'SSE',c:157.5},{n:'S',c:180},{n:'SSW',c:202.5},{n:'SW',c:225},{n:'WSW',c:247.5},{n:'W',c:270},{n:'WNW',c:292.5},{n:'NW',c:315},{n:'NNW',c:337.5}];
+function dir16(b){let me=999,best=D16[0];for(const d of D16){let df=Math.abs(b-d.c);if(df>180)df=360-df;if(df<me){me=df;best=d;}}return{name:best.n,center:best.c,error:me};}
+const DIR_COLOR={'N':'#4455aa','NNE':'#6644bb','NE':'#8833cc','ENE':'#777','E':'#777','ESE':'#777','SE':'#777','SSE':'#777','S':'#777','SSW':'#777','SW':'#777','WSW':'#b06020','W':'#bb4400','WNW':'#993300','NW':'#006677','NNW':'#003d66'};
+
+// ★注目センターの定義（世界的方位一致）
+const STAR_NOTES = {
+  'ロンドンSV':   '★ NNW 335.9°— ストーンヘンジ（336.7°）とほぼ同じ方位',
+  'オランダSV':   '★ NNW 333.8°— エーブベリー・ニューグレンジと同じ方位帯',
+  'パリSV':       '★ NNW 333.1°— 英仏巨石群と同じ方位帯',
+  'ドイツSV':     '★ NNW 330.4°— ストーンヘンジ近傍方位',
+  'バンコクSV':   '★ WSW 248.4°（誤差0.9°）— 桜島・アンコールワットと同じ',
+  'コリマSV':     '★ ENE 58.3°— 天城×コリマ×ギザ装置の頂点。2026年10月スザ竣工',
+  'キンシャサSV': '★ WNW 287.1°— メッカ（292.7°）・北京と同じ方位帯',
+  'ルアンダSV':   '★ WNW 284.3°— メッカ・北京・メロエと同じ方位帯',
+  'ソウルSV':     '★ WNW 288.8°— 愛発関（288.8°）と同じ方位（誤差0.0°）',
+  'サンパウロSV': '★ NNE 24.9°— 摩周湖（24.5°）と同じ方位帯',
+};
+
+const SACRED=[
+  {b:0.0,name:'箱根（東西境界）',type:'legend',note:'古代から東国と西国の境。関所の地。'},
+  {b:6.8,name:'鼠ヶ関（消された関）',type:'legend',note:'記紀がほぼ沈黙した北の海の関。越後の北端。'},
+  {b:11.0,name:'黒又山・アラハバキ',type:'god',note:'記紀に登場しない北の神。秋田県鹿角市。'},
+  {b:14.3,name:'十和田湖（八郎太郎伝説）',type:'legend',note:'大蛇（龍）が封じられた湖。'},
+  {b:24.5,name:'摩周湖・カムイトー',type:'legend',note:'アイヌの神の湖。元晃大国魂宮の地。'},
+  {b:35.9,name:'皇祖皇太神宮（茨城）',type:'shrine',note:'竹内文書の第1代神の降臨地とされる。'},
+  {b:37.9,name:'将門の首塚（大手町）',type:'legend',note:'1000年以上動かせない封印地。'},
+  {b:42.2,name:'八幡の藪知らず（市川）',type:'legend',note:'入ると出られないとされる禁足地。'},
+  {b:50.9,name:'鹿島神宮・タケミカヅチ',type:'shrine',note:'国譲りを迫った使者神。'},
+  {b:50.9,name:'アマツミカボシ（常陸）',type:'god',note:'記紀で討伐された星神。'},
+  {b:51.0,name:'香取神宮・フツヌシ',type:'shrine',note:'国譲りを迫ったもう一人の使者神。'},
+  {b:65.3,name:'ナスカ地上絵（ペルー）',type:'legend',note:'古代地上絵。'},
+  {b:86.7,name:'キラウエア火山（ハワイ）',type:'legend',note:'ポリネシア神話の火の女神ペレの住処。'},
+  {b:208.6,name:'スラウェシ手形洞窟',type:'legend',note:'人類最古級（4万年前）の手形岩絵。'},
+  {b:224.4,name:'クラカタウ火山（インドネシア）',type:'legend',note:'神話に登場する巨大火山。'},
+  {b:246.8,name:'桜島',type:'legend',note:'鹿児島の活火山。古来信仰の対象。'},
+  {b:244.7,name:'アンコールワット（カンボジア）',type:'legend',note:'クメール帝国の宇宙観を体現した遺跡。'},
+  {b:253.1,name:'高千穂・ニニギ降臨地',type:'god',note:'天孫降臨の地。'},
+  {b:256.9,name:'伊勢神宮',type:'shrine',note:'天照大御神を祀る。'},
+  {b:256.3,name:'佐賀関（大分）',type:'legend',note:'記紀が沈黙した海の関。前方後円墳14基が並ぶライン。'},
+  {b:262.4,name:'箸墓古墳（奈良）',type:'kofun',note:'日本最初期の大型前方後円墳。全長280m。'},
+  {b:263.9,name:'誉田御廟山古墳（応神陵）',type:'kofun',note:'全長425m。応神天皇陵。'},
+  {b:264.0,name:'大仙陵古墳（仁徳陵）',type:'kofun',note:'全長486m。世界最大級の墳墓。'},
+  {b:262.4,name:'三輪山・大物主神',type:'god',note:'山そのものが神体。今も発掘禁止。'},
+  {b:272.4,name:'鈴鹿関',type:'legend',note:'陸の三関のひとつ。'},
+  {b:277.1,name:'出雲大社・オオクニヌシ',type:'shrine',note:'国譲りで封じられた神。'},
+  {b:282.9,name:'不破関（岐阜）',type:'legend',note:'陸の三関のひとつ。'},
+  {b:286.0,name:'籠神社（丹後）・天火明命',type:'shrine',note:'天火明命の本社。豊受大御神の元の鎮座地。'},
+  {b:288.8,name:'愛発関（福井）',type:'legend',note:'陸の三関のひとつ。越の国への入口。'},
+  {b:292.3,name:'北京',type:'legend',note:'中華文明の中心地。'},
+  {b:292.7,name:'メッカ（サウジアラビア）',type:'legend',note:'イスラム教最大の聖地。'},
+  {b:292.5,name:'メロエ（スーダン）',type:'legend',note:'古代アフリカ文明の遺跡群。'},
+  {b:308.1,name:'御嶽山・国常立尊',type:'god',note:'記紀が一行で消した最初の神。'},
+  {b:311.8,name:'位山（岐阜）',type:'legend',note:'竹内文書の第6代神の神殿とされる。'},
+  {b:324.7,name:'諏訪大社・タケミナカタ',type:'shrine',note:'国譲りで逃げた国津神。'},
+  {b:331.1,name:'能登・珠洲（消された関）',type:'legend',note:'記紀がほぼ沈黙した北の海の関。'},
+  {b:331.8,name:'富士山・宮下文書',type:'legend',note:'宮下文書が伝える「高天原＝富士山麓」の地。'},
+  {b:337.9,name:'戸隠山（長野）',type:'legend',note:'天岩戸を投げた地。NNW誤差0.4°。'},
+  {b:336.7,name:'ストーンヘンジ（英）',type:'legend',note:'紀元前2500年頃の巨石遺跡。'},
+  {b:336.8,name:'エーブベリー（英）',type:'legend',note:'世界最大の環状列石。ストーンヘンジとほぼ同方位。'},
+  {b:340.4,name:'ニューグレンジ（アイルランド）',type:'legend',note:'紀元前3200年頃のパッセージ墓。'},
+  {b:335.5,name:'カルナック（フランス）',type:'legend',note:'世界最大規模の巨石列。'},
+  // ── 世界の聖地・遺跡（追加）──
+  {b:334.1,name:'アルタミラ洞窟（スペイン）',type:'legend',note:'旧石器時代の壁画。人類最古の芸術の一つ。'},
+  {b:331.7,name:'ラスコー洞窟（フランス）',type:'legend',note:'旧石器時代の洞窟壁画。1万7千年前。'},
+  {b:323.3,name:'バチカン（ローマ）',type:'legend',note:'キリスト教の中心。サン・ピエトロ大聖堂。'},
+  {b:315.4,name:'デルフィ神殿（ギリシャ）',type:'legend',note:'古代ギリシャの神託の地。世界のへそ（オンファロス）。'},
+  {b:314.4,name:'パルテノン神殿（ギリシャ）',type:'legend',note:'アテネのアクロポリス。西洋文明の象徴。'},
+  {b:312.5,name:'エフェソス（トルコ）',type:'legend',note:'アルテミス神殿跡。世界七不思議。'},
+  {b:312.3,name:'サントリーニ火山（ギリシャ）',type:'legend',note:'アトランティス伝説の候補地。'},
+  {b:311.6,name:'クノッソス宮殿（クレタ）',type:'legend',note:'ミノア文明の中心。迷宮伝説の地。'},
+  {b:306.3,name:'ゴベクリ・テペ（トルコ）',type:'legend',note:'1万2千年前の神殿。農耕以前の巨石建造物。'},
+  {b:304.9,name:'バールベック（レバノン）',type:'legend',note:'ローマ時代の巨大神殿群。石材重量1000トン超。'},
+  {b:304.3,name:'ギザのピラミッド（エジプト）',type:'legend',note:'古代エジプトの聖地。世界七不思議。'},
+  {b:303.6,name:'エルサレム（イスラエル）',type:'legend',note:'三大宗教の聖地。神殿の丘。'},
+  {b:302.3,name:'ペトラ（ヨルダン）',type:'legend',note:'岩窟都市。ナバテア王国の首都。'},
+  {b:300.1,name:'ルクソール神殿（エジプト）',type:'legend',note:'古代エジプト・カルナック神殿群。'},
+  {b:299.7,name:'バビロン（イラク）',type:'legend',note:'古代バビロニアの首都。空中庭園伝説。'},
+  {b:297.6,name:'ウル（イラク）',type:'legend',note:'シュメール文明の都市。ジッグラト（聖塔）。'},
+  {b:293.9,name:'万里の長城',type:'legend',note:'中国の国境を示す長城。2000年以上の歴史。'},
+  {b:293.5,name:'ペルセポリス（イラン）',type:'legend',note:'ペルシア帝国の儀礼都市。'},
+  {b:292.5,name:'メロエ（スーダン）',type:'legend',note:'クシュ王国のピラミッド群。'},
+  {b:291.8,name:'敦煌・莫高窟（中国）',type:'legend',note:'シルクロードの仏教洞窟寺院。'},
+  {b:282.6,name:'カイラス山（チベット）',type:'legend',note:'ヒンドゥー・仏教の聖山。世界の中心とされる。'},
+  {b:279.3,name:'タージ・マハル（インド）',type:'legend',note:'ムガル帝国の聖廟。'},
+  {b:277.4,name:'始皇帝陵・兵馬俑（中国）',type:'legend',note:'中国最初の皇帝の陵墓。'},
+  {b:276.4,name:'ポタラ宮（チベット）',type:'legend',note:'チベット仏教の聖地。ダライ・ラマの宮殿。'},
+  {b:274.2,name:'キリマンジャロ（タンザニア）',type:'legend',note:'アフリカ最高峰。マサイの聖山。'},
+  {b:262.5,name:'グレート・ジンバブエ',type:'legend',note:'アフリカ最大の石造建築遺跡。'},
+  {b:244.7,name:'アンコールワット（カンボジア）',type:'legend',note:'クメール帝国の宇宙観を体現した神殿。'},
+  {b:218.2,name:'ボロブドゥール（インドネシア）',type:'legend',note:'仏教の宇宙山。世界最大の仏教遺跡。'},
+  {b:217.9,name:'プランバナン（インドネシア）',type:'legend',note:'ヒンドゥー最大の神殿群。'},
+  {b:188.3,name:'ウルル（オーストラリア）',type:'legend',note:'アボリジニの聖地。世界最大の一枚岩。'},
+  {b:143.2,name:'ナンマドール（ミクロネシア）',type:'legend',note:'海上の石造都市。太平洋の謎の遺跡。'},
+  {b:102.7,name:'イースター島',type:'legend',note:'モアイ像。謎の文明。'},
+  {b:65.3,name:'ナスカ地上絵（ペルー）',type:'legend',note:'地上絵。宇宙との交信説。'},
+  {b:60.5,name:'マチュピチュ（ペルー）',type:'legend',note:'インカの空中都市。'},
+  {b:60.5,name:'ティワナク（ボリビア）',type:'legend',note:'アンデス文明の中心。太陽の門。'},
+  {b:54.8,name:'テオティワカン（メキシコ）',type:'legend',note:'太陽のピラミッド。マヤ以前の巨大都市。'},
+  {b:51.5,name:'パレンケ（メキシコ）',type:'legend',note:'マヤの聖都。碑文の神殿。'},
+  {b:51.2,name:'セドナ（米）',type:'legend',note:'アメリカ先住民の聖地。エネルギースポット。'},
+  {b:46.7,name:'チチェンイツァ（メキシコ）',type:'legend',note:'マヤ文明の中心。世界七不思議。'},
+];
+
+const CENTERS=[
+  // 日本
+  {region:'北海道',name:'札幌SV',lat:43.0624,lon:141.3304},
+  {region:'北海道',name:'函館SV',lat:41.7863,lon:140.7564},
+  {region:'北海道',name:'旭川SV',lat:43.7718,lon:142.3237},
+  {region:'東北',name:'青森SV',lat:40.8046,lon:140.7534},
+  {region:'東北',name:'盛岡SV',lat:39.7028,lon:141.1366},
+  {region:'東北',name:'仙台SV',lat:38.2684,lon:140.9001},
+  {region:'東北',name:'秋田SV',lat:39.7195,lon:140.1158},
+  {region:'東北',name:'山形SV',lat:38.2757,lon:140.3342},
+  {region:'東北',name:'鶴岡SV',lat:38.7435,lon:139.8271},
+  {region:'東北',name:'酒田SV',lat:38.9256,lon:139.8425},
+  {region:'東北',name:'郡山SV',lat:37.4005,lon:140.3526},
+  {region:'東北',name:'いわきSV',lat:37.0538,lon:140.9027},
+  {region:'関東',name:'習志野SV',lat:35.6813,lon:140.0381},
+  {region:'関東',name:'東金SV',lat:35.5565,lon:140.3686},
+  {region:'関東',name:'上野SV',lat:35.7190,lon:139.7792},
+  {region:'関東',name:'浅草橋SV',lat:35.6997,lon:139.7857},
+  {region:'関東',name:'東京SV（虎ノ門）',lat:35.6617,lon:139.7476},
+  {region:'関東',name:'田園調布SV',lat:35.5924,lon:139.6692},
+  {region:'関東',name:'高円寺SV',lat:35.6964,lon:139.6481},
+  {region:'関東',name:'目白SV',lat:35.7226,lon:139.7064},
+  {region:'関東',name:'亀有SV',lat:35.7651,lon:139.8476},
+  {region:'関東',name:'江戸川SV',lat:35.6584,lon:139.8633},
+  {region:'関東',name:'八王子SV',lat:35.6574,lon:139.3319},
+  {region:'関東',name:'小金井SV',lat:35.7069,lon:139.5086},
+  {region:'関東',name:'おおみやSV',lat:35.8610,lon:139.6580},
+  {region:'関東',name:'越谷SV',lat:35.8886,lon:139.7831},
+  {region:'関東',name:'むさしのSV',lat:35.8114,lon:139.4069},
+  {region:'関東',name:'千葉SV',lat:35.6377,lon:140.0864},
+  {region:'関東',name:'成田SV',lat:35.7816,lon:140.3236},
+  {region:'関東',name:'横浜SV',lat:35.4755,lon:139.6225},
+  {region:'関東',name:'横須賀SV',lat:35.2807,lon:139.6755},
+  {region:'関東',name:'湘南SV',lat:35.2954,lon:139.5879},
+  {region:'関東',name:'前橋SV',lat:36.3894,lon:139.0634},
+  {region:'関東',name:'宇都宮SV',lat:36.5500,lon:139.8970},
+  {region:'中部',name:'新潟SV',lat:37.9162,lon:139.0364},
+  {region:'中部',name:'長岡SV',lat:37.4369,lon:138.7952},
+  {region:'中部',name:'富山SV',lat:36.7101,lon:137.2322},
+  {region:'中部',name:'高岡SV',lat:36.7514,lon:137.0178},
+  {region:'中部',name:'金沢SV',lat:36.5800,lon:136.6248},
+  {region:'中部',name:'福井SV',lat:36.0648,lon:136.2002},
+  {region:'中部',name:'甲府SV',lat:35.6601,lon:138.5841},
+  {region:'中部',name:'長野旭SV',lat:36.5686,lon:138.1431},
+  {region:'中部',name:'松本旭SV',lat:36.2149,lon:137.9774},
+  {region:'中部',name:'諏訪旭SV',lat:36.0156,lon:138.1280},
+  {region:'中部',name:'岐阜SV',lat:35.3963,lon:136.7315},
+  {region:'中部',name:'高山SV',lat:36.1396,lon:137.2500},
+  {region:'中部',name:'名古屋SV',lat:34.9756,lon:136.9966},
+  {region:'近畿',name:'大阪SV',lat:34.6937,lon:135.5023},
+  {region:'近畿',name:'京都SV',lat:35.0116,lon:135.7681},
+  {region:'近畿',name:'神戸SV',lat:34.6901,lon:135.1956},
+  {region:'近畿',name:'奈良SV',lat:34.6851,lon:135.8050},
+  {region:'中国',name:'広島SV',lat:34.3853,lon:132.4553},
+  {region:'中国',name:'岡山SV',lat:34.6552,lon:133.9196},
+  {region:'九州',name:'福岡SV',lat:33.5904,lon:130.4017},
+  {region:'九州',name:'熊本SV',lat:32.8031,lon:130.7079},
+  {region:'九州',name:'鹿児島SV',lat:31.5966,lon:130.5571},
+  // ── 海外 ──
+  {region:'台湾',name:'桃園SV',lat:24.9936,lon:121.3010},
+  {region:'台湾',name:'台北SV',lat:25.0330,lon:121.5654},
+  {region:'アメリカ',name:'サンタアナSV',lat:33.7455,lon:-117.8677},
+  {region:'カナダ',name:'バンクーバーSV',lat:49.2827,lon:-123.1207},
+  {region:'メキシコ',name:'コリマSV',lat:19.2433,lon:-103.7241},
+  {region:'ブラジル',name:'サンパウロSV',lat:-23.5505,lon:-46.6333},
+  {region:'ウルグアイ',name:'モンテビデオSV',lat:-34.9011,lon:-56.1645},
+  {region:'コンゴ',name:'キンシャサSV',lat:-4.3317,lon:15.3217},
+  {region:'アンゴラ',name:'ルアンダSV',lat:-8.8368,lon:13.2343},
+  {region:'フランス',name:'パリSV',lat:48.8566,lon:2.3522},
+  {region:'韓国',name:'ソウルSV',lat:37.5665,lon:126.9780},
+  {region:'タイ',name:'バンコクSV',lat:13.7563,lon:100.5018},
+  {region:'オランダ',name:'オランダSV',lat:52.3676,lon:4.9041},
+  {region:'イギリス',name:'ロンドンSV',lat:51.5074,lon:-0.1278},
+  {region:'ドイツ',name:'ドイツSV',lat:51.1657,lon:10.4515},
+  {region:'フィリピン',name:'マニラSV',lat:14.5995,lon:120.9842},
+  {region:'オーストラリア',name:'シドニーSV',lat:-33.8688,lon:151.2093},
+];
+
+const OVERSEAS_REGIONS=['台湾','アメリカ','カナダ','メキシコ','ブラジル','ウルグアイ','コンゴ','アンゴラ','フランス','韓国','タイ','オランダ','イギリス','ドイツ','フィリピン','オーストラリア'];
+
+function getNearSacred(bearing,range=10){return SACRED.filter(s=>{let d=Math.abs(s.b-bearing);if(d>180)d=360-d;return d<=range;}).sort((a,b)=>{let da=Math.abs(a.b-bearing);if(da>180)da=360-da;let db=Math.abs(b.b-bearing);if(db>180)db=360-db;return da-db;});}
+function tagClass(type){return{god:'tg',kofun:'tk',legend:'tl',shrine:'ts'}[type]||'tg';}
+let tableData=[],sortCol=1,sortAsc=true,currentRegion='all';
+function buildTableData(){tableData=CENTERS.map(c=>{const b=calcB(AM.lat,AM.lon,c.lat,c.lon);const di=calcD(AM.lat,AM.lon,c.lat,c.lon);const d=dir16(b);return{...c,bearing:b,dist:di,dir:d.name,error:d.error};});}
+function isOverseas(region){return OVERSEAS_REGIONS.includes(region);}
+function renderTable(){
+  let data=[...tableData];
+  if(currentRegion==='海外'){data=data.filter(r=>isOverseas(r.region));}
+  else if(currentRegion!=='all'){data=data.filter(r=>r.region===currentRegion);}
+  data.sort((a,b)=>{const v=sortAsc?1:-1;if(sortCol===0)return a.name.localeCompare(b.name,'ja')*v;if(sortCol===1)return(a.bearing-b.bearing)*v;if(sortCol===3)return(a.dist-b.dist)*v;return 0;});
+  const tbody=document.getElementById('tbody1');tbody.innerHTML='';
+  data.forEach((r,i)=>{
+    const color=DIR_COLOR[r.dir]||'#777';const nearby=getNearSacred(r.bearing,12);const uid=`dr-${i}`;
+    const overseas=isOverseas(r.region);
+    const starNote=STAR_NOTES[r.name]||'';
+    const tagsHtml=nearby.slice(0,4).map(s=>{let d=Math.abs(s.b-r.bearing);if(d>180)d=360-d;return`<span class="tag ${tagClass(s.type)}">${s.name}（${d.toFixed(1)}°差）</span>`;}).join('');
+    const starHtml=starNote?`<span class="tag tw">${starNote}</span>`:'';
+    const tr=document.createElement('tr');
+    if(overseas)tr.className='world-row';
+    tr.innerHTML=`<td><strong>${r.name}</strong><br><span style="font-size:11px;color:${overseas?'#4080c0':'#888'}">${r.region}</span></td><td><strong style="font-size:15px">${r.bearing.toFixed(1)}°</strong></td><td><span class="dir-badge" style="background:${color}">${r.dir}</span></td><td>${r.dist.toFixed(0)}km</td><td><div class="tags">${starHtml}${tagsHtml||(!starNote?'<span style="color:#aaa;font-size:11px">—</span>':'')}</div></td><td><button class="detail-btn" onclick="toggleDetail('${uid}')">詳細</button></td>`;
+    tbody.appendChild(tr);
+    const allNearby=getNearSacred(r.bearing,12);
+    const gods=allNearby.filter(s=>s.type==='god');const shrines=allNearby.filter(s=>s.type==='shrine');const kofun=allNearby.filter(s=>s.type==='kofun');const legends=allNearby.filter(s=>s.type==='legend');
+    function listItems(arr){if(!arr.length)return'（なし）';return arr.map(s=>{let d=Math.abs(s.b-r.bearing);if(d>180)d=360-d;return`<div style="margin-bottom:4px">・<strong>${s.name}</strong>（方位角${s.b}°、差${d.toFixed(1)}°）<br><span style="color:#555;font-size:11px;padding-left:12px">${s.note}</span></div>`;}).join('');}
+    const dtr=document.createElement('tr');dtr.className='detail-row';dtr.id=uid;
+    const starBlock=starNote?`<div class="star-note">${starNote}</div>`:'';
+    dtr.innerHTML=`<td class="detail-cell" colspan="6"><div style="font-weight:700;color:#b8860b;margin-bottom:8px">${r.name}　天城から ${r.bearing.toFixed(2)}° (${r.dir}) / ${r.dist.toFixed(0)}km</div>${starBlock}<div class="ds"><div class="dt">神（同方向に伝わる）</div>${listItems(gods)}</div><div class="ds"><div class="dt">神社（同方向）</div>${listItems(shrines)}</div><div class="ds"><div class="dt">古墳（ライン±10°上）</div>${listItems(kofun)}</div><div class="ds"><div class="dt">伝説・聖地（同方向）</div>${listItems(legends)}</div></td>`;
+    tbody.appendChild(dtr);
+  });
+}
+function toggleDetail(uid){document.getElementById(uid).classList.toggle('open');}
+function sortTable(col){if(sortCol===col)sortAsc=!sortAsc;else{sortCol=col;sortAsc=true;}renderTable();}
+function buildFilters(){
+  const japanRegions=['all','北海道','東北','関東','中部','近畿','中国','九州'];
+  const worldRegions=['海外',...OVERSEAS_REGIONS];
+  const wrap=document.getElementById('filters1');
+  japanRegions.forEach(r=>{const btn=document.createElement('button');btn.className='f-btn'+(r==='all'?' active':'');btn.textContent=r==='all'?'すべて':r;btn.onclick=()=>{document.querySelectorAll('#filters1 .f-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentRegion=r;renderTable();};wrap.appendChild(btn);});
+  // 区切り
+  const sep=document.createElement('span');sep.textContent=' | ';sep.style.color='#ccc';wrap.appendChild(sep);
+  worldRegions.forEach(r=>{const btn=document.createElement('button');btn.className='f-btn world';btn.textContent=r;btn.onclick=()=>{document.querySelectorAll('#filters1 .f-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentRegion=r;renderTable();};wrap.appendChild(btn);});
+}
+function switchTab(id,btn){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');}
+function analyzeCustom(){
+  const la=parseFloat(document.getElementById('lat').value),lo=parseFloat(document.getElementById('lon').value),nm=document.getElementById('pname').value.trim()||`${la}N,${lo}E`;
+  if(isNaN(la)||isNaN(lo)){alert('緯度・経度を入力してください');return;}
+  const b=calcB(AM.lat,AM.lon,la,lo),di=calcD(AM.lat,AM.lon,la,lo),d=dir16(b),color=DIR_COLOR[d.name]||'#777';
+  const nearby=getNearSacred(b,10);
+  const gods=nearby.filter(s=>s.type==='god'),shrines=nearby.filter(s=>s.type==='shrine'),kofun=nearby.filter(s=>s.type==='kofun'),legends=nearby.filter(s=>s.type==='legend');
+  function rcList(arr){if(!arr.length)return'<span style="color:#aaa;font-size:11px">（なし）</span>';return'<div class="tags">'+arr.map(s=>{let dif=Math.abs(s.b-b);if(dif>180)dif=360-dif;return`<span class="tag ${tagClass(s.type)}">${s.name}（${dif.toFixed(1)}°差）</span>`;}).join('')+'</div>';}
+  const rc=document.getElementById('rc');
+  rc.innerHTML=`<div class="rc-head"><div class="rc-val">${b.toFixed(2)}°</div><div class="rc-dir"><span class="dir-badge" style="background:${color}">${d.name}</span></div><div class="rc-sub">${nm} ／ 天城から ${di.toFixed(0)}km ／ 16方位中心から誤差 ${d.error.toFixed(1)}°</div></div><div class="rc-body"><div class="rc-sec"><div class="rc-sec-title">神（同方向に伝わる）</div>${rcList(gods)}</div><div class="rc-sec"><div class="rc-sec-title">神社（同方向）</div>${rcList(shrines)}</div><div class="rc-sec"><div class="rc-sec-title">古墳（ライン±10°上）</div>${rcList(kofun)}</div><div class="rc-sec"><div class="rc-sec-title">伝説・聖地（同方向）</div>${rcList(legends)}</div></div>`;
+  rc.classList.add('show');rc.scrollIntoView({behavior:'smooth'});
+}
+window.addEventListener('DOMContentLoaded',()=>{buildTableData();buildFilters();renderTable();});
+</script>
+</body>
+</html>
