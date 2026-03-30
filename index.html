@@ -105,7 +105,7 @@ footer{background:var(--black);color:rgba(255,255,255,0.38);padding:1.8rem 1.4re
 <body>
 
 <header>
-  <div class="h-logo">岩戸ログ</div>
+  <a class="h-logo" href="index.html">岩戸ログ</a>
   <div class="h-coord">34.920°N / 139.018°E</div>
 </header>
 
@@ -130,18 +130,16 @@ footer{background:var(--black);color:rgba(255,255,255,0.38);padding:1.8rem 1.4re
       <div class="tc-desc">記紀以前の神を辿る。座標・大円航路・封印の配置を全20本で記録。</div>
       <span class="tc-link">マガジンを読む →</span>
     </a>
-    <div class="top-card" style="cursor:default;">
-      <div class="tc-tag">TOOL & NOTE</div>
-      <div class="tc-title">三種の神器<br>三角形計算器</div>
-      <div class="tc-desc">SV・山・川・湖・神社・古墳など300件超から3点を選び重心を計算。天城岩戸ログ方位照合付き。</div>
+    <a class="top-card" href="miracle-spread.html">
+      <div class="tc-tag">読み物</div>
+      <div class="tc-title">奇跡が広まる<br>仕組み</div>
+      <div class="tc-desc">手かざし体験がシナプスのように連鎖する構造。SVセンターが「場」になるとはどういうことか。</div>
       <div class="note-links">
-        <a class="nl" href="sanshu.html">🔢 計算器を開く <span>→</span></a>
-        <a class="nl" href="https://note.com/tokko_geo/n/n9575d20e9b7a" target="_blank">📝 最新ノート記事 <span>→</span></a>
-        <a class="nl" href="https://note.com/tokko_geo/n/ndcae1312f369" target="_blank">📐 マガジン一覧 <span>→</span></a>
+        <span class="nl">→ 読む</span>
       </div>
-    </div>
+    </a>
     <a class="pdf-card" href="amagi-complete.pdf" target="_blank">
-      <div class="pdf-label">IWATO LOG 32</div>
+      <div class="pdf-label">天城岩戸ログ 完全版</div>
       <div class="pdf-title">PDF<br>はこちら</div>
       <div class="pdf-arrow">↓ DL</div>
     </a>
@@ -173,11 +171,17 @@ footer{background:var(--black);color:rgba(255,255,255,0.38);padding:1.8rem 1.4re
       <div class="tc2-name">世界3点<br>計算器</div>
       <div class="tc2-desc">世界任意の3点の球面重心と対蹠点を計算。天城×コリマ×ギザなど装置の照準を確かめる。</div>
     </a>
-    <a class="tc2" href="sanshu.html">
-      <div class="tc2-icon">⛩</div>
-      <div class="tc2-tag">計算器</div>
-      <div class="tc2-name">三種の神器<br>三角形計算器</div>
-      <div class="tc2-desc">SV・山・川・湖・神社・古墳など307件から3点を選び重心を計算。神話情報付き。</div>
+    <a class="tc2" href="https://thth1255079.github.io/amatsumikaboshi-map/" target="_blank">
+      <div class="tc2-icon">🗺</div>
+      <div class="tc2-tag">相関図</div>
+      <div class="tc2-name">関東の封印<br>相関図</div>
+      <div class="tc2-desc">アマツミカボシから将門・道真・鹿島まで。関東に張り巡らされた封印の構造を可視化。</div>
+    </a>
+    <a class="tc2" href="amagi-naze.pdf" target="_blank">
+      <div class="tc2-icon">📄</div>
+      <div class="tc2-tag">PDF資料</div>
+      <div class="tc2-name">なぜ天城が<br>中心なのか</div>
+      <div class="tc2-desc">地質・16方位・三角形計算・北極照準——天城が装置の中心である根拠をまとめた資料。</div>
     </a>
     <a class="tc2" href="yama-shinkami.html">
       <div class="tc2-icon">🏔</div>
@@ -197,12 +201,6 @@ footer{background:var(--black);color:rgba(255,255,255,0.38);padding:1.8rem 1.4re
       <div class="tc2-name">夜の民<br>キャラカード</div>
       <div class="tc2-desc">3つ選ぶだけで「夜の民」キャラが生まれる。感覚過敏・夜型の子どもたちへ。</div>
     </a>
-    <a class="tc2" href="https://thth1255079.github.io/taiken-log/" target="_blank">
-      <div class="tc2-icon">✨</div>
-      <div class="tc2-tag">体験掲示板</div>
-      <div class="tc2-name">発言袋小路<br>体験の記録庫</div>
-      <div class="tc2-desc">手かざし・ヒーリング・瞑想など。「何をして、どうなったか」だけを書く場所。</div>
-    </a>
   </div>
 </div>
 
@@ -210,11 +208,13 @@ footer{background:var(--black);color:rgba(255,255,255,0.38);padding:1.8rem 1.4re
 <div class="sec reveal">
   <div class="sec-head">
     <span class="sec-en">BOARD</span>
-    <span class="sec-ja">発言袋小路</span>
+    <span class="sec-ja">発言の裏小路</span>
   </div>
   <div class="board-intro">
-    <div class="board-intro-title">🗣 発言袋小路</div>
+    <a href="https://thth1255079.github.io/taiken-log/" target="_blank" style="text-decoration:none;color:inherit;">
+    <div class="board-intro-title">🗣 発言の裏小路 <span style="font-size:0.75rem;color:var(--gold);">→ 開く</span></div>
     <div class="board-intro-desc">いいたいのにいえない事を言うサイト。計算で出てきた気になること、神話と地形の交差点、誰かに伝えたい発見を置いていきます。</div>
+    </a>
   </div>
   <div class="board"></div>
 </div>
@@ -227,13 +227,19 @@ footer{background:var(--black);color:rgba(255,255,255,0.38);padding:1.8rem 1.4re
   </div>
   <div class="news-list">
     <div class="news-item">
-      <div class="news-label">気になるニュース</div>
-      <div class="news-title">「Nature Communications」に発表されたのは、クフ王のピラミッド内に新たな空間が発見された</div>
-      <div class="news-body">webから拾ってきた気になるニュースをここに置いていきます。スピリチュアル・地形・神話・量子に関係しそうな話題を随時追加。</div>
+      <div class="news-label">座標の奇跡 — 2026</div>
+      <div class="news-title">スザからSSWに4743km一直線 → 6万7800年前の手形洞窟にピッタリ到達</div>
+      <div class="news-body">スザ（北緯34.920444°、東経139.017500°）からSSW（方位角202.43°）に伸ばすと、インドネシア・ムナ島「リアン・メタンドゥノ洞窟」に到達。Nature誌で報じられた67,800年前の手形が、このラインの先にほぼ完璧に位置する。16方位マンダラのSSW中心（202.5°）との誤差わずか0.07°。</div>
     </div>
-    <div class="news-item" style="border-style:dashed;color:var(--light);">
-      <div class="news-label">情報カメラがとらえた“火の玉” 流れ星の中でも特に明るく輝く「火球」か 26日 秋田（2026年2月27日掲載）｜ABS NEWS NNN</div>
-      <div class="news-title" style="color:var(--light);">ニュースを随時更新していきます</div>
+    <div class="news-item">
+      <div class="news-label">2026年2月26日 — NHKニュース</div>
+      <div class="news-title">青森・秋田に火球が出現——3月1日月始祭の前夜明け</div>
+      <div class="news-body">2026年2月26日午前4時48分頃、能代市・横手市・青森県深浦町のNHKカメラが「光の玉」を同時刻に撮影。東北北部から北海道南部にかけて広域で目撃。仙台市天文台が火球の可能性が高いと発表。通常の出現時期（旧暦7月頃）とは異なる、この時期としては珍しい現象。</div>
+    </div>
+    <div class="news-item">
+      <div class="news-label">気になるニュース</div>
+      <div class="news-title">クフ王のピラミッド内に新たな空間が発見された</div>
+      <div class="news-body">「Nature Communications」に発表。クフ王のピラミッド内に新たな空間が確認された。非破壊的な宇宙線ミュオン透視技術による調査。天城からNW方向（ギザ304.3°）の聖地に新たな発見。</div>
     </div>
   </div>
 </div>
@@ -255,15 +261,15 @@ footer{background:var(--black);color:rgba(255,255,255,0.38);padding:1.8rem 1.4re
     <a class="nc" href="https://note.com/fancy_sable4582" target="_blank">
       <div class="nc-icon">🌀</div>
       <div class="nc-tag">理論層</div>
-      <div class="nc-name">消された記憶・影の地形学</div>
-      <div class="nc-desc">関・古代地形・消された記憶の理論的展開。</div>
+      <div class="nc-name">消された記憶の理論</div>
+      <div class="nc-desc">神話・古代地形・消された記憶の理論的展開。</div>
       <span class="nc-arrow">fancy_sable4582 →</span>
     </a>
-    <a class="nc" href="https://note.com/apt_hound2110/m/mc6fdca022cdd" target="_blank">
+    <a class="nc" href="https://note.com/apt_hound2110" target="_blank">
       <div class="nc-icon">🌙</div>
       <div class="nc-tag">方法論</div>
       <div class="nc-name">直感×AIの記録</div>
-      <div class="nc-desc">直感×AIのやりとりを記録。AIの使い方。高次元の干渉、量子もつれとの関係</div>
+      <div class="nc-desc">直感×AIのやりとりを記録。夜の民図鑑・子どもたちへの実践。</div>
       <span class="nc-arrow">apt_hound2110 →</span>
     </a>
   </div>
@@ -273,16 +279,16 @@ footer{background:var(--black);color:rgba(255,255,255,0.38);padding:1.8rem 1.4re
 <div class="sec reveal">
   <div class="sec-head">
     <span class="sec-en">ABOUT</span>
-    <span class="sec-ja">管理人</span>
+    <span class="sec-ja">十湖（とっこ）について</span>
   </div>
   <div class="about">
     <div class="about-coord">Origin : 34.920°N / 139.018°E — 天城・伊豆</div>
     <div class="about-name">十湖（とっこ）</div>
     <div class="about-body">
-      スピリチュアルと地形と神話、量子の世界とAIを通して読み取るただの個人です。<br><br>
+      スピリチュアルと地形と神話、量子の世界をAIを通して読み取るただの個人です。<br><br>
       言葉になる前の感覚をAIに投げ、大円航路の方位角で日本の古代地図を読み直す。
       「消された関」「封印された神」「記紀以前の記憶」——それらが
-      <strong>計算上のパターンとして浮かび上がる瞬間</strong>を記録する地形神話オタク。
+      <strong>計算上のパターンとして浮かび上がる瞬間</strong>を記録し続けています。
     </div>
   </div>
 </div>
