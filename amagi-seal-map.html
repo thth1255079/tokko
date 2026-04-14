@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>封印活動マップ — 天城岩戸ログ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Source+Code+Pro:wght@300;400&display=swap');
+
+:root {
+  --bg: #0a0c10;
+  --bg2: #12151c;
+  --bg3: #1a1f2a;
+  --ink: #f0ece0;
+  --dim: #6a7080;
+  --rule: #2a3040;
+
+  --typeA: #e84020;
+  --typeA-glow: rgba(232,64,32,0.4);
+  --typeB: #2060e8;
+  --typeB-glow: rgba(32,96,232,0.4);
+  --typeC: #20c060;
+  --typeC-glow: rgba(32,192,96,0.3);
+  --typeX: #404858;
+  --gold: #e0b040;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.page { max-width: 900px; margin: 0 auto; padding: 28px 16px 60px; }
+
+/* ヘッダー */
+header { margin-bottom: 24px; border-bottom: 1px solid var(--rule); padding-bottom: 14px; }
+.h-title { font-size: clamp(1rem,3vw,1.35rem); font-weight: 700; letter-spacing: .06em; color: var(--gold); }
+.h-sub { font-family: 'Source Code Pro', monospace; font-size: .60rem; color: var(--dim); letter-spacing: .06em; line-height: 2; margin-top: 4px; }
+
+/* 凡例 */
+.legend {
+  display: flex; flex-wrap: wrap; gap: 8px 20px;
+  margin-bottom: 20px; padding: 12px 14px;
+  background: var(--bg2); border: 1px solid var(--rule);
+}
+.lg { display: flex; align-items: center; gap: 8px; }
+.lg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.lg-text { font-size: .68rem; color: var(--ink); }
+.lg-sub  { font-size: .60rem; color: var(--dim); margin-left: 4px; }
+
+/* メインSVG */
+.map-wrap {
+  position: relative;
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.map-wrap svg { display: block; width: 100%; }
+
+/* 詳細パネル */
+.detail-panel {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 16px 18px;
+  min-height: 120px;
+  display: none;
+}
+.detail-panel.open { display: block; }
+.dp-dir { font-family: 'Source Code Pro', monospace; font-size: .65rem; color: var(--dim); letter-spacing: .1em; margin-bottom: 4px; }
+.dp-title { font-size: 1.05rem; font-weight: 700; color: var(--gold); margin-bottom: 12px; letter-spacing: .04em; }
+.dp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 520px) { .dp-grid { grid-template-columns: 1fr; } }
+
+.dp-section-label { font-family: 'Source Code Pro', monospace; font-size: .58rem; color: var(--dim); letter-spacing: .1em; text-transform: uppercase; border-bottom: 1px solid var(--rule); padding-bottom: 5px; margin-bottom: 8px; }
+
+.deity-block { margin-bottom: 8px; padding: 9px 11px; border-left: 2px solid var(--rule); }
+.deity-block.dA { border-left-color: var(--typeA); background: rgba(232,64,32,.06); }
+.deity-block.dB { border-left-color: var(--typeB); background: rgba(32,96,232,.06); }
+.deity-block.dC { border-left-color: var(--typeC); background: rgba(32,192,96,.05); }
+.deity-block.dX { border-left-color: var(--typeX); background: rgba(64,72,88,.08); }
+.deity-name { font-size: .88rem; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.deity-desc { font-size: .70rem; color: #a0a8b8; line-height: 1.75; }
+
+.ev-block { margin-bottom: 7px; padding: 8px 10px; font-size: .69rem; line-height: 1.8; border: 1px solid var(--rule); color: #a0a8b8; }
+.ev-block.evA { border-color: rgba(232,64,32,.4); background: rgba(232,64,32,.06); color: #f09080; }
+.ev-block.evB { border-color: rgba(32,96,232,.4); background: rgba(32,96,232,.06); color: #8090f0; }
+.ev-block.evC { border-color: rgba(32,192,96,.3); background: rgba(32,192,96,.05); color: #60d090; }
+.ev-label { font-family: 'Source Code Pro', monospace; font-size: .56rem; letter-spacing: .1em; opacity: .7; margin-bottom: 2px; }
+
+.sv-list { font-size: .68rem; color: var(--dim); line-height: 1.9; }
+.sv-list span { color: var(--ink); margin-right: 6px; }
+
+.close-btn {
+  float: right; font-family: 'Source Code Pro', monospace;
+  font-size: .60rem; color: var(--dim); cursor: pointer;
+  border: 1px solid var(--rule); padding: 2px 8px;
+  background: var(--bg3); letter-spacing: .05em;
+}
+.close-btn:hover { color: var(--ink); }
+
+.footer { margin-top: 28px; padding-top: 12px; border-top: 1px solid var(--rule); font-family: 'Source Code Pro', monospace; font-size: .57rem; color: var(--dim); letter-spacing: .06em; line-height: 2; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="h-title">封印活動マップ — 天城を原点とした16方位</div>
+  <div class="h-sub">
+    原点：天城山 34.92°N / 139.02°E　／　天城岩戸ログ + 世界岩戸ログ Layer 1–2<br>
+    方位帯をタップすると詳細表示　／　線の太さ＝指導部の数　／　色＝封印の状態<br>
+    SE帯・SSE帯：2026年3月 世界岩戸ログ001（NNE↔SE対角構造）追加済み
+  </div>
+</header>
+
+<div class="legend">
+  <div class="lg"><div class="lg-dot" style="background:var(--typeA);box-shadow:0 0 6px var(--typeA-glow);"></div><div class="lg-text">Type A <span class="lg-sub">封印が抵抗中・深発地震あり</span></div></div>
+  <div class="lg"><div class="lg-dot" style="background:var(--typeB);box-shadow:0 0 6px var(--typeB-glow);"></div><div class="lg-text">Type B <span class="lg-sub">固定・装置が現役稼働中</span></div></div>
+  <div class="lg"><div class="lg-dot" style="background:var(--typeC);box-shadow:0 0 6px var(--typeC-glow);"></div><div class="lg-text">Type C <span class="lg-sub">自発的封印・単発大型地震</span></div></div>
+  <div class="lg"><div class="lg-dot" style="background:var(--typeX);"></div><div class="lg-text">記録なし <span class="lg-sub">DB未構築</span></div></div>
+  <div class="lg"><div class="lg-dot" style="background:var(--gold);"></div><div class="lg-text">本部・神殿 <span class="lg-sub">天城至近</span></div></div>
+</div>
+
+<div class="map-wrap">
+  <svg id="map-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<div class="detail-panel" id="detail-panel">
+  <button class="close-btn" onclick="closeDetail()">✕ 閉じる</button>
+  <div class="dp-dir" id="dp-dir"></div>
+  <div class="dp-title" id="dp-title"></div>
+  <div class="dp-grid" id="dp-grid"></div>
+</div>
+
+<div class="footer">
+  LAYER 1–2 記録　／　原点：天城山 34.92°N 139.02°E<br>
+  出典：真光誌716号（R8.4）本部・指導部所在地一覧　／　封印タイプはLayer 2（観察）　／　評価なし・スコアなし
+</div>
+</div>
+
+<script>
+// ── 方位帯データ ──
+const DIRS = [
+  {
+    code:'N', deg:0, label:'N（北）0°', theme:'記紀に書かれなかった神々',
+    type:'A', quake:'A',
+    sv:['北関東方面（前橋1.35°）','山形方面（鶴岡9.39°）','新潟方面（長岡356.96°）'],
+    count:3,
+    deities:[
+      {name:'アラハバキ', t:'A', desc:'黒又山（11.0°）。縄文の原初神。記紀未収録。発掘禁止継続中。'},
+      {name:'縄文の神々', t:'A', desc:'三内丸山（12.3°）。記紀の「国生み」以前の文明の痕跡。'},
+    ],
+    evidence:[
+      {t:'A', label:'禁足', text:'黒又山・発掘禁止（現在も継続）'},
+      {t:'A', label:'地名', text:'一戸〜九戸（北の境界を封じる九つの門）'},
+    ],
+    quakeLog:'N帯での地震活動記録あり。深発系列との直接対応は調査継続中。',
+  },
+  {
+    code:'NNE', deg:22.5, label:'NNE（北北東）22.5°', theme:'封印が抵抗中・深発系列進行中',
+    type:'A', quake:'A',
+    sv:['北海道方面（札幌11.72°）','東北方面（仙台23.71°）','西関東方面（八王子19.60°）'],
+    count:3,
+    deities:[
+      {name:'アマツミカボシ（天津甕星）', t:'A', desc:'国譲りで最後まで抵抗した星神。常陸を本拠に封印された。引き出すと将門・物部・千葉・藤原・家康が芋づる式に連動。'},
+      {name:'九尾の狐', t:'A', desc:'那須殺生石（20.0°）。2022年に封印の石が自然崩壊。千年以上続いた封印が物理的に解除。'},
+      {name:'八郎太郎', t:'A', desc:'十和田湖（14.3°）。海神・龍神。龍神祭が現在も継続。'},
+    ],
+    evidence:[
+      {t:'A', label:'深発系列', text:'1/11岩手80km → 2/16栃木星宮直下130km → 2/22栃木藤宮直下211km（42日間・NNE20°帯）'},
+      {t:'A', label:'2022崩壊', text:'那須殺生石（20.0°）が自然に割れた。千年以上の封印が物理的に解除。'},
+      {t:'A', label:'芋づる', text:'アマツミカボシ→将門→物部→千葉氏→藤原→家康の江戸封印が多層に癒着'},
+    ],
+    quakeLog:'深発系列進行中：80→130→211kmと42日間で段階的に深化。',
+  },
+  {
+    code:'NE', deg:45, label:'NE（北東）45°', theme:'将門・多層封印・常陸',
+    type:'A', quake:'A',
+    sv:['千葉方面（習志野47.21°）','東関東方面（浅草橋38.59°）','東京方面（上野37.73°）','北米方面（55.17°）'],
+    count:4,
+    deities:[
+      {name:'平将門', t:'A', desc:'首（大手町37.9°）・胴（延命寺33.9°）・兜の三分割封印。首塚は再開発のたびに事故。現在も移動不能。'},
+      {name:'アマツミカボシ（千葉氏妙見）', t:'A', desc:'千葉氏の氏神・妙見菩薩はアマツミカボシを取り込んだ封印構造。封印した側と封印された神が同一氏族に混在。'},
+      {name:'鹿島・香取の要石神', t:'B', desc:'要石（鹿島50.9°・香取51.0°）が現在も地中に存在。地底のナマズを押さえる物理的装置。'},
+    ],
+    evidence:[
+      {t:'A', label:'禁足', text:'八幡の藪知らず（42.2°）立入禁止継続中。川崎方面（42.21°）と0.01°差。'},
+      {t:'A', label:'現存', text:'将門の首塚（大手町37.9°）移動不能。再開発のたびに事故。'},
+      {t:'B', label:'現存', text:'要石（鹿島・香取）地中に現存。抜けないと伝わる。'},
+    ],
+    quakeLog:'1/9 千葉県北東部M4.7（秋田と同日同夜）。NE帯の地震活動継続中。',
+  },
+  {
+    code:'ENE', deg:67.5, label:'ENE（東北東）67.5°', theme:'コリマ火山・ペルー深発帯（1°差）',
+    type:'X', quake:'A',
+    sv:['中南米方面（コリマ58.33°・建設中）'],
+    count:1,
+    deities:[
+      {name:'コリマ火山（建設中のスザ）', t:'X', desc:'天城×コリマ×ギザの球面重心は北緯85.07°（北極点549km）。3点すべてからほぼ真北を指す配置。2026年10月竣工予定。'},
+      {name:'ペルー深発帯', t:'A', desc:'天城からENE57°方位にペルー内陸部深発地震帯が位置する。ペルーM6.8深さ560km（2023年・57°）。コリマ（58.33°）と1°差で一致。'},
+    ],
+    evidence:[
+      {t:'A', label:'深発帯一致', text:'ペルー深発地震帯（ENE57°）とコリマ火山（ENE58.33°）が天城から1°差で一致。ボリビア深発M8.2深さ647km（1994年・NE55°）も近接帯域。'},
+      {t:'X', label:'Layer 3', text:'コリマにスザが建てられた時点で天城×コリマ×ギザの三角形が完成する（仮説）。ペルー深発帯との方位一致の意味は調査継続中。'},
+    ],
+    quakeLog:'ペルー深発帯（ENE57°）とコリマ（ENE58°）が1°差で一致することを確認（Layer 1）。',
+  },
+  {code:'E', deg:90, label:'E（東）90°', theme:'記録なし', type:'X', quake:'Q', sv:[], count:0, deities:[{name:'記録なし',t:'X',desc:'この方位帯に対応する封印DBの記録がない。調査継続中。'}], evidence:[], quakeLog:'記録なし。'},
+  {code:'ESE', deg:112.5, label:'ESE（東南東）112.5°', theme:'記録なし', type:'X', quake:'Q', sv:[], count:0, deities:[{name:'記録なし',t:'X',desc:'この方位帯に対応する封印DBの記録がない。調査継続中。'}], evidence:[], quakeLog:'記録なし。'},
+  {
+    code:'SE', deg:135, label:'SE（南東）135°', theme:'NNEの対角・トンガ/フィジー超深発帯【世界岩戸ログ001】',
+    type:'A', quake:'A',
+    sv:[], count:0,
+    deities:[
+      {name:'トンガ・フィジー超深発帯', t:'A', desc:'天城からSE133〜135°方位。世界最大規模の超深発地震が集中する帯域。フィジーM8.2深さ670km（2018）、トンガM7.6深さ238km（2026/3/24）。NNE20°（日本国内・封印深発系列）と天城を挟んでほぼ対角の位置関係にある。'},
+    ],
+    evidence:[
+      {t:'A', label:'2026/3/24', text:'トンガM7.6・深さ238km（SE133°）。NNE深発系列（1〜2月・80→130→211km）の直後に対角方位で大型深発地震が発生。'},
+      {t:'A', label:'歴史深発', text:'フィジー諸島深発M8.2・深さ670km（2018年・SE135°）。世界有数の超深発地震帯。'},
+      {t:'A', label:'対角構造', text:'NNE20°とSE133°は天城を挟んで差113°（ほぼ対角）。1〜2月NNE活発→3月SE大型深発という時系列が観察された。世界岩戸ログ001として記録。'},
+    ],
+    quakeLog:'【世界岩戸ログ001】2026/3/24 トンガM7.6深さ238km（SE133°）。NNE深発系列の直後。NNE↔SE対角構造として記録。',
+  },
+  {
+    code:'SSE', deg:157.5, label:'SSE（南南東）157.5°', theme:'バヌアツ深発帯【世界岩戸ログ001連続】',
+    type:'A', quake:'A',
+    sv:[], count:0,
+    deities:[
+      {name:'バヌアツ深発帯', t:'A', desc:'天城からSSE147°方位にバヌアツ諸島が位置する。プレート沈み込みが活発で深発地震が繰り返し発生する帯域。2026年3月30日、トンガの6日後に連続発生。'},
+    ],
+    evidence:[
+      {t:'A', label:'2026/3/30', text:'バヌアツM7.3・深さ116km（SSE147°）。トンガM7.6（3/24・SE）の6日後に隣接帯域で連続発生。'},
+      {t:'A', label:'SE→SSE連続', text:'3/24トンガ（SE133°）→3/30バヌアツ（SSE147°）と、6日間で南東帯を南へ移動する形で深発大型地震が連続した。'},
+    ],
+    quakeLog:'2026/3/30 バヌアツM7.3深さ116km（SSE147°）。SE→SSEへの連続として記録。世界岩戸ログ001の一部。',
+  },
+  {
+    code:'S', deg:180, label:'S（南）180°', theme:'小笠原超深発帯',
+    type:'X', quake:'Q',
+    sv:[], count:0,
+    deities:[
+      {name:'小笠原諸島西方超深発帯', t:'X', desc:'天城からS169°方位。2015年M7.9・深さ681kmという日本の地震観測史上最深の深発地震が起きた帯域。2026年は静穏。'},
+    ],
+    evidence:[
+      {t:'X', label:'歴史深発', text:'小笠原諸島西方M7.9・深さ681km（2015年・S169°）。日本の地震観測史上最大の超深発地震。'},
+    ],
+    quakeLog:'小笠原超深発帯（S169°）。2026年1〜4月での活動記録なし。',
+  },
+  {
+    code:'SSW', deg:202.5, label:'SSW（南南西）202.5°', theme:'インドネシア深発帯',
+    type:'A', quake:'S',
+    sv:[], count:0,
+    deities:[
+      {name:'インドネシア深発帯（バンダ海・タラウド・モルッカ）', t:'A', desc:'天城からSSW198〜203°方位。フィリピン海プレートの沈み込みで深発地震が繰り返し発生する帯域。'},
+    ],
+    evidence:[
+      {t:'A', label:'2026/4/2', text:'インドネシア・モルッカ海M7.4深さ35km（SSW202°）。津波発生。'},
+      {t:'A', label:'深発帯', text:'バンダ海M6.9深さ521km（2023年・SSW199°）。タラウド諸島M7.0深さ312km（2024年・SSW203°）。この帯域は繰り返し深発地震が発生。'},
+    ],
+    quakeLog:'2026/4/2 インドネシア・モルッカ海M7.4深さ35km（SSW202°）。歴史的にも深発地震が集中する帯域。',
+  },
+  {
+    code:'SW', deg:225, label:'SW（南西）225°', theme:'記録なし（沖縄・琉球神話系）',
+    type:'X', quake:'Q',
+    sv:['沖縄方面（那覇231.25°）'],
+    count:1,
+    deities:[{name:'記録なし（琉球神話系）', t:'X', desc:'琉球の神話体系は記紀と別系統。対応する封印DBが未構築。'}],
+    evidence:[],
+    quakeLog:'SW帯での顕著な深発記録なし。宮古島近海の繰り返し地震は別系統。',
+  },
+  {
+    code:'WSW', deg:247.5, label:'WSW（西南西）247.5°', theme:'記紀の主役・天孫降臨',
+    type:'B', quake:'Q',
+    sv:['西九州方面（諫早256.90°）','東九州方面（大分256.78°）','熊本方面（255.27°）','南九州方面（鹿児島247.00°）','北台湾方面（241.51°）','南台湾方面（240.82°）'],
+    count:6,
+    deities:[
+      {name:'ニニギノミコト', t:'B', desc:'霧島神宮（248.6°）。天孫降臨の主役。記紀の正史が集中する方位。'},
+      {name:'天照大御神', t:'B', desc:'伊勢神宮内宮（256.9°）。式年遷宮（20年ごと）により力の更新が現在も稼働中。次回2033年。'},
+    ],
+    evidence:[
+      {t:'B', label:'神事', text:'式年遷宮（伊勢・20年ごと）現在も稼働。次回2033年。'},
+      {t:'B', label:'神事', text:'高千穂の夜神楽（毎年11月〜2月）継続中。'},
+    ],
+    quakeLog:'WSW帯での顕著な深発記録なし。',
+  },
+  {
+    code:'W', deg:270, label:'W（西）270°', theme:'国譲り・封印装置が最も多い方位',
+    type:'B', quake:'S',
+    sv:['静岡方面（浜松259.23°）','東海方面（名古屋278.89°）','愛知方面（豊田276.68°）','中京方面（知多272.57°）','関西方面（大阪266.09°）','中国方面（福山266.30°）','四国方面（新居浜260.17°）','福岡方面（262.19°）'],
+    count:8,
+    deities:[
+      {name:'オオクニヌシ', t:'C', desc:'出雲大社（277.1°）。国譲りで自発的に退いた。60年ごとの大遷宮で封印を更新。2026/1/6 M6.4で単発大型地震が発生。'},
+      {name:'温羅（うら）', t:'B', desc:'吉備津神社（268.2°）。首を境内に埋めたが唸り続けた。鳴釜神事で封印を現在も定期確認中。'},
+      {name:'大物主神', t:'B', desc:'三輪山（262.4°）。山全体が御神体。現在も発掘禁止。'},
+      {name:'饒速日命（ニギハヤヒ）', t:'C', desc:'物部神社（275.3°）。天孫降臨より前に天降った先行神。記紀では脇役化。'},
+    ],
+    evidence:[
+      {t:'S', label:'地震', text:'2026/1/6 島根M6.4 深さ11km（W276.2°）。単発・大型。Type Cの典型。'},
+      {t:'B', label:'神事', text:'鳴釜神事（吉備津神社・現在も継続）。温羅の首が唸り続けた記録。'},
+      {t:'B', label:'禁足', text:'三輪山禁足地（262.4°）現在も発掘禁止。'},
+      {t:'B', label:'火', text:'消えずの火（宮島・弥山265.5°）806年〜現在。1,200年以上継続。'},
+    ],
+    quakeLog:'2026/1/6 島根M6.4（単発）。その後は静穏。',
+  },
+  {
+    code:'WNW', deg:292.5, label:'WNW（西北西）292.5°', theme:'消された関・世界文明の起源',
+    type:'B', quake:'Q',
+    sv:['福井方面（297.37°）','アフリカ方面（キンシャサ287.08°）'],
+    count:2,
+    deities:[
+      {name:'天火明命（アメノホアカリ）', t:'B', desc:'籠神社（丹後 286.0°）。元伊勢とされる。記紀では傍流に置かれた系譜。「元の伊勢」という位置づけ自体が書き換えの痕跡。'},
+    ],
+    evidence:[
+      {t:'B', label:'消失', text:'愛発関（291.8°）消された関。場所の特定が困難。'},
+      {t:'X', label:'方位', text:'メッカ291.1°・北京天壇291.4°・ペルセポリス292.8°・メロエ293.1°・キンシャサ287.08°が同方位帯に集中。'},
+    ],
+    quakeLog:'WNW帯での顕著な深発記録なし。',
+  },
+  {
+    code:'NW', deg:315, label:'NW（北西）315°', theme:'消された古い神々',
+    type:'B', quake:'Q',
+    sv:['富山方面（321.00°）','石川方面（311.22°）'],
+    count:2,
+    deities:[
+      {name:'タケミナカタ', t:'B', desc:'諏訪湖（324.7°）。国譲りで敗北後に封じられた。御柱祭（6年ごと）で封印更新中。次回2028年。'},
+      {name:'国常立尊', t:'B', desc:'御嶽山（311.6°）。記紀冒頭に名前だけ登場し消える最古の神格。'},
+      {name:'菊理媛', t:'B', desc:'白山（311.4°）。記紀にほぼ登場しない謎の神格。'},
+    ],
+    evidence:[
+      {t:'B', label:'神事', text:'御柱祭（諏訪・6年ごと）現在も稼働。次回2028年。'},
+      {t:'B', label:'現象', text:'御神渡り（諏訪湖・冬季）タケミナカタの力の顕現として記録。'},
+    ],
+    quakeLog:'NW帯での顕著な深発記録なし。',
+  },
+  {
+    code:'NNW', deg:337.5, label:'NNW（北北西）337.5°', theme:'岩戸を投げた地・巨石文化',
+    type:'A', quake:'Q',
+    sv:['山梨方面（甲府333.75°）','信濃方面（諏訪326.77°）'],
+    count:2,
+    deities:[
+      {name:'戸隠の神々', t:'A', desc:'戸隠山（337.9°）。天岩戸を投げた地。封印の道具そのものが飛来した場所。'},
+      {name:'富士山（宮下文書）', t:'A', desc:'富士山（331.8°）。宮下文書が「高天原」の地とする。'},
+    ],
+    evidence:[
+      {t:'X', label:'遺跡', text:'ストーンヘンジ335.1°・エーブベリー335.4°・ニューグレンジ335.9°が同方位帯に集中。'},
+      {t:'B', label:'神話', text:'戸隠神社（337.9°）。岩戸を投げた地として現在も参拝者が絶えない。'},
+    ],
+    quakeLog:'NNW帯での顕著な深発記録なし（2026年1〜2月）。',
+  },
+];
+
+// ── 色定義 ──
+const TYPE_COLOR = {
+  A: '#e84020',
+  B: '#2060e8',
+  C: '#20c060',
+  X: '#404858',
+  H: '#e0b040',
+};
+const TYPE_GLOW = {
+  A: 'rgba(232,64,32,0.5)',
+  B: 'rgba(32,96,232,0.4)',
+  C: 'rgba(32,192,96,0.35)',
+  X: 'rgba(64,72,88,0.2)',
+  H: 'rgba(224,176,64,0.5)',
+};
+const QUAKE_PULSE = { A: true, S: false, Q: false };
+
+// ── SVG描画 ──
+const CX = 400, CY = 400;
+const R_INNER = 40;
+const R_MAX = 300;
+const R_LABEL = 330;
+
+function polarX(deg, r) {
+  return CX + r * Math.sin(deg * Math.PI / 180);
+}
+function polarY(deg, r) {
+  return CY - r * Math.cos(deg * Math.PI / 180);
+}
+
+function buildMap() {
+  const svg = document.getElementById('map-svg');
+  let html = '';
+
+  // 背景の同心円
+  [0.25, 0.5, 0.75, 1.0].forEach(f => {
+    const r = R_INNER + (R_MAX - R_INNER) * f;
+    html += `<circle cx="${CX}" cy="${CY}" r="${r}" fill="none" stroke="#1e2535" stroke-width="1" stroke-dasharray="3,5"/>`;
+  });
+
+  // 16方位の薄いガイドライン
+  DIRS.forEach(d => {
+    const x2 = polarX(d.deg, R_MAX + 10);
+    const y2 = polarY(d.deg, R_MAX + 10);
+    html += `<line x1="${CX}" y1="${CY}" x2="${x2}" y2="${y2}" stroke="#1e2535" stroke-width="0.5"/>`;
+  });
+
+  // 各方位帯の「アーム」
+  DIRS.forEach(d => {
+    if (d.count === 0 && d.type === 'X' && !d.sv.length) {
+      // 記録なし：細い点線
+      const x2 = polarX(d.deg, R_INNER + (R_MAX - R_INNER) * 0.2);
+      const y2 = polarY(d.deg, R_INNER + (R_MAX - R_INNER) * 0.2);
+      html += `<line x1="${polarX(d.deg, R_INNER)}" y1="${polarY(d.deg, R_INNER)}" x2="${x2}" y2="${y2}" stroke="${TYPE_COLOR.X}" stroke-width="1" stroke-dasharray="2,4" opacity="0.3"/>`;
+      return;
+    }
+
+    const color = TYPE_COLOR[d.type];
+    const glow  = TYPE_GLOW[d.type];
+
+    // アームの長さ：指導部数と封印タイプで決める
+    const lengthFactor = Math.min(0.3 + d.count * 0.12 + (d.type==='A'?0.2:d.type==='B'?0.1:0), 1.0);
+    const armR = R_INNER + (R_MAX - R_INNER) * lengthFactor;
+
+    // 太さ：指導部数
+    const strokeW = 2 + d.count * 1.5 + (d.type==='A'?2:0);
+
+    const x1 = polarX(d.deg, R_INNER);
+    const y1 = polarY(d.deg, R_INNER);
+    const x2 = polarX(d.deg, armR);
+    const y2 = polarY(d.deg, armR);
+
+    // グロー効果（Type A は強め）
+    html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${glow}" stroke-width="${strokeW + 6}" stroke-linecap="round"/>`;
+    html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${strokeW}" stroke-linecap="round" opacity="0.9"/>`;
+
+    // 先端のドット
+    const dotR = 4 + d.count * 0.8;
+    html += `<circle cx="${x2}" cy="${y2}" r="${dotR}" fill="${color}" opacity="0.9"/>`;
+    if (d.type === 'A') {
+      html += `<circle cx="${x2}" cy="${y2}" r="${dotR + 4}" fill="none" stroke="${color}" stroke-width="1" opacity="0.5"/>`;
+    }
+
+    // タップ領域（透明な太い線）
+    html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="transparent" stroke-width="20" stroke-linecap="round" style="cursor:pointer" onclick="showDetail('${d.code}')"/>`;
+    html += `<circle cx="${x2}" cy="${y2}" r="${dotR + 8}" fill="transparent" style="cursor:pointer" onclick="showDetail('${d.code}')"/>`;
+  });
+
+  // ラベル
+  DIRS.forEach(d => {
+    const hasData = d.count > 0 || d.type !== 'X';
+    const color = hasData ? TYPE_COLOR[d.type] : '#2a3040';
+    const lx = polarX(d.deg, R_LABEL);
+    const ly = polarY(d.deg, R_LABEL);
+    const anchor = lx < CX - 10 ? 'end' : lx > CX + 10 ? 'start' : 'middle';
+    const opacity = hasData ? '1' : '0.3';
+
+    html += `<text x="${lx}" y="${ly}" text-anchor="${anchor}" font-family="'Source Code Pro',monospace" font-size="13" font-weight="700" fill="${color}" opacity="${opacity}" style="cursor:pointer" onclick="showDetail('${d.code}')">${d.code}</text>`;
+
+    // 指導部数バッジ
+    if (d.count > 0) {
+      const bx = polarX(d.deg, R_LABEL + 16);
+      const by = polarY(d.deg, R_LABEL + 16);
+      html += `<text x="${bx}" y="${by}" text-anchor="${anchor}" font-family="'Noto Sans JP',sans-serif" font-size="9" fill="${color}" opacity="0.6" style="cursor:pointer" onclick="showDetail('${d.code}')">${d.count}拠点</text>`;
+    }
+  });
+
+  // 中心の天城
+  html += `
+    <circle cx="${CX}" cy="${CY}" r="${R_INNER}" fill="#0a0c10" stroke="${TYPE_COLOR.H}" stroke-width="1.5"/>
+    <circle cx="${CX}" cy="${CY}" r="${R_INNER - 6}" fill="none" stroke="${TYPE_COLOR.H}" stroke-width="0.5" stroke-dasharray="2,3" opacity="0.5"/>
+    <text x="${CX}" y="${CY - 6}" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="11" font-weight="700" fill="${TYPE_COLOR.H}">天城山</text>
+    <text x="${CX}" y="${CY + 8}" text-anchor="middle" font-family="'Source Code Pro',monospace" font-size="8" fill="${TYPE_COLOR.H}" opacity="0.7">34.92°N</text>
+    <text x="${CX}" y="${CY + 18}" text-anchor="middle" font-family="'Source Code Pro',monospace" font-size="8" fill="${TYPE_COLOR.H}" opacity="0.7">139.02°E</text>
+  `;
+
+  // 本部マーカー（WSW方向・天城至近）
+  const honbuDeg = 247.9;
+  const honbuR = R_INNER + 20;
+  const hx = polarX(honbuDeg, honbuR);
+  const hy = polarY(honbuDeg, honbuR);
+  html += `<circle cx="${hx}" cy="${hy}" r="5" fill="${TYPE_COLOR.H}" opacity="0.9"/>`;
+  html += `<text x="${hx - 8}" y="${hy - 8}" text-anchor="end" font-family="'Noto Sans JP',sans-serif" font-size="8" fill="${TYPE_COLOR.H}" opacity="0.7">本部</text>`;
+
+  svg.innerHTML = html;
+}
+
+// ── 詳細パネル ──
+function showDetail(code) {
+  const d = DIRS.find(x => x.code === code);
+  if (!d) return;
+
+  const panel = document.getElementById('detail-panel');
+  const typeLabel = {A:'Type A — 封印が抵抗中・深発地震あり', B:'Type B — 固定・装置が現役稼働中', C:'Type C — 自発的封印', X:'記録なし'};
+  const typeColor = TYPE_COLOR[d.type];
+
+  document.getElementById('dp-dir').textContent = d.label;
+  document.getElementById('dp-title').textContent = d.theme;
+  document.getElementById('dp-title').style.color = typeColor;
+
+  const deityH = d.deities.map(dy => `
+    <div class="deity-block d${dy.t}">
+      <div class="deity-name">${dy.name}</div>
+      <div class="deity-desc">${dy.desc}</div>
+    </div>`).join('');
+
+  const evH = d.evidence.map(e => `
+    <div class="ev-block ev${e.t}">
+      <div class="ev-label">${e.label}</div>
+      ${e.text}
+    </div>`).join('');
+
+  const svH = d.sv.length > 0
+    ? `<div class="sv-list">${d.sv.map(s=>`<span>▸</span>${s}`).join('<br>')}</div>`
+    : `<div class="sv-list" style="color:var(--dim)">この方位帯に指導部なし</div>`;
+
+  const quakeH = `<div class="ev-block" style="color:#a0a8b8"><div class="ev-label">深発地震ログ 2026年</div>${d.quakeLog}</div>`;
+
+  document.getElementById('dp-grid').innerHTML = `
+    <div>
+      <div class="dp-section-label">封印された神・由来</div>
+      ${deityH}
+    </div>
+    <div>
+      <div class="dp-section-label">封印が今も生きている証拠</div>
+      ${evH}
+      ${quakeH}
+      <div class="dp-section-label" style="margin-top:12px;">この方位帯の指導部</div>
+      ${svH}
+    </div>
+  `;
+
+  panel.classList.add('open');
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function closeDetail() {
+  document.getElementById('detail-panel').classList.remove('open');
+}
+
+buildMap();
+</script>
+</body>
+</html>
