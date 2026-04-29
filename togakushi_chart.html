@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>戸隠神社 登場人物相関図</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Shippori+Mincho:wght@400;700&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:#0d0a08;
+  color:#e8dcc8;
+  font-family:'Noto Serif JP',serif;
+  min-height:100vh;
+  padding:20px;
+}
+
+h1{
+  text-align:center;
+  font-family:'Shippori Mincho',serif;
+  font-size:18px;
+  letter-spacing:.3em;
+  color:#c8a96e;
+  margin-bottom:4px;
+  padding-top:16px;
+}
+.subtitle{
+  text-align:center;
+  font-size:11px;
+  color:#888;
+  letter-spacing:.2em;
+  margin-bottom:24px;
+}
+
+.section-label{
+  font-size:10px;
+  letter-spacing:.25em;
+  color:#888;
+  text-transform:uppercase;
+  margin-bottom:10px;
+  padding-left:4px;
+  border-left:2px solid #c8a96e;
+  padding-left:8px;
+}
+
+/* カード */
+.card{
+  border-radius:4px;
+  padding:12px 14px;
+  margin-bottom:10px;
+  position:relative;
+  cursor:default;
+  transition:transform .15s;
+}
+.card:hover{transform:translateY(-2px);}
+
+.card-name{
+  font-family:'Shippori Mincho',serif;
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:3px;
+  letter-spacing:.1em;
+}
+.card-kana{
+  font-size:10px;
+  color:#aaa;
+  margin-bottom:6px;
+  letter-spacing:.15em;
+}
+.card-role{
+  font-size:11px;
+  line-height:1.7;
+  color:#ccc;
+}
+.card-tag{
+  display:inline-block;
+  font-size:9px;
+  padding:2px 7px;
+  border-radius:2px;
+  margin-top:6px;
+  letter-spacing:.1em;
+}
+
+/* 色分け */
+.type-open{background:#1a1208;border:1px solid #c8a96e;border-left:3px solid #c8a96e;}
+.type-open .card-name{color:#f0d080;}
+.type-open .card-tag{background:#3a2800;color:#c8a96e;border:1px solid #c8a96e;}
+
+.type-harae{background:#0d1a1a;border:1px solid #4a9090;border-left:3px solid #4a9090;}
+.type-harae .card-name{color:#80d0d0;}
+.type-harae .card-tag{background:#002828;color:#4a9090;border:1px solid #4a9090;}
+
+.type-seal{background:#1a0d0d;border:1px solid #904040;border-left:3px solid #904040;}
+.type-seal .card-name{color:#d08080;}
+.type-seal .card-tag{background:#280000;color:#904040;border:1px solid #904040;}
+
+.type-fujiwara{background:#0d0d1a;border:1px solid #6060a0;border-left:3px solid #6060a0;}
+.type-fujiwara .card-name{color:#a0a0e0;}
+.type-fujiwara .card-tag{background:#000028;color:#6060a0;border:1px solid #6060a0;}
+
+.type-enemy{background:#1a1a0d;border:1px solid #808040;border-left:3px solid #808040;}
+.type-enemy .card-name{color:#d0d080;}
+.type-enemy .card-tag{background:#282800;color:#808040;border:1px solid #808040;}
+
+/* 矢印・接続 */
+.arrow{
+  text-align:center;
+  font-size:11px;
+  color:#666;
+  margin:4px 0;
+  letter-spacing:.1em;
+}
+.arrow-label{
+  font-size:10px;
+  color:#888;
+  display:block;
+}
+
+/* 二列レイアウト */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+
+/* 接続線説明 */
+.relation-box{
+  background:#111;
+  border:1px solid #333;
+  border-radius:4px;
+  padding:12px 14px;
+  margin-bottom:10px;
+  font-size:11px;
+  line-height:1.9;
+  color:#aaa;
+}
+.relation-box strong{color:#c8a96e;}
+
+.divider{
+  border:none;
+  border-top:1px solid #2a2a2a;
+  margin:18px 0;
+}
+
+.note{
+  font-size:10px;
+  color:#666;
+  text-align:center;
+  margin-top:16px;
+  line-height:1.8;
+  padding-bottom:20px;
+}
+</style>
+</head>
+<body>
+
+<h1>戸隠神社 登場人物相関図</h1>
+<p class="subtitle">市原・上総国分寺台の戸隠神社を中心に</p>
+
+<!-- 岩戸開きチーム -->
+<div class="section-label">岩戸開きチーム（戸隠神社の祭神）</div>
+
+<div class="card type-open">
+  <div class="card-name">天手力雄命</div>
+  <div class="card-kana">アメノタヂカラオノミコト</div>
+  <div class="card-role">岩戸を物理的にこじ開けた力の神。投げた岩戸が飛んでいった場所が長野・戸隠という伝説。扉を開ける実行者。</div>
+  <span class="card-tag">実行担当</span>
+</div>
+
+<div class="card type-open">
+  <div class="card-name">天八意思兼命</div>
+  <div class="card-kana">アメノヤゴコロオモイカネノミコト</div>
+  <div class="card-role">「どうすれば岩戸が開くか」を考えた知恵の神。宴を企画し、アマテラスを岩戸から引き出す作戦を立案。思金とも書く。中臣氏・藤原氏の祖神とされる。</div>
+  <span class="card-tag">知恵担当・藤原氏の祖</span>
+</div>
+
+<div class="card type-open">
+  <div class="card-name">天表春命</div>
+  <div class="card-kana">アメノウワハルノミコト</div>
+  <div class="card-role">戸隠神社の三神のうち最も謎が多い神。思兼命の子とも言われる。記紀への登場が少なく、詳細不明。</div>
+  <span class="card-tag">詳細不明</span>
+</div>
+
+<hr class="divider">
+
+<!-- 祓戸四神 -->
+<div class="section-label">祓戸大神（戸隠神社境内に同座）——開く前に祓う四柱</div>
+
+<div class="two-col">
+  <div class="card type-harae">
+    <div class="card-name">瀬織津比売神</div>
+    <div class="card-kana">セオリツヒメ</div>
+    <div class="card-role">罪・穢れを川から海へ流す女神。記紀本文には登場しない消された女神。</div>
+    <span class="card-tag">流す</span>
+  </div>
+  <div class="card type-harae">
+    <div class="card-name">速開都比売神</div>
+    <div class="card-kana">ハヤアキツヒメ</div>
+    <div class="card-role">海に流れ着いた穢れを飲み込む女神。</div>
+    <span class="card-tag">飲む</span>
+  </div>
+  <div class="card type-harae">
+    <div class="card-name">気吹戸主神</div>
+    <div class="card-kana">イブキドヌシ</div>
+    <div class="card-role">根の国・底の国へ吹き飛ばす男神。「気吹の戸」の主。扉との関連が深い。</div>
+    <span class="card-tag">吹く・扉</span>
+  </div>
+  <div class="card type-harae">
+    <div class="card-name">速佐須良比売神</div>
+    <div class="card-kana">ハヤサスラヒメ</div>
+    <div class="card-role">根の国・底の国で最終的に穢れを消滅させる女神。</div>
+    <span class="card-tag">消す</span>
+  </div>
+</div>
+
+<div class="relation-box">
+  <strong>なぜ「まず祓戸から参拝」なのか</strong><br>
+  戸隠神社の参拝順序は「祓戸大神→戸隠神社」。<br>
+  岩戸を開ける前に、まず穢れを祓い清める。<br>
+  封印を解く前に、祓いが必要——という構造になっている。
+</div>
+
+<hr class="divider">
+
+<!-- 対立・封印側 -->
+<div class="section-label">封印・対立の構造</div>
+
+<div class="card type-seal">
+  <div class="card-name">タケミカヅチ</div>
+  <div class="card-kana">武甕槌神</div>
+  <div class="card-role">雷神・剣の神。鹿島神宮の祭神。国譲りを迫った使者神。要石で地の力を封じる。NE54°軸上。</div>
+  <span class="card-tag">封印・要石</span>
+</div>
+
+<div class="card type-seal">
+  <div class="card-name">フツヌシ</div>
+  <div class="card-kana">経津主神</div>
+  <div class="card-role">刀身から生まれた神。香取神宮の祭神。タケミカヅチと共に国譲りを迫った。768年、藤原氏によって春日大社に移転・吸収された。</div>
+  <span class="card-tag">封印・藤原氏に奪取</span>
+</div>
+
+<hr class="divider">
+
+<!-- 藤原氏 -->
+<div class="section-label">藤原氏——封印の管理者？</div>
+
+<div class="card type-fujiwara">
+  <div class="card-name">藤原不比等</div>
+  <div class="card-kana">ふじわらのふひと</div>
+  <div class="card-role">768年、鹿島・香取の神（タケミカヅチ・フツヌシ）を奈良・春日大社に移転。東国の封印神を都の権力基盤に転用した。中臣氏（アメノヤゴコロオモイカネの子孫）の末裔。</div>
+  <span class="card-tag">封印の奪取者</span>
+</div>
+
+<div class="relation-box">
+  <strong>藤原氏と戸隠神社の接点</strong><br>
+  戸隠神社の祭神・アメノヤゴコロオモイカネは<strong>中臣氏の祖神</strong>とされる。<br>
+  中臣氏→藤原氏。<br>
+  つまり藤原氏は「岩戸開きの知恵の神の子孫」を名乗り、<br>
+  同時に「鹿島・香取の封印神を奪った」一族。<br>
+  <strong>封印と解放の両方を握ろうとした？</strong>
+</div>
+
+<hr class="divider">
+
+<!-- 首・音・扉の系譜 -->
+<div class="section-label">市原に集まる「首・音・扉」</div>
+
+<div class="two-col">
+  <div class="card type-enemy">
+    <div class="card-name">平将門</div>
+    <div class="card-kana">たいらのまさかど</div>
+    <div class="card-role">940年討死。上総国分寺境内に将門塔あり。首を切られても首が飛んで戻り続けた伝説。市原の戸隠神社に将門が祈願したとの記録あり。</div>
+    <span class="card-tag">切れない首</span>
+  </div>
+  <div class="card type-enemy">
+    <div class="card-name">温羅（うら）</div>
+    <div class="card-kana">桃太郎の鬼・吉備</div>
+    <div class="card-role">首を切られても鳴き続けた。吉備津神社の釜が鳴る伝説の起源。天城方位268°（W軸）上。</div>
+    <span class="card-tag">鳴り止まない首</span>
+  </div>
+</div>
+
+<div class="relation-box">
+  <strong>740年、上総国分寺の怪異</strong><br>
+  国分寺で「音の異変」が起きた。<br>
+  仏教施設が困り、神道の神（戸隠）を呼んだ。<br>
+  岩戸を開けた神が、閉じた音を開きに来た——<br>
+  あるいは、鳴り止まない音を封じに来た。<br><br>
+  <strong>仁王像の阿形：頭部が江戸時代に補作（元の首は失われていた）</strong>
+</div>
+
+<p class="note">
+  Layer1（事実）とLayer3（仮説）が混在しています。<br>
+  藤原氏＝中臣氏の末裔という系譜はLayer1。<br>
+  「封印と解放の両方を握ろうとした」はLayer3。
+</p>
+
+</body>
+</html>
