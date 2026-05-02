@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>封印の歴史軸 Vol.2 — 藤原氏とタケミカヅチ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;700;900&family=Shippori+Mincho:wght@400;700;800&family=Oswald:wght@500&display=swap');
+
+:root {
+    --bg-color: #0d0d12;
+    --accent-purple: #a08cc8;
+    --accent-gold: #c8a96e;
+    --text-main: #e8dcc8;
+    --text-dim: #999;
+    --border: rgba(160,140,200,0.25);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Noto Serif JP', serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+/* 雑誌風背景テクスチャ */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(160,140,200,0.05) 0%, transparent 50%),
+        url('https://www.transparenttextures.com/patterns/dark-matter.png');
+    pointer-events: none;
+    z-index: 0;
+}
+
+.magazine-layout {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ヘッダーデザイン */
+.mag-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 60px;
+}
+
+.mag-header::before, .mag-header::after {
+    content: '';
+    height: 2px;
+    background: var(--border);
+}
+
+.mag-title-box {
+    text-align: center;
+}
+
+.mag-vol {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.5em;
+    color: var(--accent-purple);
+    display: block;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: 800;
+    line-height: 1.2;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(160,140,200,0.5);
+}
+
+/* リード文 */
+.lead-section {
+    column-count: 2;
+    column-gap: 40px;
+    margin-bottom: 50px;
+    font-size: 14px;
+    color: #ccc;
+    border-left: 1px solid var(--accent-gold);
+    padding-left: 25px;
+}
+
+@media (max-width: 768px) { .lead-section { column-count: 1; } }
+
+/* タイムライン・グリッド */
+.timeline-grid {
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr;
+    gap: 0 40px;
+    position: relative;
+}
+
+/* 中央の線 */
+.timeline-grid::before {
+    content: '';
+    position: absolute;
+    left: 100px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--border), var(--accent-purple), var(--border));
+}
+
+.section-divider {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 0 30px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.8em;
+    color: var(--accent-purple);
+    text-transform: uppercase;
+}
+
+/* 各レコード */
+.time-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.time-label {
+    text-align: right;
+    padding-right: 20px;
+}
+
+.year-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    color: var(--accent-purple);
+    display: block;
+}
+
+.era-name {
+    font-size: 10px;
+    color: #666;
+}
+
+/* メインコンテンツ（定説） */
+.main-fact {
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.main-fact h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #fff;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: inline-block;
+}
+
+.main-fact p {
+    font-size: 13px;
+    color: #bbb;
+}
+
+/* 考察・問い（右カラム） */
+.insight-box {
+    background: rgba(200, 169, 110, 0.05);
+    border: 1px solid rgba(200, 169, 110, 0.2);
+    padding: 15px;
+    font-size: 12px;
+    position: relative;
+    border-radius: 4px;
+}
+
+.insight-box::before {
+    content: 'QUERY';
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background: var(--bg-color);
+    padding: 0 5px;
+    color: var(--accent-gold);
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+}
+
+.insight-box strong { color: var(--accent-gold); }
+
+/* 特集：気づき */
+.discovery-block {
+    grid-column: 2 / -1;
+    background: linear-gradient(135deg, rgba(160,140,200,0.1) 0%, rgba(200,169,110,0.1) 100%);
+    border: 1px solid var(--accent-gold);
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.discovery-tag {
+    background: var(--accent-gold);
+    color: #000;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.discovery-block h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.discovery-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+@media (max-width: 768px) {
+    .timeline-grid, .time-row, .discovery-content {
+        grid-template-columns: 1fr;
+    }
+    .timeline-grid::before { display: none; }
+    .time-label { text-align: left; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="magazine-layout">
+    <header class="mag-header">
+        <div class="mag-title-box">
+            <span class="mag-vol">SPECIAL REPORT Vol.02</span>
+            <h1>藤原氏とタケミカヅチ<br>封印された「祖神」の系譜</h1>
+        </div>
+    </header>
+
+    <div class="lead-section">
+        タケミカヅチは藤原氏の祖神――。その「常識」の裏側に、48年の空白と、緻密な神話の書き換えが見え隠れする。記紀編纂から春日大社創建へ。権力再建のために「神」が再編されたのではないか。本稿では、その疑惑の軌跡を辿る。
+    </div>
+
+    <div class="timeline-grid">
+        
+        <div class="section-divider">Origin: The Root</div>
+
+        <div class="time-row">
+            <div class="time-label">
+                <span class="year-num">記紀以前</span>
+                <span class="era-name">古代の祭祀</span>
+            </div>
+            <div class="main-fact">
+                <h3>アメノコヤネの本来</h3>
+                <p>中臣氏の本来の祖神はアメノコヤネ。天岩戸開きで祝詞を奏した、純粋な「祭祀」の神である。戸隠神社の知恵の神・オモイカネとも系譜を共にする。</p>
+            </div>
+            <div class="insight-box">
+                「祭」の神が、なぜ後世に「政」の武神と結びついたのか。系譜の接合点はどこにある？
+            </div>
+        </div>
+
+        <div class="section-divider">Rewriting: 712-720</div>
+
+        <div class="time-row">
+            <div class="time-label">
+                <span class="year-num">712-720</span>
+                <span class="era-name">奈良時代初期</span>
+            </div>
+            <div class="main-fact">
+                <h3>記紀編纂と不比等</h3>
+                <p>藤原不比等主導のもと『古事記』『日本書紀』が完成。ここでタケミカヅチは「国譲りの使者」という決定的な武功を与えられ、神威が確立される。</p>
+            </div>
+            <div class="insight-box">
+                <strong>Layer 2:</strong> 玉依姫が「天皇の母」に書き換えられたのと同時期。神話の物語化は、不比等による政治的デザインだった。
+            </div>
+        </div>
+
+        <div class="section-divider">The Blank: 737-764</div>
+
+        <div class="time-row">
+            <div class="time-label">
+                <span class="year-num">737</span>
+                <span class="era-name">藤原氏の危機</span>
+            </div>
+            <div class="main-fact">
+                <h3>藤原四兄弟の全滅</h3>
+                <p>不比等の息子たちが天然痘で一斉に没する。藤原氏の権力は崩壊。橘諸兄、そして怪僧・道鏡の台頭を許す「空白の時代」へ。</p>
+            </div>
+            <div class="insight-box">
+                この混乱期、上総国分寺での怪異を経て、古代神（戸隠神）の融合が許された。
+            </div>
+        </div>
+
+        <div class="section-divider">Restoration: 768</div>
+
+        <div class="time-row">
+            <div class="time-label">
+                <span class="year-num">768</span>
+                <span class="era-name">春日大社創建</span>
+            </div>
+            <div class="main-fact">
+                <h3>神の移植と再定義</h3>
+                <p>不比等の死から48年。藤原永手らが鹿島からタケミカヅチを、香取からフツヌシを春日へ勧請。ここで公式に「藤原氏の氏神」としての地位を確立する。</p>
+            </div>
+            <div class="insight-box">
+                <strong>問い：</strong> なぜ「48年後」なのか？ 不比等の時代にはまだタケミカヅチは「氏神」ではなかった可能性が高い。
+            </div>
+        </div>
+
+        <div class="section-divider">Establishment</div>
+
+        <div class="time-row">
+            <div class="time-label">
+                <span class="year-num">858</span>
+                <span class="era-name">摂関政治の頂点</span>
+            </div>
+            <div class="main-fact">
+                <h3>封印の管理者の完成</h3>
+                <p>藤原良房が摂政に就任。政治、宗教、そして東国の「封印神」の管理。その全てを手にした藤原氏。タケミカヅチの祖神化は完了した。</p>
+            </div>
+            <div class="insight-box">
+                「古くから信奉していた」という通説は、この時期に遡及的に作られた物語ではないか。
+            </div>
+        </div>
+
+        <!-- 気づきブロック -->
+        <div class="discovery-block">
+            <span class="discovery-tag">FINAL ANALYSIS</span>
+            <h2>タケミカヅチは「作られた祖神」だったのか</h2>
+            <div class="discovery-content">
+                <div>
+                    <p><strong>事実の断層：</strong> 不比等と春日大社の間の約半世紀のズレ。それは藤原氏が一度「滅びかけた」記憶を隠蔽するための時間だったのかもしれない。権力再編のために、鹿島の強力な武神を「横取り」し、祭祀の神（中臣氏）の系譜に無理やり接合した痕跡が見える。</p>
+                </div>
+                <div>
+                    <p><strong>問いの核心：</strong> 玉依姫という海民の神が天皇家の母とされたように、タケミカヅチもまた、その本来の姿（東国の地主神あるいは封印の守護神）を奪われ、「藤原氏の守護者」という役を演じさせられているのではないか。</p>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /timeline-grid -->
+
+    <footer style="text-align: center; margin-top: 60px; font-size: 10px; color: #555; border-top: 1px solid var(--border); padding-top: 20px;">
+        CHIBA SEALED HISTORY ARCHIVE | Layer 1: Documentary Fact | Layer 2: Insightful Observation
+    </footer>
+</div>
+
+</body>
+</html>
