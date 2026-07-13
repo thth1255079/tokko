@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天城地震ログ</title>
+<style>
+  :root {
+    --navy: #0b1220;
+    --navy-2: #111b2e;
+    --gold: #c9a24b;
+    --gold-soft: #e8d8ad;
+    --text: #e7e9ee;
+    --muted: #8b93a6;
+    --l1: #4f8ff0;
+    --l2: #e08a2b;
+    --l3: #d1495b;
+    --line: rgba(201,162,75,0.18);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--navy);
+    color: var(--text);
+    font-family: "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+    line-height: 1.6;
+    padding: 0 0 3rem;
+  }
+  header {
+    padding: 1.75rem 1.25rem 1.25rem;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--navy-2), var(--navy));
+  }
+  header h1 {
+    margin: 0 0 0.25rem;
+    font-size: 1.35rem;
+    letter-spacing: 0.02em;
+    color: var(--gold-soft);
+  }
+  header .sub {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1rem 1.1rem;
+  }
+  .status {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    text-align: right;
+  }
+  .card {
+    background: var(--navy-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin-bottom: 0.9rem;
+  }
+  .card .place {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .card .time {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    font-size: 0.85rem;
+    color: var(--gold-soft);
+    margin: 0.4rem 0 0.6rem;
+  }
+  .meta span b { color: var(--text); font-weight: 600; }
+  .bearing {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .matches {
+    margin-top: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    background: rgba(79,143,240,0.12);
+    border: 1px solid rgba(79,143,240,0.35);
+    color: var(--l1);
+    width: fit-content;
+  }
+  .badge .diff { color: var(--muted); }
+  .no-match {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 3rem 1rem;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.72rem;
+    margin-top: 2rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>天城地震ログ</h1>
+  <div class="sub">天城基準・16方位自動解析</div>
+</header>
+
+<main>
+  <div class="status" id="status">読み込み中…</div>
+  <div id="list"></div>
+</main>
+
+<footer>データ: P2P地震情報 / 天城 34.920°N, 139.018°E を基準に自動計算</footer>
+
+<script>
+fetch('quake_data.json?_=' + Date.now())
+  .then(r => {
+    if (!r.ok) throw new Error('データファイルが見つかりません');
+    return r.json();
+  })
+  .then(render)
+  .catch(err => {
+    document.getElementById('status').textContent = '読み込み失敗: ' + err.message;
+    document.getElementById('list').innerHTML =
+      '<div class="empty">quake_data.json がまだ生成されていないか、<br>パスが違う可能性があります。</div>';
+  });
+
+function render(data) {
+  document.getElementById('status').textContent =
+    '最終更新: ' + (data.generated_at || '不明');
+
+  const list = document.getElementById('list');
+  if (!data.quakes || data.quakes.length === 0) {
+    list.innerHTML = '<div class="empty">条件に合う地震はありませんでした。</div>';
+    return;
+  }
+
+  list.innerHTML = data.quakes.map(q => `
+    <div class="card">
+      <div class="place">${escapeHtml(q.place)}</div>
+      <div class="time">${escapeHtml(q.time || '')}</div>
+      <div class="meta">
+        <span>M<b>${q.mag}</b></span>
+        <span>震度<b>${escapeHtml(q.max_scale)}</b></span>
+        <span>深さ<b>${q.depth ?? '?'}</b>km</span>
+      </div>
+      <div class="bearing">天城から ${q.bearing}°（${q.dir16}方位） / ${q.distance_km}km</div>
+      <div class="matches">
+        ${
+          (q.matches && q.matches.length)
+            ? q.matches.map(m => `
+                <span class="badge">★ ${escapeHtml(m.name)}
+                  <span class="diff">差${m.diff}°</span>
+                  ${m.note ? '· ' + escapeHtml(m.note) : ''}
+                </span>`).join('')
+            : '<span class="no-match">一致する確定軸なし</span>'
+        }
+      </div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+</script>
+
+</body>
+</html>
