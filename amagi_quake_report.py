@@ -2,37 +2,59 @@
 
 # -*- coding: utf-8 -*-
 
-# “””
-天城起点 地震自動解析レポート
+# 天城起点 地震自動解析レポート
 
-やること:
+# ================================
 
-1. P2P地震情報API(日本の地震データ、無料・APIキー不要)から
-   直近(または指定日)の地震一覧を取得
-1. 各地震の震源について、天城(34.920N, 139.018E)からの
-   大円方位角・距離・16方位を計算
-1. あらかじめ登録してある「確定軸(L1)」との一致(許容誤差3°)を自動判定
-1. 結果をテキストレポートとして出力(コンソール表示 + ファイル保存)
+# 
 
-使い方:
-python3 amagi_quake_report.py            # 今日の地震をレポート
-python3 amagi_quake_report.py –days 7   # 過去7日分をまとめてレポート
-python3 amagi_quake_report.py –min-mag 3.0   # M3.0以上のみ対象
+# やること:
 
-自動実行したい場合(例: 毎日21時に実行):
+# 1. P2P地震情報API(日本の地震データ、無料・APIキー不要)から
 
-# crontab -e で以下を追加(Linux/Mac)
+# 直近(または指定日)の地震一覧を取得
 
-0 21 * * * /usr/bin/python3 /path/to/amagi_quake_report.py >> /path/to/quake_log.txt 2>&1
+# 2. 各地震の震源について、天城(34.920N, 139.018E)からの
 
-# Windowsの場合はタスクスケジューラで同スクリプトを毎日実行するよう登録
+# 大円方位角・距離・16方位を計算
 
-注意:
-P2P地震情報APIのレスポンス構造は将来変更される可能性があります。
-実行時にエラーが出た場合は、下記 parse_quake() 関数内の
-フィールド名(hypocenter, latitude, longitude 等)を
-実際のレスポンス(–debug オプションで生JSONを確認可能)に合わせて調整してください。
-“””
+# 3. あらかじめ登録してある「確定軸(L1)」との一致(許容誤差3°)を自動判定
+
+# 4. 結果をテキストレポートとして出力(コンソール表示 + ファイル保存)
+
+# 
+
+# 使い方:
+
+# python3 amagi_quake_report.py            # 今日の地震をレポート
+
+# python3 amagi_quake_report.py –days 7   # 過去7日分をまとめてレポート
+
+# python3 amagi_quake_report.py –min-mag 3.0   # M3.0以上のみ対象
+
+# 
+
+# 自動実行したい場合(例: 毎日21時に実行):
+
+# # crontab -e で以下を追加(Linux/Mac)
+
+# 0 21 * * * /usr/bin/python3 /path/to/amagi_quake_report.py >> /path/to/quake_log.txt 2>&1
+
+# 
+
+# # Windowsの場合はタスクスケジューラで同スクリプトを毎日実行するよう登録
+
+# 
+
+# 注意:
+
+# P2P地震情報APIのレスポンス構造は将来変更される可能性があります。
+
+# 実行時にエラーが出た場合は、下記 parse_quake() 関数内の
+
+# フィールド名(hypocenter, latitude, longitude 等)を
+
+# 実際のレスポンス(–debug オプションで生JSONを確認可能)に合わせて調整してください。
 
 import argparse
 import json
@@ -89,7 +111,7 @@ ALL_KNOWN_POINTS = CONFIRMED_AXES + DRAGON_SITES
 # ============================================================
 
 def bearing(lat1, lon1, lat2, lon2):
-“”“始点から終点への初期方位角(度, 0-360)”””
+# 始点から終点への初期方位角(度, 0-360)
 lat1r, lon1r, lat2r, lon2r = map(math.radians, [lat1, lon1, lat2, lon2])
 dlon = lon2r - lon1r
 x = math.sin(dlon) * math.cos(lat2r)
@@ -99,7 +121,7 @@ theta = math.atan2(x, y)
 return (math.degrees(theta) + 360) % 360
 
 def distance_km(lat1, lon1, lat2, lon2):
-“”“大円距離(km)”””
+# 大円距離(km)
 R = 6371.0
 lat1r, lon1r, lat2r, lon2r = map(math.radians, [lat1, lon1, lat2, lon2])
 dlat = lat2r - lat1r
@@ -109,12 +131,12 @@ a = (math.sin(dlat / 2) ** 2
 return R * 2 * math.asin(math.sqrt(a))
 
 def nearest_16dir(b):
-“”“方位角から最も近い16方位名を返す”””
+# 方位角から最も近い16方位名を返す
 idx = int((b + 11.25) // 22.5) % 16
 return DIRS16[idx]
 
 def match_confirmed_axes(b):
-“”“既知の軸・サイトとの一致を判定して一覧を返す”””
+# 既知の軸・サイトとの一致を判定して一覧を返す
 hits = []
 for name, center, tol, *rest in ALL_KNOWN_POINTS:
 diff = min(abs(b - center), 360 - abs(b - center))
@@ -132,7 +154,7 @@ return sorted(hits, key=lambda x: x[1])
 P2P_QUAKE_API = “https://api.p2pquake.net/v2/jma/quake”
 
 def fetch_quakes(limit=300, debug=False):
-“”“P2P地震情報APIから地震一覧を取得”””
+# P2P地震情報APIから地震一覧を取得
 url = f”{P2P_QUAKE_API}?limit={limit}”
 try:
 req = urllib.request.Request(url, headers={“User-Agent”: “amagi-quake-report/1.0”})
@@ -150,18 +172,16 @@ return data
 ```
 
 def parse_quake(item):
-“””
-APIレスポンス1件から必要な情報を抽出。
-※ P2P地震情報APIの実際のフィールド構造に応じて調整してください。
-典型的な構造:
-item[“earthquake”][“time”]              -> 発生時刻文字列
-item[“earthquake”][“hypocenter”][“name”] -> 震源地名
-item[“earthquake”][“hypocenter”][“latitude”]
-item[“earthquake”][“hypocenter”][“longitude”]
-item[“earthquake”][“hypocenter”][“depth”]
-item[“earthquake”][“hypocenter”][“magnitude”]
-item[“earthquake”][“maxScale”]           -> 最大震度(10刻みコード)
-“””
+# APIレスポンス1件から必要な情報を抽出。
+# ※ P2P地震情報APIの実際のフィールド構造に応じて調整してください。
+# 典型的な構造:
+# item[“earthquake”][“time”]              -> 発生時刻文字列
+# item[“earthquake”][“hypocenter”][“name”] -> 震源地名
+# item[“earthquake”][“hypocenter”][“latitude”]
+# item[“earthquake”][“hypocenter”][“longitude”]
+# item[“earthquake”][“hypocenter”][“depth”]
+# item[“earthquake”][“hypocenter”][“magnitude”]
+# item[“earthquake”][“maxScale”]           -> 最大震度(10刻みコード)
 try:
 eq = item[“earthquake”]
 hypo = eq[“hypocenter”]
