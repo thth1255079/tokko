@@ -15,18 +15,6 @@
 # python3 amagi_quake_report.py            # 今日の地震をレポート
 # python3 amagi_quake_report.py --days 7   # 過去7日分をまとめてレポート
 # python3 amagi_quake_report.py --min-mag 3.0   # M3.0以上のみ対象
-#
-# 自動実行したい場合(例: 毎日21時に実行):
-# # crontab -e で以下を追加(Linux/Mac)
-# 0 21 * * * /usr/bin/python3 /path/to/amagi_quake_report.py >> /path/to/quake_log.txt 2>&1
-#
-# # Windowsの場合はタスクスケジューラで同スクリプトを毎日実行するよう登録
-#
-# 注意:
-# P2P地震情報APIのレスポンス構造は将来変更される可能性があります。
-# 実行時にエラーが出た場合は、下記 parse_quake() 関数内の
-# フィールド名(hypocenter, latitude, longitude 等)を
-# 実際のレスポンス(--debug オプションで生JSONを確認可能)に合わせて調整してください。
 
 import argparse
 import json
@@ -40,23 +28,20 @@ from datetime import datetime, timedelta, timezone
 # 1. 基準地点・確定軸の定義
 # ============================================================
 
-AMAGI = (34.920, 139.018)  # 天城(基準点)
+AMAGI = (34.920, 139.018)
 
 DIRS16 = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
           "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
 
-# 確定済みL1軸・地点(あなたの研究ログより)
-# 形式: (名称, 中心方位角, 許容誤差, 備考)
 CONFIRMED_AXES = [
-    ("ENE57°軸(鹿島・香取/タケミカヅチ・フツヌシ)", 57.0, 3.0, "岩戸ログ中核軸"),
-    ("NE45°軸(香取・江ノ島・熱田)", 45.0, 3.0, "NE45°corridor/貝塚"),
-    ("W277°軸(出雲・難波宮)", 277.0, 3.0, "国譲り軸"),
-    ("NNW337°軸(ストーンヘンジ・糸魚川・戸隠)", 337.0, 3.0, ""),
-    ("NNE19°軸(封印された神々クラスタ)", 19.0, 3.0, ""),
-    ("WNW292°軸(メッカ)", 292.0, 3.0, ""),
+    ("ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)", 57.0, 3.0, "岩戸ログ中核軸"),
+    ("NE45度軸(香取・江ノ島・熱田)", 45.0, 3.0, "NE45度corridor/貝塚"),
+    ("W277度軸(出雲・難波宮)", 277.0, 3.0, "国譲り軸"),
+    ("NNW337度軸(ストーンヘンジ・糸魚川・戸隠)", 337.0, 3.0, ""),
+    ("NNE19度軸(封印された神々クラスタ)", 19.0, 3.0, ""),
+    ("WNW292度軸(メッカ)", 292.0, 3.0, ""),
 ]
 
-# 千葉龍サイトL1確定リスト(名称, 方位角, 許容誤差)
 DRAGON_SITES = [
     ("布施弁天", 39.13, 2.0),
     ("龍神社(海神)", 44.42, 2.0),
@@ -77,7 +62,6 @@ ALL_KNOWN_POINTS = CONFIRMED_AXES + DRAGON_SITES
 # ============================================================
 
 def bearing(lat1, lon1, lat2, lon2):
-    # 始点から終点への初期方位角(度, 0-360)
     lat1r, lon1r, lat2r, lon2r = map(math.radians, [lat1, lon1, lat2, lon2])
     dlon = lon2r - lon1r
     x = math.sin(dlon) * math.cos(lat2r)
@@ -88,7 +72,6 @@ def bearing(lat1, lon1, lat2, lon2):
 
 
 def distance_km(lat1, lon1, lat2, lon2):
-    # 大円距離(km)
     R = 6371.0
     lat1r, lon1r, lat2r, lon2r = map(math.radians, [lat1, lon1, lat2, lon2])
     dlat = lat2r - lat1r
@@ -99,13 +82,11 @@ def distance_km(lat1, lon1, lat2, lon2):
 
 
 def nearest_16dir(b):
-    # 方位角から最も近い16方位名を返す
     idx = int((b + 11.25) // 22.5) % 16
     return DIRS16[idx]
 
 
 def match_confirmed_axes(b):
-    # 既知の軸・サイトとの一致を判定して一覧を返す
     hits = []
     for name, center, tol, *rest in ALL_KNOWN_POINTS:
         diff = min(abs(b - center), 360 - abs(b - center))
@@ -119,13 +100,11 @@ def match_confirmed_axes(b):
 # 3. 地震データ取得(P2P地震情報API)
 # ============================================================
 
-# 正しいエンドポイントは /v2/history?codes=551 (地震情報)
 P2P_QUAKE_API = "https://api.p2pquake.net/v2/history"
-P2P_QUAKE_CODE = 551  # 551 = 地震情報
+P2P_QUAKE_CODE = 551
 
 
 def fetch_quakes(limit=300, debug=False):
-    # P2P地震情報APIから地震一覧を取得
     url = f"{P2P_QUAKE_API}?codes={P2P_QUAKE_CODE}&limit={limit}"
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "amagi-quake-report/1.0"})
@@ -142,8 +121,6 @@ def fetch_quakes(limit=300, debug=False):
 
 
 def _parse_coord(value):
-    # "N38.3" / "E141.7" のような文字列を符号付きfloatに変換する
-    # すでに数値の場合はそのまま返す
     if value is None:
         return None
     if isinstance(value, (int, float)):
@@ -165,7 +142,6 @@ def _parse_coord(value):
 
 
 def _parse_number(value):
-    # "50km" / "3.9" のような文字列から数値部分を取り出す
     if value is None:
         return None
     if isinstance(value, (int, float)):
@@ -178,15 +154,6 @@ def _parse_number(value):
 
 
 def parse_quake(item):
-    # APIレスポンス1件から必要な情報を抽出。
-    # 実際のP2P地震情報 JSON API v2の構造:
-    # item["earthquake"]["time"]              -> 発生時刻文字列
-    # item["earthquake"]["hypocenter"]["name"] -> 震源地名
-    # item["earthquake"]["hypocenter"]["latitude"]  -> 例: "N38.3"(文字列)
-    # item["earthquake"]["hypocenter"]["longitude"] -> 例: "E141.7"(文字列)
-    # item["earthquake"]["hypocenter"]["depth"]     -> 例: "50km"(文字列)
-    # item["earthquake"]["hypocenter"]["magnitude"] -> 例: "3.9"(文字列)
-    # item["earthquake"]["maxScale"]           -> 最大震度(10刻みコード)
     try:
         eq = item.get("earthquake")
         if not eq:
@@ -242,8 +209,6 @@ def build_report(quakes, days, min_mag):
             continue
         if q["mag"] is None or q["mag"] < min_mag:
             continue
-        # 時刻フィルタ(APIのtime文字列形式に応じて要調整)
-        # ここでは簡易的に全件表示し、日数フィルタは省略時はスキップ可
 
         b = bearing(AMAGI[0], AMAGI[1], q["lat"], q["lon"])
         d = distance_km(AMAGI[0], AMAGI[1], q["lat"], q["lon"])
