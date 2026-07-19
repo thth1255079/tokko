@@ -124,8 +124,10 @@ P2P_QUAKE_API = "https://api.p2pquake.net/v2/history"
 P2P_QUAKE_CODE = 551  # 551 = 地震情報
 
 
-def fetch_quakes(limit=300, debug=False):
+def fetch_quakes(limit=100, debug=False):
     # P2P地震情報APIから地震一覧を取得
+    # このAPIは limit を 1〜100 の範囲でしか受け付けない仕様
+    limit = max(1, min(limit, 100))
     url = f"{P2P_QUAKE_API}?codes={P2P_QUAKE_CODE}&limit={limit}"
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "amagi-quake-report/1.0"})
@@ -277,7 +279,7 @@ def main():
     parser = argparse.ArgumentParser(description="天城起点 地震自動解析レポート")
     parser.add_argument("--days", type=int, default=1, help="対象期間(日数, デフォルト1日)")
     parser.add_argument("--min-mag", type=float, default=1.0, help="対象とする最小マグニチュード")
-    parser.add_argument("--limit", type=int, default=300, help="APIから取得する件数上限")
+    parser.add_argument("--limit", type=int, default=100, help="APIから取得する件数上限(最大100)")
     parser.add_argument("--debug", action="store_true", help="APIレスポンスの生データを表示")
     parser.add_argument("--out", type=str, default=None, help="レポート出力先ファイルパス")
     parser.add_argument("--json-out", type=str, default=None,
