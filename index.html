@@ -3,305 +3,502 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>岩戸ログ — 情報の岩戸開き</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Shippori+Mincho+B1:wght@400;600&display=swap" rel="stylesheet">
+<title>岩戸ログ｜情報の岩戸開き</title>
+<meta name="description" content="神話・考古学・地理・方位研究のアーカイブ。天城山を起点に、失われた記憶を事実と仮説の分離を守りながら再構築する。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
 :root{
-  --bg:#ffffff; --bg2:#f7f5f0; --bg3:#edeae3;
-  --black:#111; --mid:#555; --light:#888;
-  --gold:#7a5c10; --gold2:#a07820;
-  --navy:#1a1e35; --line:#e0ddd6; --line2:rgba(122,92,16,0.2);
+  --night:#0D1424; --night2:#16203A; --nline:#2A3550;
+  --body:#EEF1F5; --card:#FFFFFF; --line:#D8DDE6;
+  --ink:#1D2433; --dim:#68707E;
+  --gold:#C9A227; --blue:#2B5FD9;
+  --l1:#2B5FD9; --l2:#D97F0E; --l3:#C43D4B;
+  --serif:'Shippori Mincho','Hiragino Mincho ProN',serif;
+  --sans:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--black);font-family:'Shippori Mincho B1','Noto Serif JP',serif;font-size:16px;line-height:1.75;overflow-x:hidden;}
-a{color:inherit;text-decoration:none;}
+*{margin:0;padding:0;box-sizing:border-box}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+html{scroll-behavior:smooth}
+body{background:var(--body);color:var(--ink);font-family:var(--sans);line-height:1.8;font-size:15px}
+a{color:var(--blue)}
+img{max-width:100%}
 
-header{position:sticky;top:0;z-index:200;background:var(--bg);border-bottom:1px solid var(--line);height:52px;display:flex;align-items:center;padding:0 1.2rem;justify-content:space-between;}
-.h-logo{font-family:'Cinzel',serif;font-size:0.78rem;letter-spacing:0.28em;color:var(--black);font-weight:600;}
-.h-coord{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.18em;color:var(--gold);}
+/* ── ナビ ── */
+.nav{background:var(--night);border-bottom:1px solid var(--nline);position:sticky;top:0;z-index:40}
+.nav-in{max-width:1080px;margin:0 auto;padding:.65rem 1.2rem;display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;text-decoration:none;line-height:1.3}
+.brand b{font-family:var(--serif);font-weight:800;font-size:1.25rem;letter-spacing:.14em;color:#F0F2F6}
+.brand span{font-family:var(--serif);font-size:.6rem;letter-spacing:.3em;color:#9AA5BD}
+.brand-tag{font-size:.68rem;color:#7C87A0;border-left:1px solid var(--nline);padding-left:1rem;line-height:1.6;max-width:12em}
+.nav-links{margin-left:auto;display:flex;gap:.9rem;flex-wrap:wrap;font-size:.76rem}
+.nav-links a{color:#AEB7C9;text-decoration:none;letter-spacing:.05em;padding:.15rem 0;border-bottom:2px solid transparent}
+.nav-links a:hover{color:#fff;border-color:var(--gold)}
+@media(max-width:640px){.brand-tag{display:none}}
 
-.hero{background:var(--navy);color:#f5f2eb;padding:3.5rem 1.4rem 3rem;position:relative;overflow:hidden;}
-.hero::after{content:'IWATO';position:absolute;right:-6px;bottom:-14px;font-family:'Cinzel',serif;font-size:clamp(4.5rem,16vw,10rem);color:rgba(255,255,255,0.04);pointer-events:none;white-space:nowrap;letter-spacing:-0.05em;}
-.hero-eye{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.45em;color:rgba(176,136,40,0.9);margin-bottom:0.9rem;}
-.hero-title{font-size:clamp(1.8rem,8vw,3.2rem);font-weight:600;line-height:1.2;letter-spacing:0.04em;margin-bottom:0.4rem;}
-.hero-sub{display:block;font-family:'Cinzel',serif;font-size:clamp(0.62rem,1.6vw,0.78rem);letter-spacing:0.35em;color:rgba(176,136,40,0.85);margin-bottom:1.6rem;}
-.hero-desc{font-size:0.98rem;line-height:2;color:rgba(245,242,235,0.78);max-width:480px;margin-bottom:2rem;}
-.hero-coord{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;color:rgba(176,136,40,0.8);padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.12);}
+/* ── ヒーロー（写真スロット） ── */
+.hero{position:relative;background:var(--night);color:#E9EDF5;overflow:hidden}
+.hero-photo{position:absolute;inset:0;background-image:
+  linear-gradient(105deg, rgba(9,13,23,.88) 0%, rgba(9,13,23,.55) 55%, rgba(9,13,23,.75) 100%),
+  url("img/hero.jpg"),
+  radial-gradient(1100px 500px at 78% 18%, #1E2C52 0%, #0D1424 60%);
+  background-size:cover;background-position:center 38%}
+.hero-dial{position:absolute;right:6%;top:50%;transform:translateY(-50%);opacity:.5;pointer-events:none}
+.hero-dial svg{width:min(300px,40vw);height:auto}
+.hero-in{position:relative;max-width:1080px;margin:0 auto;padding:3rem 1.2rem 2.6rem;display:flex;gap:2rem;flex-wrap:wrap}
+.hero-main{flex:1;min-width:280px}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(1.55rem,4.6vw,2.3rem);letter-spacing:.1em;line-height:1.65;margin-bottom:.65rem;text-shadow:0 2px 12px rgba(9,13,23,.6)}
+.hero-desc{font-size:.88rem;color:#C4CCDC;max-width:33em;margin-bottom:1.3rem;text-shadow:0 1px 8px rgba(9,13,23,.6)}
+.searchbar{display:flex;max-width:500px;box-shadow:0 4px 18px rgba(9,13,23,.4);border-radius:5px}
+.searchbar input{flex:1;padding:.8rem 1.05rem;border:none;border-radius:5px 0 0 5px;font-family:var(--sans);font-size:.9rem;background:#fff;color:var(--ink)}
+.searchbar input:focus{outline:2px solid var(--gold)}
+.searchbar button{padding:.8rem 1.5rem;border:none;border-radius:0 5px 5px 0;background:var(--night2);
+  color:#fff;font-family:var(--serif);font-weight:600;letter-spacing:.24em;cursor:pointer;font-size:.9rem;border-left:2px solid var(--gold)}
+.hot-tags{margin-top:.85rem;font-size:.73rem;color:#9AA5BD;display:flex;gap:.45rem;flex-wrap:wrap;align-items:center}
+.hot-tags a{color:#C4CCDC;text-decoration:none;background:rgba(22,32,58,.7);border:1px solid var(--nline);border-radius:3px;padding:.08rem .6rem;font-family:var(--mono);font-size:.7rem}
+.hot-tags a:hover{border-color:var(--gold);color:#fff}
 
-.sec{padding:2.2rem 1.2rem;}
-.sec+.sec{border-top:1px solid var(--line);}
-.sec-head{display:flex;align-items:baseline;gap:0.6rem;flex-wrap:wrap;margin-bottom:1.3rem;}
-.sec-en{font-family:'Cinzel',serif;font-size:0.56rem;letter-spacing:0.42em;color:var(--gold);}
-.sec-ja{font-size:1.05rem;font-weight:600;color:var(--black);}
+.method-panel{width:305px;background:rgba(13,20,36,.82);border:1px solid var(--nline);border-radius:8px;padding:1.1rem 1.2rem;backdrop-filter:blur(3px);height:fit-content}
+.method-panel h2{font-family:var(--serif);font-size:.9rem;letter-spacing:.08em;margin-bottom:.8rem;color:#E9EDF5}
+.m-row{display:flex;gap:.65rem;margin-bottom:.72rem;font-size:.74rem;color:#AEB7C9;line-height:1.7}
+.m-row:last-of-type{margin-bottom:0}
+.m-row b{color:#E9EDF5;font-weight:600}
+.lv{flex-shrink:0;font-family:var(--mono);font-size:.66rem;font-weight:600;color:#fff;border-radius:3px;padding:.06rem .5rem;height:fit-content}
+.lv.l1{background:var(--l1)}.lv.l2{background:var(--l2)}.lv.l3{background:var(--l3)}
 
-.top-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;}
-@media(max-width:580px){.top-grid{grid-template-columns:1fr;}}
+/* ── 共通 ── */
+main{max-width:1080px;margin:0 auto;padding:1.2rem 1.2rem 2.6rem}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:0 1px 3px rgba(13,20,36,.06);overflow:hidden}
+.panel-h{font-family:var(--serif);font-weight:600;font-size:1rem;letter-spacing:.08em;padding:.85rem 1.1rem .6rem}
+.panel-h .en{font-size:.72rem;color:var(--dim);font-weight:400;margin-left:.5em;font-family:var(--sans)}
+.panel-b{padding:0 1.1rem 1rem;font-size:.8rem;color:#4B5260}
+.panel-foot{display:block;margin:0 1.1rem 1rem;padding:.5rem;text-align:center;font-size:.78rem;
+  border:1px solid var(--line);border-radius:5px;text-decoration:none;transition:all .15s}
+.panel-foot:hover{border-color:var(--blue);background:#F5F8FE}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-top:.4rem}
+@media(max-width:900px){.row3{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.row3{grid-template-columns:1fr}}
+.row4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1rem}
+@media(max-width:1000px){.row4{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.row4{grid-template-columns:1fr}}
 
-.top-card{border:1px solid var(--line);border-radius:5px;padding:1.3rem 1.1rem;display:block;transition:box-shadow .2s,border-color .2s;}
-.top-card:hover{box-shadow:0 3px 14px rgba(0,0,0,0.07);border-color:var(--line2);}
-.tc-tag{font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.22em;color:var(--gold);margin-bottom:0.4rem;}
-.tc-title{font-size:1rem;font-weight:600;color:var(--black);line-height:1.5;margin-bottom:0.5rem;}
-.tc-desc{font-size:0.82rem;color:var(--mid);line-height:1.7;}
-.tc-link{display:block;font-size:0.78rem;color:var(--gold);margin-top:0.6rem;}
+.map{height:230px;background:var(--night2)}
+.leaflet-container{font-family:var(--sans)}
 
-.note-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
-.nl{background:var(--bg2);border:1px solid var(--line);border-radius:4px;padding:0.5rem 0.9rem;font-size:0.8rem;color:var(--mid);transition:background .2s;}
-.nl:hover{background:var(--bg3);color:var(--black);}
-.nl span{color:var(--gold);}
+/* 更新リスト */
+.upd{list-style:none}
+.upd li{padding:.55rem 1.1rem;border-top:1px solid #EDF0F5}
+.upd .u-top{display:flex;gap:.55rem;align-items:center}
+.upd .u-date{font-family:var(--mono);font-size:.7rem;color:var(--dim)}
+.upd .u-title{font-size:.82rem;line-height:1.6;margin-top:.1rem}
+.upd .u-title a{color:var(--ink);text-decoration:none}
+.upd .u-title a:hover{color:var(--blue)}
+.plan-tag{color:var(--blue);border:1px solid var(--blue);border-radius:3px;padding:0 .4em;font-size:.62rem}
 
-.pdf-card{border:2px solid var(--navy);border-radius:5px;padding:1rem 0.9rem;background:var(--navy);color:#f5f2eb;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-width:88px;transition:opacity .2s;}
-.pdf-card:hover{opacity:0.88;}
-.pdf-label{font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.2em;color:rgba(176,136,40,0.9);margin-bottom:0.4rem;}
-.pdf-title{font-size:0.8rem;font-weight:600;line-height:1.5;margin-bottom:0.4rem;}
-.pdf-arrow{font-size:0.7rem;color:rgba(176,136,40,0.9);}
+/* カテゴリタイル */
+h2.sec{font-family:var(--serif);font-weight:600;font-size:1.18rem;letter-spacing:.12em;margin:2rem 0 .9rem;display:flex;align-items:center;gap:.6em}
+h2.sec::before{content:"";width:.5em;height:.5em;background:var(--gold);transform:rotate(45deg)}
+h2.sec .en{font-family:var(--mono);font-size:.56rem;letter-spacing:.24em;color:var(--dim);margin-left:auto;font-weight:400}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.9rem}
+.cat{text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:.45rem;cursor:pointer}
+.cat-ph{position:relative;aspect-ratio:1/1;border-radius:8px;overflow:hidden;background:linear-gradient(160deg,var(--night2),var(--night));box-shadow:0 1px 3px rgba(13,20,36,.15)}
+.cat-ph .glyph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:3rem;color:rgba(201,162,39,.85);letter-spacing:0}
+.cat-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .25s}
+.cat:hover .cat-ph img{transform:scale(1.05)}
+.cat-name{font-family:var(--serif);font-weight:600;font-size:.95rem;letter-spacing:.05em}
+.cat-desc{font-size:.7rem;color:var(--dim);line-height:1.6;margin-top:-.3rem}
 
-/* tool-grid: 8個対応 */
-.tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
-@media(min-width:560px){.tool-grid{grid-template-columns:repeat(4,1fr);}}
-.tc2{background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:1.1rem 0.9rem;display:block;transition:box-shadow .2s,border-color .2s;}
-.tc2:hover{box-shadow:0 4px 16px rgba(0,0,0,0.08);border-color:var(--line2);}
-.tc2-icon{font-size:1.5rem;margin-bottom:0.45rem;}
-.tc2-tag{font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:0.3rem;}
-.tc2-name{font-size:0.88rem;font-weight:600;color:var(--black);line-height:1.4;margin-bottom:0.3rem;}
-.tc2-desc{font-size:0.75rem;color:var(--mid);line-height:1.6;}
+/* タグ＋基準データ */
+.tagrow{display:grid;grid-template-columns:2fr 1fr;gap:1rem;margin-top:1.4rem;align-items:start}
+@media(max-width:820px){.tagrow{grid-template-columns:1fr}}
+.tags-panel .t-line{display:flex;gap:.5rem;align-items:baseline;padding:.4rem 1.1rem;flex-wrap:wrap}
+.t-k{font-size:.72rem;color:var(--dim);min-width:3.2em}
+.t-tag{font-size:.73rem;text-decoration:none;color:#41527A;background:#E8ECF4;border-radius:3px;padding:.06rem .6rem;cursor:pointer;border:none;font-family:var(--sans)}
+.t-tag:hover{background:var(--blue);color:#fff}
+.t-tag.lv1{color:#fff;background:var(--l1)}.t-tag.lv2{color:#fff;background:var(--l2)}.t-tag.lv3{color:#fff;background:var(--l3)}
+.base-photo{height:120px;background-image:linear-gradient(rgba(13,20,36,.15),rgba(13,20,36,.35)),url("img/amagi.jpg"),linear-gradient(150deg,#2A3B66,#0D1424);background-size:cover;background-position:center}
+.base-row{display:flex;justify-content:space-between;font-size:.79rem;padding:.3rem 1.1rem;border-top:1px dashed #E8ECF2}
+.base-row .k{color:var(--dim)}
+.base-row .v{font-family:var(--mono);font-size:.76rem}
 
-.board-intro{background:var(--bg2);border:1px solid var(--line);border-radius:5px;padding:1.4rem 1.3rem;margin-bottom:12px;}
-.board-intro-title{font-size:1.05rem;font-weight:600;color:var(--black);margin-bottom:0.35rem;}
-.board-intro-desc{font-size:0.85rem;color:var(--mid);line-height:1.8;}
-.board{display:grid;gap:10px;}
+/* 検索結果・記録リスト */
+#searchSec{display:none;margin-top:1.2rem}
+#searchSec.on{display:block}
+.report{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.9rem 1.2rem;margin-bottom:.8rem;box-shadow:0 1px 3px rgba(13,20,36,.05)}
+.r-top{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.r-date{font-family:var(--mono);font-size:.71rem;color:var(--dim)}
+.r-title{font-family:var(--serif);font-weight:600;font-size:1.02rem;margin:.15rem 0 .3rem;line-height:1.6}
+.r-body{font-size:.83rem;color:#3A4150}
+.r-photos{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem}
+.r-photos figure{margin:0;width:106px}
+.r-photos img{width:106px;height:80px;object-fit:cover;border-radius:5px;border:1px solid var(--line);cursor:pointer;display:block}
+.r-photos figcaption{font-size:.64rem;color:var(--dim);line-height:1.5;margin-top:.15rem}
+.r-files{margin-top:.55rem;display:flex;gap:.55rem;flex-wrap:wrap}
+.r-file{font-size:.74rem;color:var(--blue);text-decoration:none;border:1px solid var(--line);border-radius:4px;padding:.12rem .6rem;background:#F7F9FC}
+.r-file::before{content:"📄 "}
+.r-tags{margin-top:.5rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+.tag{font-size:.67rem;padding:.06rem .55rem;border-radius:3px;background:#E8ECF4;color:#41527A}
+.r-link{font-size:.74rem;margin-left:auto;color:var(--blue);text-decoration:none;border-bottom:1px solid var(--blue)}
+.count{font-family:var(--mono);font-size:.72rem;color:var(--dim);margin:.3rem 0 .7rem}
+.empty{padding:1.6rem;text-align:center;color:var(--dim);font-size:.84rem}
 
-.news-list{display:grid;gap:8px;}
-.news-item{background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:0.9rem 1rem;display:block;transition:background .2s;}
-.news-item:hover{background:var(--bg2);}
-.news-label{font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:0.3rem;}
-.news-title{font-size:0.92rem;font-weight:600;color:var(--black);line-height:1.5;margin-bottom:0.25rem;}
-.news-body{font-size:0.8rem;color:var(--mid);line-height:1.7;}
+/* 現地調査サムネ行 */
+.fw-item{display:flex;gap:.7rem;padding:.6rem 1.1rem;border-top:1px solid #EDF0F5;align-items:center}
+.fw-th{width:70px;height:52px;border-radius:5px;flex-shrink:0;overflow:hidden;position:relative;
+  background:linear-gradient(150deg,var(--night2),var(--night));display:flex;align-items:center;justify-content:center}
+.fw-th span{color:rgba(201,162,39,.8);font-family:var(--serif);font-size:1.2rem}
+.fw-th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fw-t{font-size:.78rem;line-height:1.55}
+.fw-t .d{font-family:var(--mono);font-size:.66rem;color:var(--dim);display:block}
 
-.note-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:5px;overflow:hidden;}
-@media(min-width:480px){.note-grid{grid-template-columns:repeat(3,1fr);}}
-.nc{background:var(--bg);padding:1.3rem 1.1rem;display:block;transition:background .2s;}
-.nc:hover{background:var(--bg2);}
-.nc-icon{font-size:1.3rem;margin-bottom:0.45rem;}
-.nc-tag{font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:0.3rem;}
-.nc-name{font-size:0.98rem;font-weight:600;color:var(--black);margin-bottom:0.3rem;}
-.nc-desc{font-size:0.82rem;color:var(--mid);line-height:1.7;}
-.nc-arrow{font-size:0.75rem;color:var(--gold);margin-top:0.5rem;display:block;}
+/* 地震ミニ表 */
+table.qk{width:100%;border-collapse:collapse;font-size:.74rem}
+table.qk th{font-weight:500;color:var(--dim);text-align:left;padding:.4rem .5rem .4rem 1.1rem;background:#F4F6FA;border-bottom:1px solid #E4E8EF;white-space:nowrap}
+table.qk td{padding:.42rem .5rem .42rem 1.1rem;border-bottom:1px solid #EDF0F5;white-space:nowrap}
+table.qk .m{font-family:var(--mono)}
 
-.about{background:var(--bg2);border-radius:5px;padding:1.6rem 1.4rem;}
-.about-coord{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.18em;color:var(--gold);margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid var(--line2);}
-.about-name{font-size:1.05rem;font-weight:600;color:var(--black);margin-bottom:0.6rem;}
-.about-body{font-size:0.95rem;color:var(--mid);line-height:2;}
-.about-body strong{color:var(--black);font-weight:600;}
+/* 画像ギャラリー */
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;padding:0 1.1rem .4rem}
+.gal figure{margin:0}
+.gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:5px;border:1px solid var(--line);cursor:pointer;display:block}
+.gal figcaption{font-size:.62rem;color:var(--dim);line-height:1.5}
+.gal-empty{padding:.4rem 1.1rem 1rem;font-size:.74rem;color:var(--dim)}
 
-footer{background:var(--black);color:rgba(255,255,255,0.38);padding:1.8rem 1.4rem;text-align:center;}
-.f-logo{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.36em;color:rgba(176,136,40,0.8);margin-bottom:0.4rem;}
-.f-origin{font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.15em;}
+footer{background:var(--night);color:#7C87A0;margin-top:2.6rem;padding:1.8rem 1.2rem 2.4rem;font-size:.76rem}
+.foot-in{max-width:1080px;margin:0 auto;display:flex;gap:1.4rem;flex-wrap:wrap;align-items:center}
+.foot-in a{color:#AEB7C9;text-decoration:none}
+.foot-in a:hover{color:#fff}
+.foot-c{margin-left:auto;font-family:var(--mono);font-size:.68rem}
 
-.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
+.lightbox{position:fixed;inset:0;background:rgba(9,13,23,.94);display:none;
+  align-items:center;justify-content:center;flex-direction:column;gap:.7rem;z-index:60;padding:1rem;cursor:zoom-out}
+.lightbox.on{display:flex}
+.lightbox img{max-width:100%;max-height:80vh;border-radius:5px}
+.lb-cap{color:#AEB7C9;font-size:.8rem;text-align:center}
+.lb-x{color:#68707E;font-size:.68rem;font-family:var(--mono);letter-spacing:.2em}
 </style>
 </head>
 <body>
 
-<header>
-  <a class="h-logo" href="index.html">岩戸ログ</a>
-  <div class="h-coord">34.920°N / 139.018°E</div>
-</header>
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html"><b>岩戸ログ</b><span>情報の岩戸開き</span></a>
+    <div class="brand-tag">神話・考古学・地理・方位研究のアーカイブ</div>
+    <div class="nav-links">
+      <a href="#worldmap">世界地図</a>
+      <a href="#japanmap">日本地図</a>
+      <a href="#cats">研究カテゴリ</a>
+      <a href="iwato-log.html">地震ログ</a>
+      <a href="#field">現地調査ログ</a>
+      <a href="https://thth1255079.github.io/kage-chikei/">守護神鑑定</a>
+      <a href="#about">このサイトについて</a>
+    </div>
+  </div>
+</nav>
 
 <div class="hero">
-  <div class="hero-eye">AMAGI IWATO LOG</div>
-  <div class="hero-title">岩戸ログ</div>
-  <span class="hero-sub">〜 情報の岩戸開き 〜</span>
-  <div class="hero-desc">
-    ここは天城を中心にするといろいろと繋がるという事を、<br>
-    神話・地形・スピリチュアル体験をとおして<br>
-    検証できるツールを置いておくウェブサイトです。
-  </div>
-  <div class="hero-coord">Origin : 34.920°N / 139.018°E — 天城・伊豆</div>
-</div>
-
-<!-- 上段3列 -->
-<div class="sec reveal">
-  <div class="top-grid">
-    <a class="top-card" href="https://note.com/tokko_geo/m/m741d4265a296" target="_blank">
-      <div class="tc-tag">MAGAZINE</div>
-      <div class="tc-title">なぜ天城が<br>中心なのか</div>
-      <div class="tc-desc">記紀以前の神を辿る。座標・大円航路・封印の配置を全20本で記録。</div>
-      <span class="tc-link">マガジンを読む →</span>
-    </a>
-    <a class="top-card" href="miracle-spread.html">
-      <div class="tc-tag">読み物</div>
-      <div class="tc-title">奇跡が広まる<br>仕組み</div>
-      <div class="tc-desc">手かざし体験がシナプスのように連鎖する構造。SVセンターが「場」になるとはどういうことか。</div>
-      <div class="note-links">
-        <span class="nl">→ 読む</span>
+  <div class="hero-photo" aria-hidden="true"></div>
+  <div class="hero-dial" aria-hidden="true"><svg id="bgDial" viewBox="0 0 420 420"></svg></div>
+  <div class="hero-in">
+    <div class="hero-main">
+      <h1>すべての方位は、つながっている。</h1>
+      <p class="hero-desc">天城山を起点に、神話・遺跡・地形・神社・地震・伝承をつなぎ、失われた記憶を、事実と仮説の分離を守りながら再構築する。</p>
+      <div class="searchbar">
+        <input id="q" type="search" placeholder="キーワードを入力（例：麻賀多神社、月、黒又山）" aria-label="サイト内を検索">
+        <button onclick="doSearch()">検索</button>
       </div>
-    </a>
-    <a class="pdf-card" href="amagi-complete.pdf" target="_blank">
-      <div class="pdf-label">天城岩戸ログ 完全版</div>
-      <div class="pdf-title">PDF<br>はこちら</div>
-      <div class="pdf-arrow">↓ DL</div>
-    </a>
-  </div>
-</div>
-
-<!-- TOOLS -->
-<div class="sec reveal">
-  <div class="sec-head">
-    <span class="sec-en">TOOLS</span>
-    <span class="sec-ja">計算ツール・体験アプリ</span>
-  </div>
-  <div class="tool-grid">
-    <a class="tc2" href="kankei.html">
-      <div class="tc2-icon">🚧</div>
-      <div class="tc2-tag">計算器</div>
-      <div class="tc2-name">関・峠・岬<br>三角形計算器</div>
-      <div class="tc2-desc">地名か座標を3点入れると重心と方位を計算。陸の三関・消された海の関など収録。</div>
-    </a>
-    <a class="tc2" href="amagi16.html">
-      <div class="tc2-icon">🧭</div>
-      <div class="tc2-tag">調査ツール</div>
-      <div class="tc2-name">SVセンター<br>地理ライン調査</div>
-      <div class="tc2-desc">天城を原点に各SVセンターの方位角を計算。同方向の神・古墳・伝説地を一覧表示。</div>
-    </a>
-    <a class="tc2" href="sekai3ten.html">
-      <div class="tc2-icon">🌐</div>
-      <div class="tc2-tag">計算器</div>
-      <div class="tc2-name">世界3点<br>計算器</div>
-      <div class="tc2-desc">世界任意の3点の球面重心と対蹠点を計算。天城×コリマ×ギザなど装置の照準を確かめる。</div>
-    </a>
-    <a class="tc2" href="https://thth1255079.github.io/amatsumikaboshi-map/" target="_blank">
-      <div class="tc2-icon">🗺</div>
-      <div class="tc2-tag">クローズアップ</div>
-      <div class="tc2-name">関東の封印最前線<br>相関図</div>
-      <div class="tc2-desc">アマツミカボシから将門・道真・鹿島まで。関東に張り巡らされた封印の構造を可視化。</div>
-    </a>
-    <a class="tc2" href="amagi-naze.pdf" target="_blank">
-      <div class="tc2-icon">📄</div>
-      <div class="tc2-tag">PDF資料</div>
-      <div class="tc2-name">なぜ天城が<br>中心なのか</div>
-      <div class="tc2-desc">地質・16方位・三角形計算・北極照準——天城が装置の中心である根拠をまとめた資料。</div>
-    </a>
-    <a class="tc2" href="yama-shinkami.html">
-      <div class="tc2-icon">🏔</div>
-      <div class="tc2-tag">鑑定</div>
-      <div class="tc2-name">山の古層神<br>鑑定</div>
-      <div class="tc2-desc">山々に宿る神の名を呼び覚ます。あなただけの古層神鑑定。行こうか迷っている時に</div>
-    </a>
-    <a class="tc2" href="https://thth1255079.github.io/kage-chikei/" target="_blank">
-      <div class="tc2-icon">📍</div>
-      <div class="tc2-tag">占い</div>
-      <div class="tc2-name">天城16方位<br>守護神占い</div>
-      <div class="tc2-desc">天城16方位・地形ラインをもとにした占い。座標と神話が交差する場所。</div>
-    </a>
-    <a class="tc2" href="https://thth1255079.github.io/nightfolk-cards/nightfolk-cards.html" target="_blank">
-      <div class="tc2-icon">🌙</div>
-      <div class="tc2-tag">キャラ診断</div>
-      <div class="tc2-name">夜の民<br>キャラカード</div>
-      <div class="tc2-desc">3つ選ぶだけで「夜の民」キャラが生まれる。感覚過敏・夜型の子どもたちへ。</div>
-    </a>
-  </div>
-</div>
-
-<!-- 掲示板 -->
-<div class="sec reveal">
-  <div class="sec-head">
-    <span class="sec-en">BOARD</span>
-    <span class="sec-ja">発言の小径（はつげんのこみち）言い難いので名前変えました</span>
-  </div>
-  <div class="board-intro">
-    <a href="https://thth1255079.github.io/taiken-log/" target="_blank" style="text-decoration:none;color:inherit;">
-    <div class="board-intro-title">🗣 発言の小径 <span style="font-size:0.75rem;color:var(--gold);">→ 開く</span></div>
-    <div class="board-intro-desc">いいたいのにいえない奇跡体験、不思議体験を置いていくサイト。計算で出てきた気になること、神話と地形の交差点、誰かに伝えたい発見を置いていきます。</div>
-    </a>
-  </div>
-  <div class="board"></div>
-</div>
-
-<!-- NEWS -->
-<div class="sec reveal">
-  <div class="sec-head">
-    <span class="sec-en">NEWS</span>
-    <span class="sec-ja">◎ 注目のニュース</span>
-  </div>
-  <div class="news-list">
-    <div class="news-item">
-      <div class="news-label">座標の奇跡 — 2026</div>
-      <div class="news-title">スザからSSWに4743km一直線 → 6万7800年前の手形洞窟にピッタリ到達</div>
-      <div class="news-body">スザ（北緯34.920444°、東経139.017500°）からSSW（方位角202.43°）に伸ばすと、インドネシア・ムナ島「リアン・メタンドゥノ洞窟」に到達。Nature誌で報じられた67,800年前の手形が、このラインの先にほぼ完璧に位置する。16方位マンダラのSSW中心（202.5°）との誤差わずか0.07°。</div>
+      <div class="hot-tags">よく検索されるキーワード：
+        <a href="#" data-q="月">#月メジャースタンドスティル</a>
+        <a href="#" data-q="印旛沼">#印旛沼</a>
+        <a href="#" data-q="月読">#月読命</a>
+        <a href="#" data-q="海民">#海人族</a>
+        <a href="#" data-q="18">#18</a>
+      </div>
     </div>
-    <div class="news-item">
-      <div class="news-label">2026年2月26日 — NHKニュース</div>
-      <div class="news-title">青森・秋田に火球が出現——3月1日月始祭の前夜明け</div>
-      <div class="news-body">2026年2月26日午前4時48分頃、能代市・横手市・青森県深浦町のNHKカメラが「光の玉」を同時刻に撮影。東北北部から北海道南部にかけて広域で目撃。仙台市天文台が火球の可能性が高いと発表。通常の出現時期（旧暦7月頃）とは異なる、この時期としては珍しい現象。</div>
+    <aside class="method-panel" id="about">
+      <h2>研究の方法論（L1 / L2 / L3）</h2>
+      <div class="m-row"><span class="lv l1">L1</span><span><b>確定。</b>実測・実験・文献で裏付けられた事実。方位は誤差を明記して記録する。</span></div>
+      <div class="m-row"><span class="lv l2">L2</span><span><b>構造の判断。</b>複数のL1事実から導く中間解釈。構造や関係性の理解。</span></div>
+      <div class="m-row"><span class="lv l3">L3</span><span><b>仮説・物語。</b>象徴的・物語的解釈、未確認の接続仮説。魅力的な物語ほど、L1と混同しない。</span></div>
+    </aside>
+  </div>
+</div>
+
+<main>
+  <div id="searchSec">
+    <h2 class="sec">検索結果<span class="en">SEARCH</span></h2>
+    <div class="count" id="sCount"></div>
+    <div id="sList"></div>
+  </div>
+
+  <div class="row3">
+    <div class="panel" id="worldmap">
+      <div class="panel-h">世界地図<span class="en">グローバル研究</span></div>
+      <div class="map" id="mapWorld"></div>
+      <div class="panel-b" style="padding-top:.7rem">ソロヴェツキー諸島を中心とした世界聖地ネットワーク、出雲軸などのグローバルな接続を探る。金線は天城からの大円方位。</div>
     </div>
-    <div class="news-item">
-      <div class="news-label">気になるニュース</div>
-      <div class="news-title">クフ王のピラミッド内に新たな空間が発見された</div>
-      <div class="news-body">「Nature Communications」に発表。クフ王のピラミッド内に新たな空間が確認された。非破壊的な宇宙線ミュオン透視技術による調査。天城からNW方向（ギザ304.3°）の聖地に新たな発見。</div>
+    <div class="panel" id="japanmap">
+      <div class="panel-h">日本地図<span class="en">国内研究</span></div>
+      <div class="map" id="mapJapan"></div>
+      <div class="panel-b" style="padding-top:.7rem">各地の神社・遺跡・地形・地名を天城16方位グリッドで分析。縄文から律令への流れを地域ごとに追う。</div>
+    </div>
+    <div class="panel">
+      <div class="panel-h">最近の更新<span class="en">UPDATES</span></div>
+      <ul class="upd" id="updList"></ul>
+      <a class="panel-foot" href="#records">更新履歴をすべて見る →</a>
     </div>
   </div>
-</div>
 
-<!-- NOTE -->
-<div class="sec reveal">
-  <div class="sec-head">
-    <span class="sec-en">NOTE</span>
-    <span class="sec-ja">連載・記録</span>
-  </div>
-  <div class="note-grid">
-    <a class="nc" href="https://note.com/tokko_geo" target="_blank">
-      <div class="nc-icon">📐</div>
-      <div class="nc-tag">計算層</div>
-      <div class="nc-name">天城岩戸ログ</div>
-      <div class="nc-desc">座標・大円航路・三種の神器の配置分析。</div>
-      <span class="nc-arrow">tokko_geo →</span>
-    </a>
-    <a class="nc" href="https://note.com/fancy_sable4582" target="_blank">
-      <div class="nc-icon">🌀</div>
-      <div class="nc-tag">理論層</div>
-      <div class="nc-name">消された記憶の理論</div>
-      <div class="nc-desc">神話・古代地形・消された記憶の理論的展開。</div>
-      <span class="nc-arrow">fancy_sable4582 →</span>
-    </a>
-    <a class="nc" href="https://note.com/apt_hound2110/n/naa6f7b86b51e" target="_blank">
-      <div class="nc-icon">🌙</div>
-      <div class="nc-tag">方法論</div>
-      <div class="nc-name">直感×AIの記録</div>
-      <div class="nc-desc">直感×AIのやりとりを記録。夜の民図鑑・子どもたちへの実践。</div>
-      <span class="nc-arrow">apt_hound2110 →</span>
-    </a>
-  </div>
-</div>
+  <section id="cats">
+    <h2 class="sec">研究カテゴリ<span class="en">CATEGORIES</span></h2>
+    <div class="cats" id="catGrid"></div>
+  </section>
 
-<!-- ABOUT -->
-<div class="sec reveal">
-  <div class="sec-head">
-    <span class="sec-en">ABOUT</span>
-    <span class="sec-ja">管理人</span>
-  </div>
-  <div class="about">
-    <div class="about-coord">Origin : 34.920°N / 139.018°E — 天城・伊豆</div>
-    <div class="about-name">十湖（とっこ）</div>
-    <div class="about-body">
-      スピリチュアルと地形と神話、量子の世界とAIを通して読み取るただの個人です。<br>
-      <br>言葉になる前の感覚をAIに投げ、大円航路の方位角で日本の古代地図を読み直す。
-      「消された関」「封印された神」「記紀以前の記憶」——それらが
-      <strong>計算上のパターンとして浮かび上がる瞬間</strong>を記録する地形神話オタク。
+  <div class="tagrow">
+    <div class="panel tags-panel">
+      <div class="panel-h">タグから探す<span class="en">TAGS</span></div>
+      <div class="t-line"><span class="t-k">確度</span>
+        <button class="t-tag lv1" data-layer="L1">#L1（確定）</button>
+        <button class="t-tag lv2" data-layer="L2">#L2（構造の判断）</button>
+        <button class="t-tag lv3" data-layer="L3">#L3（仮説・物語）</button>
+      </div>
+      <div class="t-line"><span class="t-k">地域</span>
+        <button class="t-tag" data-q="千葉">#千葉</button>
+        <button class="t-tag" data-q="東北">#東北</button>
+        <button class="t-tag" data-q="山形">#山形</button>
+        <button class="t-tag" data-q="世界">#世界</button>
+        <button class="t-tag" data-q="ベネズエラ">#ベネズエラ</button>
+      </div>
+      <div class="t-line" style="padding-bottom:.9rem"><span class="t-k">テーマ</span>
+        <button class="t-tag" data-q="月">#月</button>
+        <button class="t-tag" data-q="海民">#海民</button>
+        <button class="t-tag" data-q="神">#神話</button>
+        <button class="t-tag" data-q="地震">#地震</button>
+        <button class="t-tag" data-q="封印">#封印</button>
+        <button class="t-tag" data-q="18">#18</button>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-h">天城山 基準データ</div>
+      <div class="base-photo"></div>
+      <div class="base-row"><span class="k">北緯</span><span class="v">34.920°</span></div>
+      <div class="base-row"><span class="k">東経</span><span class="v">139.018°</span></div>
+      <div class="base-row"><span class="k">標高</span><span class="v">1,406 m</span></div>
+      <div class="base-row" style="margin-bottom:.6rem"><span class="k">役割</span><span class="v">16方位グリッドの起点</span></div>
+      <a class="panel-foot" href="amagi16.html">天城16方位グリッドを見る →</a>
     </div>
   </div>
-</div>
+
+  <div class="row4">
+    <div class="panel" id="records">
+      <div class="panel-h">最新の研究記録</div>
+      <ul class="upd" id="recList"></ul>
+    </div>
+    <div class="panel" id="field">
+      <div class="panel-h">現地調査ログ<span class="en">最新3件</span></div>
+      <div id="fwList"></div>
+      <a class="panel-foot" href="#" onclick="tagFilterCat('field');return false;">すべての現地調査ログを見る →</a>
+    </div>
+    <div class="panel">
+      <div class="panel-h">地震ログ<span class="en">最新3件</span></div>
+      <table class="qk">
+        <thead><tr><th>発生日</th><th>場所</th><th>M</th><th>天城方位</th></tr></thead>
+        <tbody id="qkBody"></tbody>
+      </table>
+      <a class="panel-foot" href="iwato-log.html">すべての地震ログを見る →</a>
+    </div>
+    <div class="panel">
+      <div class="panel-h">最近追加された画像</div>
+      <div class="gal" id="gal"></div>
+      <div class="gal-empty" id="galEmpty">まだ画像がありません。data.js の IMAGES に追加してください。</div>
+    </div>
+  </div>
+</main>
 
 <footer>
-  <div class="f-logo">岩戸ログ — AMAGI IWATO LOG</div>
-  <div class="f-origin">Origin : 34.920°N / 139.018°E — 十湖 TOKKO</div>
+  <div class="foot-in">
+    <span style="font-family:var(--serif);color:#E9EDF5;letter-spacing:.1em">岩戸ログ<span style="font-size:.65rem;color:#7C87A0;margin-left:.6em">情報の岩戸開き</span></span>
+    <a href="#about">このサイトについて</a>
+    <a href="iwato-log.html">地震ログ</a>
+    <a href="https://thth1255079.github.io/kage-chikei/">守護神鑑定</a>
+    <a href="https://note.com/tokko_geo" target="_blank" rel="noopener">note</a>
+    <span class="foot-c">© 2026 岩戸ログ（陽光文明同好会）</span>
+  </div>
 </footer>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-label="写真の拡大表示">
+  <img id="lbImg" src="" alt="">
+  <p class="lb-cap" id="lbCap"></p>
+  <p class="lb-x">タップで閉じる</p>
+</div>
+
+<script src="data.js"></script>
 <script>
-const reveals=document.querySelectorAll('.reveal');
-const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.07});
-reveals.forEach(el=>observer.observe(el));
+/* ── 背景の方位盤 ── */
+(function(){
+  const cx=210,cy=210,r1=70,r2=180;
+  let s="";
+  for(let i=0;i<16;i++){
+    const a=(i*22.5-90)*Math.PI/180;
+    s+=`<line x1="${cx+r1*Math.cos(a)}" y1="${cy+r1*Math.sin(a)}" x2="${cx+r2*Math.cos(a)}" y2="${cy+r2*Math.sin(a)}" stroke="#C9A227" stroke-width="${i%4===0?1.5:0.6}" opacity=".8"/>`;
+  }
+  [r1,120,r2].forEach(r=>{ s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#C9A227" stroke-width="0.6" opacity=".8"/>`; });
+  const DIRS=["N","NE","E","SE","S","SW","W","NW"];
+  DIRS.forEach((d,i)=>{
+    const a=(i*45-90)*Math.PI/180;
+    s+=`<text x="${cx+(r2+16)*Math.cos(a)}" y="${cy+(r2+16)*Math.sin(a)+4}" text-anchor="middle" fill="#C9A227" font-size="12" font-family="monospace" opacity=".9">${d}</text>`;
+  });
+  document.getElementById("bgDial").innerHTML=s;
+})();
+
+/* ── 地図（Leaflet／CARTOダークタイル） ── */
+const TILE="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+const ATTR='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>';
+function miniMap(id, center, zoom){
+  const m=L.map(id,{zoomControl:false,dragging:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,touchZoom:false,attributionControl:true});
+  L.tileLayer(TILE,{attribution:ATTR,subdomains:"abcd",maxZoom:19}).addTo(m);
+  m.setView(center,zoom);
+  return m;
+}
+(function buildMaps(){
+  const gold={color:"#C9A227",weight:1.4,opacity:.85};
+  const mark=(m,site,color)=>L.circleMarker(site.ll,{radius:5,color:color,weight:1.5,fillColor:color,fillOpacity:.55})
+      .addTo(m).bindTooltip(`${site.name}${site.note?"｜"+site.note:""}`);
+  // 世界
+  const mw=miniMap("mapWorld",[48,60],1);
+  MAP_SITES.filter(s=>s.type==="world").forEach(s=>{
+    L.polyline([AMAGI_LL,s.ll],gold).addTo(mw);
+    mark(mw,s,"#E58CA0");
+  });
+  mark(mw,MAP_SITES[0],"#C9A227");
+  // 日本
+  const mj=miniMap("mapJapan",[37.6,137.8],4);
+  MAP_SITES.filter(s=>s.type==="jp").forEach(s=>mark(mj,s,"#6FA8E8"));
+  mark(mj,MAP_SITES[0],"#C9A227");
+})();
+
+/* ── 最近の更新・研究記録 ── */
+const catName = id => (CATS.find(c=>c.id===id)||{}).name || id;
+function updLine(r){
+  return `<li>
+    <div class="u-top"><span class="lv ${r.layer.toLowerCase()}">${r.layer}</span><span class="u-date">${r.date}</span>${r.plan?'<span class="plan-tag">予定</span>':""}</div>
+    <div class="u-title"><a href="#" data-open="${r.title}">${r.title}</a></div>
+  </li>`;
+}
+document.getElementById("updList").innerHTML = REPORTS.slice(0,5).map(updLine).join("");
+document.getElementById("recList").innerHTML = REPORTS.slice(0,6).map(updLine).join("");
+
+/* ── カテゴリタイル ── */
+const GLYPH={tsuki:"月",shio:"海",fuin:"封",world:"星",iwato:"震",field:"調",chiba:"千",kami:"神"};
+document.getElementById("catGrid").innerHTML = CATS.map(c=>{
+  const tag=c.href?"a":"div";
+  const href=c.href?` href="${c.href}"`:` data-cat="${c.id}" role="button" tabindex="0"`;
+  return `<${tag} class="cat"${href}>
+    <div class="cat-ph"><span class="glyph">${GLYPH[c.id]||"◈"}</span><img src="${c.photo}" alt="" loading="lazy" onerror="this.remove()"></div>
+    <span class="cat-name">${c.name}</span>
+    <span class="cat-desc">${c.desc}</span>
+  </${tag}>`;
+}).join("");
+document.querySelectorAll("#catGrid [data-cat]").forEach(el=>{
+  const act=()=>tagFilterCat(el.dataset.cat);
+  el.addEventListener("click",act);
+  el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();act();}});
+});
+
+/* ── 現地調査ログ（photosつき優先で最新3件） ── */
+(function(){
+  const fw=REPORTS.filter(r=>r.cats.includes("field")).slice(0,3);
+  document.getElementById("fwList").innerHTML = fw.length ? fw.map(r=>{
+    const ph=r.photos && r.photos[0];
+    return `<div class="fw-item">
+      <div class="fw-th"><span>調</span>${ph?`<img src="${ph.src}" alt="" loading="lazy" onerror="this.remove()">`:""}</div>
+      <div class="fw-t"><span class="d">${r.date}${r.plan?"（予定）":""}</span>${r.title}</div>
+    </div>`;
+  }).join("") : `<div class="empty" style="padding:1rem">現地調査の報告はまだありません。</div>`;
+})();
+
+/* ── 地震ログ最新3件 ── */
+document.getElementById("qkBody").innerHTML = LOGS.slice(0,3).map(l=>{
+  const mag=String(l.mag).includes("要確認")?"—":l.mag;
+  const b=l.bearing.split("（")[0].replace("■要確認","—");
+  return `<tr><td class="m">${l.date}</td><td>${l.epicenter.replace("■要確認","—").split("／")[0]}</td><td class="m">${mag.split("（")[0].split("／")[0]}</td><td class="m">${b}</td></tr>`;
+}).join("");
+
+/* ── 画像ギャラリー ── */
+(function(){
+  const g=document.getElementById("gal");
+  if(IMAGES.length){
+    document.getElementById("galEmpty").remove();
+    g.innerHTML=IMAGES.slice(0,6).map(im=>`<figure><img src="${im.src}" alt="${im.cap||""}" loading="lazy" data-cap="${im.cap||""}"><figcaption>${im.cap||""}</figcaption></figure>`).join("");
+  }
+})();
+
+/* ── 検索 ── */
+function doSearch(){
+  const q=document.getElementById("q").value.trim();
+  runSearch(rows=>rows.filter(r=>(r.title+r.body+(r.cats||[]).map(catName).join("")).includes(q)),
+            q?`検索: "${q}"`:null);
+}
+function tagFilterCat(id){
+  runSearch(rows=>rows.filter(r=>r.cats && r.cats.includes(id)), `テーマ: ${catName(id)}`);
+}
+function tagFilterLayer(lv){
+  runSearch(rows=>rows.filter(r=>r.layer===lv), `確度: ${lv}`);
+}
+function runSearch(filter, label){
+  const sec=document.getElementById("searchSec");
+  if(!label){ sec.classList.remove("on"); return; }
+  const rows=filter(REPORTS);
+  document.getElementById("sCount").textContent=`${rows.length} 件 ／ ${label}`;
+  document.getElementById("sList").innerHTML = rows.length ? rows.map(r=>`
+    <div class="report">
+      <div class="r-top">
+        <span class="lv ${r.layer.toLowerCase()}">${r.layer}</span>
+        <span class="r-date">${r.date}</span>${r.plan?'<span class="plan-tag">予定</span>':""}
+      </div>
+      <div class="r-title">${r.title}</div>
+      <div class="r-body">${r.body}</div>
+      ${r.photos && r.photos.length ? `<div class="r-photos">${r.photos.map(p=>`
+        <figure><img src="${p.src}" alt="${p.cap||""}" loading="lazy" data-cap="${p.cap||""}">${p.cap?`<figcaption>${p.cap}</figcaption>`:""}</figure>`).join("")}</div>` : ""}
+      ${r.files && r.files.length ? `<div class="r-files">${r.files.map(f=>`
+        <a class="r-file" href="${f.href}" target="_blank" rel="noopener">${f.label||"添付資料"}</a>`).join("")}</div>` : ""}
+      <div class="r-tags">
+        ${r.cats.map(c=>`<span class="tag">${catName(c)}</span>`).join("")}
+        ${r.link?`<a class="r-link" href="${r.link}" ${r.link.startsWith("http")?'target="_blank" rel="noopener"':""}>詳細 →</a>`:""}
+      </div>
+    </div>`).join("") : `<div class="empty">該当する記録はありません。</div>`;
+  sec.classList.add("on");
+  sec.scrollIntoView({behavior:"smooth"});
+}
+document.getElementById("q").addEventListener("keydown",e=>{ if(e.key==="Enter") doSearch(); });
+document.querySelectorAll(".hot-tags a").forEach(a=>{
+  a.addEventListener("click",e=>{e.preventDefault();document.getElementById("q").value=a.dataset.q;doSearch();});
+});
+document.querySelectorAll(".t-tag").forEach(b=>{
+  b.addEventListener("click",()=>{
+    if(b.dataset.layer) tagFilterLayer(b.dataset.layer);
+    else { document.getElementById("q").value=b.dataset.q; doSearch(); }
+  });
+});
+document.querySelectorAll("#updList a, #recList a").forEach(a=>{
+  a.addEventListener("click",e=>{e.preventDefault();document.getElementById("q").value=a.dataset.open;doSearch();});
+});
+
+/* ── ライトボックス ── */
+const lb=document.getElementById("lightbox");
+document.addEventListener("click",e=>{
+  const img=e.target.closest(".r-photos img, .gal img"); if(!img) return;
+  document.getElementById("lbImg").src=img.src;
+  document.getElementById("lbCap").textContent=img.dataset.cap||"";
+  lb.classList.add("on");
+});
+lb.addEventListener("click",()=>lb.classList.remove("on"));
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") lb.classList.remove("on"); });
 </script>
 </body>
 </html>

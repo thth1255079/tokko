@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>岩戸ログ｜地震と方位の記録</title>
+<meta name="description" content="天城16方位モデルによる地震観測ログ。震源方位と対応神を三層構造（L1/L2/L3）で記録するアーカイブ。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EEF1F5;      /* 石白 */
+  --ink:#1D2433;        /* 墨 */
+  --rock:#0D1424;       /* 岩戸 */
+  --rock-2:#16203A;
+  --vermilion:#C43D4B;  /* 朱 */
+  --indigo:#2B5FD9;     /* 藍 */
+  --line:#D8DDE6;       /* 薄墨 */
+  --dim:#68707E;
+  --card:#FFFFFF;
+  --serif:'Shippori Mincho','Hiragino Mincho ProN',serif;
+  --sans:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.85;font-size:15.5px}
+
+/* ── 岩戸（ヘッダー） ── */
+header{background:var(--rock);color:#E8E6E1;padding:2.6rem 1.2rem 2.2rem}
+.h-inner{max-width:860px;margin:0 auto}
+.h-eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.28em;color:#9BA0A6;text-transform:uppercase}
+h1{font-family:var(--serif);font-weight:800;font-size:clamp(1.9rem,5vw,2.7rem);letter-spacing:.14em;margin:.35rem 0 .5rem}
+h1 .sub{font-size:.45em;font-weight:600;letter-spacing:.22em;color:#B9BDC2;margin-left:.9em}
+.h-desc{font-size:.86rem;color:#B9BDC2;max-width:38em}
+.h-desc b{color:#E8E6E1;font-weight:500}
+
+/* ── 方位盤 ── */
+.dial-wrap{max-width:860px;margin:-1px auto 0;background:var(--rock);padding:0 1.2rem 2.4rem;border-radius:0 0 6px 6px}
+@media(max-width:900px){.dial-wrap{border-radius:0}}
+.dial-flex{display:flex;gap:2rem;align-items:center;flex-wrap:wrap}
+.dial-box{flex:0 0 auto}
+svg.dial{display:block;width:min(300px,78vw);height:auto}
+.dial-legend{flex:1;min-width:220px;color:#C9CCC7;font-size:.82rem}
+.dial-legend p{margin-bottom:.6rem}
+.dial-legend .k{font-family:var(--mono);color:#E8E6E1}
+.sector{fill:#232E4A;stroke:var(--rock);stroke-width:1.5;cursor:pointer;transition:fill .18s}
+.sector:hover{fill:#2E3B5E}
+.sector.has{fill:#3A5A8C}
+.sector.has:hover{fill:#4A6EA8}
+.sector.on{fill:var(--vermilion)}
+.dir-label{font-family:var(--mono);font-size:11px;fill:#B9BDC2;text-anchor:middle;pointer-events:none}
+.dir-label.on{fill:#FFD9CF;font-weight:600}
+.dial-center{font-family:var(--serif);font-size:22px;fill:#E8E6E1;text-anchor:middle;letter-spacing:.1em}
+.dial-center-sub{font-family:var(--mono);font-size:8.5px;fill:#9BA0A6;text-anchor:middle;letter-spacing:.12em}
+
+/* ── フィルタ帯 ── */
+.filters{max-width:860px;margin:1.4rem auto 0;padding:0 1.2rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;
+  padding:.28rem .85rem;font-size:.8rem;cursor:pointer;font-family:var(--sans);color:var(--ink);transition:all .15s}
+.chip:hover{border-color:var(--indigo);color:var(--indigo)}
+.chip.on{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.chip:focus-visible,.sector:focus-visible{outline:2px solid var(--vermilion);outline-offset:2px}
+.search{margin-left:auto;border:1px solid var(--line);border-radius:999px;padding:.3rem .95rem;
+  font-size:.82rem;background:var(--card);font-family:var(--sans);min-width:170px}
+.search:focus{outline:2px solid var(--indigo);outline-offset:1px}
+.f-label{font-size:.75rem;color:var(--dim);letter-spacing:.08em}
+.clear-btn{background:none;border:none;font-size:.78rem;color:var(--vermilion);cursor:pointer;
+  text-decoration:underline;text-underline-offset:3px;display:none;font-family:var(--sans)}
+.clear-btn.show{display:inline}
+
+/* ── ログ一覧 ── */
+main{max-width:860px;margin:1.6rem auto 4rem;padding:0 1.2rem}
+.count{font-size:.78rem;color:var(--dim);margin-bottom:1rem;font-family:var(--mono)}
+article.log{background:var(--card);border:1px solid var(--line);border-radius:6px;
+  margin-bottom:1.6rem;overflow:hidden}
+.log-head{padding:1.15rem 1.4rem .9rem;border-bottom:1px solid var(--line);
+  border-left:4px solid var(--vermilion)}
+.log-date{font-family:var(--mono);font-size:.76rem;color:var(--dim);letter-spacing:.06em}
+.log-title{font-family:var(--serif);font-weight:600;font-size:1.22rem;letter-spacing:.04em;margin-top:.15rem;line-height:1.6}
+.log-tags{margin-top:.5rem;display:flex;gap:.4rem;flex-wrap:wrap}
+.tag{font-size:.7rem;padding:.1rem .6rem;border-radius:3px;letter-spacing:.05em}
+.tag.band{background:#E4EAF1;color:var(--indigo)}
+.tag.deity{background:#F3E4E0;color:var(--vermilion)}
+.tag.layer{color:#fff;font-family:var(--mono);font-weight:600}
+.tag.layer.l1{background:#2B5FD9}.tag.layer.l2{background:#D97F0E}.tag.layer.l3{background:#C43D4B}
+
+/* 定型表（まほろば式） */
+table.spec{width:100%;border-collapse:collapse;font-size:.86rem}
+table.spec th{width:8.5em;text-align:left;font-weight:500;color:var(--dim);
+  padding:.55rem 1.4rem;border-bottom:1px solid #E4E8EF;background:#F4F6FA;
+  letter-spacing:.06em;vertical-align:top;white-space:nowrap}
+table.spec td{padding:.55rem 1rem .55rem 0;border-bottom:1px solid #E4E8EF;vertical-align:top}
+table.spec tr:last-child th,table.spec tr:last-child td{border-bottom:none}
+.v-num{font-family:var(--mono);font-size:.92em}
+.v-bearing{font-family:var(--mono);color:var(--indigo);font-weight:500}
+.v-deity{font-family:var(--serif);font-weight:600;letter-spacing:.06em}
+.todo{color:var(--vermilion);font-size:.8em;border:1px dashed var(--vermilion);
+  border-radius:3px;padding:0 .45em}
+
+.log-body{padding:1rem 1.4rem 1.2rem;font-size:.9rem;color:#3B3F42}
+.log-body .memo-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--dim);display:block;margin-bottom:.25rem}
+.log-foot{padding: .75rem 1.4rem 1rem;display:flex;justify-content:flex-end}
+.note-link{font-size:.82rem;color:var(--indigo);text-decoration:none;
+  border-bottom:1px solid var(--indigo);padding-bottom:1px;letter-spacing:.04em}
+.note-link:hover{color:var(--vermilion);border-color:var(--vermilion)}
+
+/* 写真・添付 */
+.r-photos{display:flex;gap:.5rem;flex-wrap:wrap;padding:.2rem 1.4rem .4rem}
+.r-photos figure{margin:0;width:110px}
+.r-photos img{width:110px;height:82px;object-fit:cover;border-radius:4px;
+  border:1px solid var(--line);cursor:pointer;display:block;transition:transform .15s}
+.r-photos img:hover{transform:scale(1.03)}
+.r-photos figcaption{font-size:.66rem;color:var(--dim);line-height:1.5;margin-top:.15rem}
+.r-files{display:flex;gap:.6rem;flex-wrap:wrap;padding:0 1.4rem .3rem}
+.r-file{font-size:.76rem;color:var(--indigo);text-decoration:none;
+  border:1px solid var(--line);border-radius:3px;padding:.14rem .65rem;background:#fff}
+.r-file::before{content:"📄 "}
+.r-file:hover{border-color:var(--indigo)}
+.lightbox{position:fixed;inset:0;background:rgba(20,22,25,.93);display:none;
+  align-items:center;justify-content:center;flex-direction:column;gap:.7rem;z-index:50;padding:1rem;cursor:zoom-out}
+.lightbox.on{display:flex}
+.lightbox img{max-width:100%;max-height:80vh;border-radius:4px}
+.lb-cap{color:#C9CCC7;font-size:.8rem;text-align:center}
+.lb-x{color:#8A8F95;font-size:.7rem;font-family:var(--mono);letter-spacing:.2em}
+.empty{padding:3rem 1rem;text-align:center;color:var(--dim);font-size:.88rem}
+.empty b{font-family:var(--serif)}
+
+footer{background:var(--rock);padding:1.8rem 1.2rem 2.4rem;text-align:center;
+  font-size:.78rem;color:#7C87A0;margin-top:2rem}
+footer a{color:#AEB7C9}
+@media(max-width:560px){
+  table.spec th{width:7em;padding:.5rem .9rem}
+  .log-head,.log-body{padding-left:1rem;padding-right:1rem}
+  table.spec td{padding-right:.6rem}
+  .search{min-width:0;flex:1}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-inner">
+    <div class="h-eyebrow">IWATO LOG — SEISMIC / DIRECTIONAL ARCHIVE</div>
+    <h1>岩戸ログ<span class="sub">地震と方位の記録</span></h1>
+    <p class="h-desc">天城（34.920°N / 139.018°E）を原点とする16方位モデルで震源方位を記録する観測ログ。
+    <b>L1＝計算・記録</b>／<b>L2＝観測パターン</b>／<b>L3＝仮説</b> の三層を厳密に区別して記述する。</p>
+  </div>
+</header>
+
+<div class="dial-wrap">
+  <div class="h-inner dial-flex">
+    <div class="dial-box">
+      <svg class="dial" viewBox="0 0 320 320" role="group" aria-label="16方位フィルタ盤" id="dial"></svg>
+    </div>
+    <div class="dial-legend">
+      <p><span class="k">方位盤</span>の各扇をタップすると、その方位帯のログだけを表示します。</p>
+      <p>明るい扇＝ログのある方位帯。<span class="k" style="color:#E0866F">朱</span>＝選択中。もう一度タップで解除。</p>
+    </div>
+  </div>
+</div>
+
+<div class="filters" id="deityFilters">
+  <span class="f-label">神別：</span>
+  <!-- 神チップはJSが生成 -->
+  <input class="search" id="q" type="search" placeholder="検索（震源・語句）" aria-label="ログを検索">
+  <button class="clear-btn" id="clearBtn">絞り込み解除</button>
+</div>
+
+<main>
+  <div class="count" id="count"></div>
+  <div id="list"></div>
+</main>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="写真の拡大表示">
+  <img id="lbImg" src="" alt="">
+  <p class="lb-cap" id="lbCap"></p>
+  <p class="lb-x">タップで閉じる</p>
+</div>
+
+<footer>
+  岩戸ログ｜<a href="https://note.com/tokko_geo" target="_blank" rel="noopener">note（tokko_geo）</a>｜
+  <a href="../">tokko トップへ戻る</a>
+</footer>
+
+<script src="data.js"></script>
+<script>
+/* ログデータは data.js（共有データファイル）で管理する */
+
+/* ── 16方位 ── */
+const DIRS = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+const state = { band:null, deity:null, q:"" };
+
+/* ── 方位盤SVG生成 ── */
+(function buildDial(){
+  const svg = document.getElementById("dial");
+  const cx=160, cy=160, r1=62, r2=132, rl=148;
+  const has = new Set(LOGS.map(l=>l.band));
+  let out = "";
+  DIRS.forEach((d,i)=>{
+    const a0 = (i*22.5 - 11.25 - 90) * Math.PI/180;
+    const a1 = (i*22.5 + 11.25 - 90) * Math.PI/180;
+    const p = (r,a)=>[cx+r*Math.cos(a), cy+r*Math.sin(a)];
+    const [x0,y0]=p(r2,a0),[x1,y1]=p(r2,a1),[x2,y2]=p(r1,a1),[x3,y3]=p(r1,a0);
+    out += `<path class="sector${has.has(d)?" has":""}" data-band="${d}" tabindex="0" role="button"
+      aria-label="${d} 方位帯で絞り込み"
+      d="M${x0},${y0} A${r2},${r2} 0 0 1 ${x1},${y1} L${x2},${y2} A${r1},${r1} 0 0 0 ${x3},${y3} Z"/>`;
+    const am = (i*22.5 - 90) * Math.PI/180;
+    const [lx,ly]=p(rl,am);
+    out += `<text class="dir-label" data-band="${d}" x="${lx}" y="${ly+4}">${d}</text>`;
+  });
+  out += `<circle cx="${cx}" cy="${cy}" r="${r1-8}" fill="#0A101D" />`;
+  out += `<text class="dial-center" x="${cx}" y="${cy+2}">天城</text>`;
+  out += `<text class="dial-center-sub" x="${cx}" y="${cy+20}">34.920N 139.018E</text>`;
+  svg.innerHTML = out;
+  svg.querySelectorAll(".sector").forEach(s=>{
+    const act = ()=>{ state.band = (state.band===s.dataset.band) ? null : s.dataset.band; render(); };
+    s.addEventListener("click",act);
+    s.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();act();} });
+  });
+})();
+
+/* ── 神チップ生成 ── */
+(function buildDeity(){
+  const box = document.getElementById("deityFilters");
+  const search = document.getElementById("q");
+  const deities = [...new Set(LOGS.flatMap(l=>l.deities))];
+  deities.forEach(d=>{
+    const b=document.createElement("button");
+    b.className="chip"; b.textContent=d; b.dataset.deity=d;
+    b.addEventListener("click",()=>{ state.deity = (state.deity===d)?null:d; render(); });
+    box.insertBefore(b,search);
+  });
+})();
+
+document.getElementById("q").addEventListener("input",e=>{ state.q=e.target.value.trim(); render(); });
+document.getElementById("clearBtn").addEventListener("click",()=>{
+  state.band=null; state.deity=null; state.q="";
+  document.getElementById("q").value=""; render();
+});
+
+/* ── 値の整形（■要確認 → 朱枠） ── */
+function fmt(v, cls){
+  if(!v) return `<span class="todo">未入力</span>`;
+  if(String(v).includes("■要確認")) return `<span class="todo">要確認</span>` + String(v).replace("■要確認","").replace(/^（|）$/g,"") ;
+  return cls ? `<span class="${cls}">${v}</span>` : v;
+}
+
+/* ── 描画 ── */
+function render(){
+  const list=document.getElementById("list");
+  const rows = LOGS.filter(l=>
+    (!state.band  || l.band===state.band) &&
+    (!state.deity || l.deities.includes(state.deity)) &&
+    (!state.q || (l.title+l.epicenter+l.memo+l.bearing).includes(state.q))
+  );
+  document.getElementById("count").textContent =
+    `${rows.length} 件` + (state.band?` ／ 方位帯: ${state.band}`:"") + (state.deity?` ／ 神: ${state.deity}`:"");
+  document.querySelectorAll(".sector").forEach(s=>s.classList.toggle("on", s.dataset.band===state.band));
+  document.querySelectorAll(".dir-label").forEach(t=>t.classList.toggle("on", t.dataset.band===state.band));
+  document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on", c.dataset.deity===state.deity));
+  document.getElementById("clearBtn").classList.toggle("show", !!(state.band||state.deity||state.q));
+
+  if(!rows.length){
+    list.innerHTML = `<div class="empty"><b>該当するログはありません。</b><br>方位盤か絞り込みを解除してください。</div>`;
+    return;
+  }
+  list.innerHTML = rows.map(l=>`
+    <article class="log">
+      <div class="log-head">
+        <div class="log-date">${l.date}</div>
+        <div class="log-title">${l.title}</div>
+        <div class="log-tags">
+          <span class="tag band">方位帯 ${l.band}</span>
+          ${l.deities.map(d=>`<span class="tag deity">${d}</span>`).join("")}
+          <span class="tag layer ${l.layer.toLowerCase()}">${l.layer}</span>
+        </div>
+      </div>
+      <table class="spec">
+        <tr><th>発生日</th><td><span class="v-num">${l.date}</span></td></tr>
+        <tr><th>震源</th><td>${fmt(l.epicenter)}</td></tr>
+        <tr><th>規模</th><td>${fmt(l.mag,"v-num")}</td></tr>
+        <tr><th>深さ</th><td>${fmt(l.depth,"v-num")}</td></tr>
+        <tr><th>天城方位</th><td>${fmt(l.bearing,"v-bearing")}</td></tr>
+        <tr><th>対応神</th><td>${l.deities.map(d=>`<span class="v-deity">${d}</span>`).join("・")}</td></tr>
+        <tr><th>記述層</th><td><span class="tag layer ${l.layer.toLowerCase()}">${l.layer}</span></td></tr>
+      </table>
+      <div class="log-body">
+        <span class="memo-label">MEMO</span>
+        ${l.memo}
+      </div>
+      ${l.photos && l.photos.length ? `<div class="r-photos">${l.photos.map(p=>`
+        <figure><img src="${p.src}" alt="${p.cap||""}" loading="lazy" data-cap="${p.cap||""}">${p.cap?`<figcaption>${p.cap}</figcaption>`:""}</figure>`).join("")}</div>` : ""}
+      ${l.files && l.files.length ? `<div class="r-files">${l.files.map(f=>`
+        <a class="r-file" href="${f.href}" target="_blank" rel="noopener">${f.label||"添付資料"}</a>`).join("")}</div>` : ""}
+      <div class="log-foot">
+        <a class="note-link" href="${l.note}" target="_blank" rel="noopener">本文をnoteで読む →</a>
+      </div>
+    </article>
+  `).join("");
+}
+render();
+
+/* ── 写真ライトボックス ── */
+const lb=document.getElementById("lightbox");
+document.getElementById("list").addEventListener("click",e=>{
+  const img=e.target.closest(".r-photos img"); if(!img) return;
+  document.getElementById("lbImg").src=img.src;
+  document.getElementById("lbCap").textContent=img.dataset.cap||"";
+  lb.classList.add("on");
+});
+lb.addEventListener("click",()=>lb.classList.remove("on"));
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") lb.classList.remove("on"); });
+</script>
+</body>
+</html>
