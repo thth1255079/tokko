@@ -1,6 +1,68 @@
 {
-  "generated_at": "2026-07-19T14:22:19",
+  "generated_at": "2026-07-20T14:09:25",
   "quakes": [
+    {
+      "time": "2026/07/20 11:25:00",
+      "place": "福島県中通り",
+      "mag": 3.0,
+      "depth": 100.0,
+      "max_scale": "1",
+      "bearing": 27.29,
+      "dir16": "NNE",
+      "distance_km": 286.4,
+      "matches": []
+    },
+    {
+      "time": "2026/07/20 10:15:00",
+      "place": "福島県沖",
+      "mag": 4.4,
+      "depth": 30.0,
+      "max_scale": "1",
+      "bearing": 42.13,
+      "dir16": "NE",
+      "distance_km": 392.2,
+      "matches": [
+        {
+          "name": "NE45度軸(香取・江ノ島・熱田)",
+          "diff": 2.87,
+          "note": "NE45度corridor/貝塚"
+        }
+      ]
+    },
+    {
+      "time": "2026/07/20 04:21:00",
+      "place": "京都府南部",
+      "mag": 2.7,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 276.7,
+      "dir16": "W",
+      "distance_km": 312.6,
+      "matches": [
+        {
+          "name": "W277度軸(出雲・難波宮)",
+          "diff": 0.3,
+          "note": "国譲り軸"
+        }
+      ]
+    },
+    {
+      "time": "2026/07/20 03:04:00",
+      "place": "日高地方中部",
+      "mag": 2.8,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 20.17,
+      "dir16": "NNE",
+      "distance_km": 880.5,
+      "matches": [
+        {
+          "name": "NNE19度軸(封印された神々クラスタ)",
+          "diff": 1.17,
+          "note": ""
+        }
+      ]
+    },
     {
       "time": "2026/07/18 09:48:00",
       "place": "奄美大島近海",
@@ -1080,50 +1142,6 @@
       "bearing": 250.18,
       "dir16": "WSW",
       "distance_km": 749.8,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 05:55:00",
-      "place": "奄美大島近海",
-      "mag": 3.4,
-      "depth": 20.0,
-      "max_scale": "1",
-      "bearing": 235.03,
-      "dir16": "SW",
-      "distance_km": 1133.6,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 01:31:00",
-      "place": "石川県能登地方",
-      "mag": 2.5,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 323.71,
-      "dir16": "NW",
-      "distance_km": 317.0,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 00:33:00",
-      "place": "茨城県南部",
-      "mag": 3.4,
-      "depth": 60.0,
-      "max_scale": "1",
-      "bearing": 31.68,
-      "dir16": "NNE",
-      "distance_km": 167.8,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 00:02:00",
-      "place": "房総半島南方沖",
-      "mag": 4.1,
-      "depth": 60.0,
-      "max_scale": "1",
-      "bearing": 113.04,
-      "dir16": "ESE",
-      "distance_km": 117.7,
       "matches": []
     }
   ]
