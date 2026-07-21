@@ -1,6 +1,28 @@
 {
-  "generated_at": "2026-07-20T14:09:25",
+  "generated_at": "2026-07-21T13:55:03",
   "quakes": [
+    {
+      "time": "2026/07/21 11:25:00",
+      "place": "根室半島南東沖",
+      "mag": 4.0,
+      "depth": 80.0,
+      "max_scale": "2",
+      "bearing": 31.08,
+      "dir16": "NNE",
+      "distance_km": 1127.1,
+      "matches": []
+    },
+    {
+      "time": "2026/07/21 02:23:00",
+      "place": "山梨県東部・富士五湖",
+      "mag": 3.1,
+      "depth": 20.0,
+      "max_scale": "1",
+      "bearing": 350.6,
+      "dir16": "N",
+      "distance_km": 65.4,
+      "matches": []
+    },
     {
       "time": "2026/07/20 11:25:00",
       "place": "福島県中通り",
@@ -1032,116 +1054,6 @@
       "bearing": 26.1,
       "dir16": "NNE",
       "distance_km": 672.1,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 23:52:00",
-      "place": "岩手県沖",
-      "mag": 4.2,
-      "depth": 40.0,
-      "max_scale": "1",
-      "bearing": 27.02,
-      "dir16": "NNE",
-      "distance_km": 652.6,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 22:23:00",
-      "place": "大隅半島東方沖",
-      "mag": 3.1,
-      "depth": 30.0,
-      "max_scale": "1",
-      "bearing": 241.84,
-      "dir16": "WSW",
-      "distance_km": 799.3,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 21:08:00",
-      "place": "岩手県沖",
-      "mag": 6.0,
-      "depth": 40.0,
-      "max_scale": "4",
-      "bearing": 26.36,
-      "dir16": "NNE",
-      "distance_km": 648.5,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 21:08:00",
-      "place": "岩手県沖",
-      "mag": 6.0,
-      "depth": 40.0,
-      "max_scale": "不明",
-      "bearing": 26.36,
-      "dir16": "NNE",
-      "distance_km": 648.5,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 19:57:00",
-      "place": "宮崎県北部平野部",
-      "mag": 2.7,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 250.18,
-      "dir16": "WSW",
-      "distance_km": 749.8,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 10:36:00",
-      "place": "十勝地方中部",
-      "mag": 3.5,
-      "depth": 80.0,
-      "max_scale": "1",
-      "bearing": 23.38,
-      "dir16": "NNE",
-      "distance_km": 965.0,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 10:22:00",
-      "place": "茨城県北部",
-      "mag": 3.3,
-      "depth": 90.0,
-      "max_scale": "1",
-      "bearing": 31.39,
-      "dir16": "NNE",
-      "distance_km": 219.7,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 08:44:00",
-      "place": "宮崎県北部平野部",
-      "mag": 3.1,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 250.18,
-      "dir16": "WSW",
-      "distance_km": 749.8,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 08:40:00",
-      "place": "宮崎県北部平野部",
-      "mag": 5.1,
-      "depth": 10.0,
-      "max_scale": "4",
-      "bearing": 250.18,
-      "dir16": "WSW",
-      "distance_km": 749.8,
-      "matches": []
-    },
-    {
-      "time": "2026/07/01 08:40:00",
-      "place": "宮崎県北部平野部",
-      "mag": 5.1,
-      "depth": 10.0,
-      "max_scale": "不明",
-      "bearing": 250.18,
-      "dir16": "WSW",
-      "distance_km": 749.8,
       "matches": []
     }
   ]
