@@ -1,6 +1,39 @@
 {
-  "generated_at": "2026-07-22T13:59:51",
+  "generated_at": "2026-07-23T14:04:27",
   "quakes": [
+    {
+      "time": "2026/07/23 18:22:00",
+      "place": "奄美大島近海",
+      "mag": 4.7,
+      "depth": 10.0,
+      "max_scale": "3",
+      "bearing": 228.98,
+      "dir16": "SW",
+      "distance_km": 1151.3,
+      "matches": []
+    },
+    {
+      "time": "2026/07/23 18:22:00",
+      "place": "奄美大島近海",
+      "mag": 4.7,
+      "depth": 10.0,
+      "max_scale": "不明",
+      "bearing": 228.98,
+      "dir16": "SW",
+      "distance_km": 1151.3,
+      "matches": []
+    },
+    {
+      "time": "2026/07/23 07:46:00",
+      "place": "紀伊水道",
+      "mag": 3.2,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 254.04,
+      "dir16": "WSW",
+      "distance_km": 385.6,
+      "matches": []
+    },
     {
       "time": "2026/07/22 20:11:00",
       "place": "福島県沖",
@@ -932,139 +965,6 @@
       "bearing": 24.58,
       "dir16": "NNE",
       "distance_km": 650.5,
-      "matches": []
-    },
-    {
-      "time": "2026/07/03 18:32:00",
-      "place": "山梨県東部・富士五湖",
-      "mag": 2.5,
-      "depth": 20.0,
-      "max_scale": "1",
-      "bearing": 342.99,
-      "dir16": "NNW",
-      "distance_km": 67.5,
-      "matches": []
-    },
-    {
-      "time": "2026/07/03 17:24:00",
-      "place": "北西太平洋",
-      "mag": 6.0,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 37.24,
-      "dir16": "NE",
-      "distance_km": 1958.7,
-      "matches": [
-        {
-          "name": "布施弁天",
-          "diff": 1.89,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/07/03 14:03:00",
-      "place": "福島県沖",
-      "mag": 3.6,
-      "depth": 50.0,
-      "max_scale": "1",
-      "bearing": 38.26,
-      "dir16": "NE",
-      "distance_km": 340.3,
-      "matches": [
-        {
-          "name": "布施弁天",
-          "diff": 0.87,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/07/03 13:05:00",
-      "place": "宮古島北西沖",
-      "mag": 6.4,
-      "depth": 0.0,
-      "max_scale": "3",
-      "bearing": 235.47,
-      "dir16": "SW",
-      "distance_km": 1606.4,
-      "matches": []
-    },
-    {
-      "time": "2026/07/03 13:05:00",
-      "place": "宮古島北西沖",
-      "mag": 6.4,
-      "depth": 0.0,
-      "max_scale": "不明",
-      "bearing": 235.47,
-      "dir16": "SW",
-      "distance_km": 1606.4,
-      "matches": []
-    },
-    {
-      "time": "2026/07/03 12:53:00",
-      "place": "宮古島北西沖",
-      "mag": 5.0,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 235.23,
-      "dir16": "SW",
-      "distance_km": 1598.9,
-      "matches": []
-    },
-    {
-      "time": "2026/07/03 10:44:00",
-      "place": "宮城県沖",
-      "mag": 4.8,
-      "depth": 30.0,
-      "max_scale": "2",
-      "bearing": 33.83,
-      "dir16": "NE",
-      "distance_km": 511.8,
-      "matches": []
-    },
-    {
-      "time": "2026/07/03 07:05:00",
-      "place": "岩手県沖",
-      "mag": 3.9,
-      "depth": 50.0,
-      "max_scale": "1",
-      "bearing": 23.73,
-      "dir16": "NNE",
-      "distance_km": 670.5,
-      "matches": []
-    },
-    {
-      "time": "2026/07/03 05:30:00",
-      "place": "根室半島南東沖",
-      "mag": 3.3,
-      "depth": 50.0,
-      "max_scale": "1",
-      "bearing": 32.41,
-      "dir16": "NNE",
-      "distance_km": 1132.5,
-      "matches": []
-    },
-    {
-      "time": "2026/07/03 05:24:00",
-      "place": "宮城県沖",
-      "mag": 3.5,
-      "depth": 50.0,
-      "max_scale": "1",
-      "bearing": 29.21,
-      "dir16": "NNE",
-      "distance_km": 511.3,
-      "matches": []
-    },
-    {
-      "time": "2026/07/02 23:44:00",
-      "place": "与那国島近海",
-      "mag": 4.6,
-      "depth": 110.0,
-      "max_scale": "1",
-      "bearing": 238.62,
-      "dir16": "WSW",
-      "distance_km": 1959.9,
       "matches": []
     }
   ]
