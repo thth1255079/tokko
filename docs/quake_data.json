@@ -1,6 +1,17 @@
 {
-  "generated_at": "2026-07-23T14:04:27",
+  "generated_at": "2026-07-24T13:48:14",
   "quakes": [
+    {
+      "time": "2026/07/24 20:53:00",
+      "place": "福島県沖",
+      "mag": 4.0,
+      "depth": 50.0,
+      "max_scale": "1",
+      "bearing": 37.08,
+      "dir16": "NE",
+      "distance_km": 391.5,
+      "matches": []
+    },
     {
       "time": "2026/07/23 18:22:00",
       "place": "奄美大島近海",
@@ -899,72 +910,6 @@
       "bearing": 37.08,
       "dir16": "NE",
       "distance_km": 306.3,
-      "matches": []
-    },
-    {
-      "time": "2026/07/04 17:24:00",
-      "place": "茨城県南部",
-      "mag": 2.8,
-      "depth": 50.0,
-      "max_scale": "1",
-      "bearing": 28.12,
-      "dir16": "NNE",
-      "distance_km": 149.1,
-      "matches": []
-    },
-    {
-      "time": "2026/07/04 10:17:00",
-      "place": "岩手県沖",
-      "mag": 3.8,
-      "depth": 40.0,
-      "max_scale": "1",
-      "bearing": 25.24,
-      "dir16": "NNE",
-      "distance_km": 654.4,
-      "matches": []
-    },
-    {
-      "time": "2026/07/04 08:29:00",
-      "place": "愛知県東部",
-      "mag": 2.1,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 284.93,
-      "dir16": "WNW",
-      "distance_km": 123.9,
-      "matches": []
-    },
-    {
-      "time": "2026/07/04 07:25:00",
-      "place": "日向灘",
-      "mag": 3.1,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 245.81,
-      "dir16": "WSW",
-      "distance_km": 735.6,
-      "matches": []
-    },
-    {
-      "time": "2026/07/04 02:48:00",
-      "place": "千葉県北東部",
-      "mag": 2.8,
-      "depth": 40.0,
-      "max_scale": "1",
-      "bearing": 50.52,
-      "dir16": "NE",
-      "distance_km": 173.0,
-      "matches": []
-    },
-    {
-      "time": "2026/07/03 23:37:00",
-      "place": "岩手県沖",
-      "mag": 3.8,
-      "depth": 40.0,
-      "max_scale": "1",
-      "bearing": 24.58,
-      "dir16": "NNE",
-      "distance_km": 650.5,
       "matches": []
     }
   ]
