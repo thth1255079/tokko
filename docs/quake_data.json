@@ -1,6 +1,39 @@
 {
-  "generated_at": "2026-07-24T13:48:14",
+  "generated_at": "2026-07-25T13:37:33",
   "quakes": [
+    {
+      "time": "2026/07/25 14:04:00",
+      "place": "新島・神津島近海",
+      "mag": 2.7,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 143.11,
+      "dir16": "SE",
+      "distance_km": 58.3,
+      "matches": []
+    },
+    {
+      "time": "2026/07/25 04:54:00",
+      "place": "長野県北部",
+      "mag": 2.3,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 345.26,
+      "dir16": "NNW",
+      "distance_km": 216.3,
+      "matches": []
+    },
+    {
+      "time": "2026/07/25 04:43:00",
+      "place": "奄美大島近海",
+      "mag": 4.2,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 235.47,
+      "dir16": "SW",
+      "distance_km": 1126.5,
+      "matches": []
+    },
     {
       "time": "2026/07/24 20:53:00",
       "place": "福島県沖",
@@ -877,39 +910,6 @@
       "bearing": 31.4,
       "dir16": "NNE",
       "distance_km": 1186.7,
-      "matches": []
-    },
-    {
-      "time": "2026/07/05 18:30:00",
-      "place": "福島県会津",
-      "mag": 1.7,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 8.34,
-      "dir16": "N",
-      "distance_km": 233.8,
-      "matches": []
-    },
-    {
-      "time": "2026/07/05 02:06:00",
-      "place": "石川県能登地方",
-      "mag": 2.5,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 330.91,
-      "dir16": "NNW",
-      "distance_km": 330.0,
-      "matches": []
-    },
-    {
-      "time": "2026/07/05 02:03:00",
-      "place": "福島県沖",
-      "mag": 3.4,
-      "depth": 50.0,
-      "max_scale": "1",
-      "bearing": 37.08,
-      "dir16": "NE",
-      "distance_km": 306.3,
       "matches": []
     }
   ]
