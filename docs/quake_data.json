@@ -1,6 +1,72 @@
 {
-  "generated_at": "2026-07-26T13:25:47",
+  "generated_at": "2026-07-27T14:38:54",
   "quakes": [
+    {
+      "time": "2026/07/27 13:56:00",
+      "place": "トカラ列島近海",
+      "mag": 2.7,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 238.2,
+      "dir16": "WSW",
+      "distance_km": 1085.2,
+      "matches": []
+    },
+    {
+      "time": "2026/07/27 12:04:00",
+      "place": "トカラ列島近海",
+      "mag": 2.5,
+      "depth": 20.0,
+      "max_scale": "1",
+      "bearing": 238.2,
+      "dir16": "WSW",
+      "distance_km": 1085.2,
+      "matches": []
+    },
+    {
+      "time": "2026/07/27 03:03:00",
+      "place": "福島県会津",
+      "mag": 2.8,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 7.96,
+      "dir16": "N",
+      "distance_km": 244.8,
+      "matches": []
+    },
+    {
+      "time": "2026/07/27 02:00:00",
+      "place": "鹿児島県薩摩地方",
+      "mag": 4.2,
+      "depth": 0.0,
+      "max_scale": "3",
+      "bearing": 250.83,
+      "dir16": "WSW",
+      "distance_km": 879.7,
+      "matches": []
+    },
+    {
+      "time": "2026/07/27 02:00:00",
+      "place": "鹿児島県薩摩地方",
+      "mag": 4.2,
+      "depth": 0.0,
+      "max_scale": "不明",
+      "bearing": 250.83,
+      "dir16": "WSW",
+      "distance_km": 879.7,
+      "matches": []
+    },
+    {
+      "time": "2026/07/26 23:45:00",
+      "place": "茨城県北部",
+      "mag": 3.1,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 33.83,
+      "dir16": "NE",
+      "distance_km": 253.0,
+      "matches": []
+    },
     {
       "time": "2026/07/26 21:58:00",
       "place": "トカラ列島近海",
@@ -850,50 +916,6 @@
           "note": ""
         }
       ]
-    },
-    {
-      "time": "2026/07/07 06:16:00",
-      "place": "島根県西部",
-      "mag": 3.2,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 269.82,
-      "dir16": "W",
-      "distance_km": 641.1,
-      "matches": []
-    },
-    {
-      "time": "2026/07/07 02:09:00",
-      "place": "岩手県沖",
-      "mag": 4.6,
-      "depth": 40.0,
-      "max_scale": "2",
-      "bearing": 27.02,
-      "dir16": "NNE",
-      "distance_km": 652.6,
-      "matches": []
-    },
-    {
-      "time": "2026/07/07 01:27:00",
-      "place": "種子島近海",
-      "mag": 3.2,
-      "depth": 50.0,
-      "max_scale": "1",
-      "bearing": 238.49,
-      "dir16": "WSW",
-      "distance_km": 961.3,
-      "matches": []
-    },
-    {
-      "time": "2026/07/07 00:05:00",
-      "place": "沖縄本島近海",
-      "mag": 2.9,
-      "depth": 50.0,
-      "max_scale": "1",
-      "bearing": 232.33,
-      "dir16": "SW",
-      "distance_km": 1466.0,
-      "matches": []
     }
   ]
 }
