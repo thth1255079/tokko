@@ -1,6 +1,149 @@
 {
-  "generated_at": "2026-08-17T12:46:15",
+  "generated_at": "2026-08-18T12:49:16",
   "quakes": [
+    {
+      "time": "2026/08/18 18:36:00",
+      "place": "熊本県熊本地方",
+      "mag": 2.6,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 253.31,
+      "dir16": "WSW",
+      "distance_km": 823.5,
+      "matches": []
+    },
+    {
+      "time": "2026/08/18 17:56:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.5,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 252.37,
+      "dir16": "WSW",
+      "distance_km": 849.2,
+      "matches": []
+    },
+    {
+      "time": "2026/08/18 17:09:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.9,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 253.54,
+      "dir16": "WSW",
+      "distance_km": 832.2,
+      "matches": []
+    },
+    {
+      "time": "2026/08/18 15:05:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 4.0,
+      "depth": 10.0,
+      "max_scale": "3",
+      "bearing": 253.54,
+      "dir16": "WSW",
+      "distance_km": 832.2,
+      "matches": []
+    },
+    {
+      "time": "2026/08/18 15:05:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 4.0,
+      "depth": 10.0,
+      "max_scale": "不明",
+      "bearing": 253.54,
+      "dir16": "WSW",
+      "distance_km": 832.2,
+      "matches": []
+    },
+    {
+      "time": "2026/08/18 12:42:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 3.7,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 253.54,
+      "dir16": "WSW",
+      "distance_km": 832.2,
+      "matches": []
+    },
+    {
+      "time": "2026/08/18 09:54:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.7,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 252.83,
+      "dir16": "WSW",
+      "distance_km": 836.3,
+      "matches": []
+    },
+    {
+      "time": "2026/08/18 08:21:00",
+      "place": "福岡県福岡地方",
+      "mag": 3.1,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 261.63,
+      "dir16": "W",
+      "distance_km": 834.8,
+      "matches": []
+    },
+    {
+      "time": "2026/08/18 05:46:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.7,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 253.54,
+      "dir16": "WSW",
+      "distance_km": 832.2,
+      "matches": []
+    },
+    {
+      "time": "2026/08/18 05:22:00",
+      "place": "熊本県熊本地方",
+      "mag": 2.2,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 253.8,
+      "dir16": "WSW",
+      "distance_km": 810.8,
+      "matches": []
+    },
+    {
+      "time": "2026/08/18 04:32:00",
+      "place": "熊本県熊本地方",
+      "mag": 2.5,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 253.8,
+      "dir16": "WSW",
+      "distance_km": 810.8,
+      "matches": []
+    },
+    {
+      "time": "2026/08/17 23:09:00",
+      "place": "熊本県熊本地方",
+      "mag": 3.2,
+      "depth": 0.0,
+      "max_scale": "2",
+      "bearing": 253.31,
+      "dir16": "WSW",
+      "distance_km": 823.5,
+      "matches": []
+    },
+    {
+      "time": "2026/08/17 22:33:00",
+      "place": "日向灘",
+      "mag": 3.7,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 245.81,
+      "dir16": "WSW",
+      "distance_km": 735.6,
+      "matches": []
+    },
     {
       "time": "2026/08/17 21:07:00",
       "place": "青森県東方沖",
@@ -905,133 +1048,6 @@
       "bearing": 253.54,
       "dir16": "WSW",
       "distance_km": 832.2,
-      "matches": []
-    },
-    {
-      "time": "2026/08/13 04:06:00",
-      "place": "熊本県熊本地方",
-      "mag": 3.1,
-      "depth": 10.0,
-      "max_scale": "3",
-      "bearing": 254.31,
-      "dir16": "WSW",
-      "distance_km": 798.1,
-      "matches": []
-    },
-    {
-      "time": "2026/08/13 04:06:00",
-      "place": "熊本県熊本地方",
-      "mag": 3.1,
-      "depth": 10.0,
-      "max_scale": "不明",
-      "bearing": 254.31,
-      "dir16": "WSW",
-      "distance_km": 798.1,
-      "matches": []
-    },
-    {
-      "time": "2026/08/12 22:53:00",
-      "place": "熊本県熊本地方",
-      "mag": 2.3,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 254.54,
-      "dir16": "WSW",
-      "distance_km": 806.9,
-      "matches": []
-    },
-    {
-      "time": "2026/08/12 21:03:00",
-      "place": "宮古島近海",
-      "mag": 3.4,
-      "depth": 30.0,
-      "max_scale": "1",
-      "bearing": 232.46,
-      "dir16": "SW",
-      "distance_km": 1741.7,
-      "matches": []
-    },
-    {
-      "time": "2026/08/12 15:41:00",
-      "place": "熊本県熊本地方",
-      "mag": 2.8,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 253.31,
-      "dir16": "WSW",
-      "distance_km": 823.5,
-      "matches": []
-    },
-    {
-      "time": "2026/08/12 13:05:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 4.9,
-      "depth": 10.0,
-      "max_scale": "4",
-      "bearing": 253.54,
-      "dir16": "WSW",
-      "distance_km": 832.2,
-      "matches": []
-    },
-    {
-      "time": "2026/08/12 13:05:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 4.9,
-      "depth": 10.0,
-      "max_scale": "4",
-      "bearing": 253.54,
-      "dir16": "WSW",
-      "distance_km": 832.2,
-      "matches": []
-    },
-    {
-      "time": "2026/08/12 13:05:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 4.9,
-      "depth": 10.0,
-      "max_scale": "不明",
-      "bearing": 253.54,
-      "dir16": "WSW",
-      "distance_km": 832.2,
-      "matches": []
-    },
-    {
-      "time": "2026/08/12 11:57:00",
-      "place": "鳥取県中部",
-      "mag": 3.1,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 278.01,
-      "dir16": "W",
-      "distance_km": 468.3,
-      "matches": [
-        {
-          "name": "W277度軸(出雲・難波宮)",
-          "diff": 1.01,
-          "note": "国譲り軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/08/12 09:25:00",
-      "place": "鹿児島県薩摩地方",
-      "mag": 2.3,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 250.83,
-      "dir16": "WSW",
-      "distance_km": 879.7,
-      "matches": []
-    },
-    {
-      "time": "2026/08/12 09:19:00",
-      "place": "新潟県中越地方",
-      "mag": 2.5,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 353.04,
-      "dir16": "N",
-      "distance_km": 233.0,
       "matches": []
     }
   ]
