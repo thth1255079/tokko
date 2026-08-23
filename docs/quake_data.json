@@ -1,6 +1,134 @@
 {
-  "generated_at": "2026-08-22T12:41:17",
+  "generated_at": "2026-08-23T12:42:24",
   "quakes": [
+    {
+      "time": "2026/08/23 19:28:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.6,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/08/23 15:31:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.2,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/08/23 07:56:00",
+      "place": "石川県能登地方",
+      "mag": 2.3,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 323.67,
+      "dir16": "NW",
+      "distance_km": 331.2,
+      "matches": []
+    },
+    {
+      "time": "2026/08/23 07:07:00",
+      "place": "熊本県熊本地方",
+      "mag": 1.7,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 253.31,
+      "dir16": "WSW",
+      "distance_km": 823.5,
+      "matches": []
+    },
+    {
+      "time": "2026/08/23 06:45:00",
+      "place": "大阪府北部",
+      "mag": 2.1,
+      "depth": 20.0,
+      "max_scale": "1",
+      "bearing": 272.58,
+      "dir16": "W",
+      "distance_km": 329.8,
+      "matches": []
+    },
+    {
+      "time": "2026/08/23 02:47:00",
+      "place": "熊本県熊本地方",
+      "mag": 3.1,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 254.54,
+      "dir16": "WSW",
+      "distance_km": 806.9,
+      "matches": []
+    },
+    {
+      "time": "2026/08/23 02:00:00",
+      "place": "茨城県南部",
+      "mag": 5.9,
+      "depth": 70.0,
+      "max_scale": "5弱",
+      "bearing": 38.9,
+      "dir16": "NE",
+      "distance_km": 155.0,
+      "matches": [
+        {
+          "name": "布施弁天",
+          "diff": 0.23,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "time": "2026/08/23 02:00:00",
+      "place": "茨城県南部",
+      "mag": 5.9,
+      "depth": 70.0,
+      "max_scale": "5弱",
+      "bearing": 38.9,
+      "dir16": "NE",
+      "distance_km": 155.0,
+      "matches": [
+        {
+          "name": "布施弁天",
+          "diff": 0.23,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "time": "2026/08/23 02:00:00",
+      "place": "茨城県南部",
+      "mag": 5.9,
+      "depth": 70.0,
+      "max_scale": "不明",
+      "bearing": 38.9,
+      "dir16": "NE",
+      "distance_km": 155.0,
+      "matches": [
+        {
+          "name": "布施弁天",
+          "diff": 0.23,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "time": "2026/08/22 22:46:00",
+      "place": "釧路沖",
+      "mag": 2.9,
+      "depth": 50.0,
+      "max_scale": "1",
+      "bearing": 29.59,
+      "dir16": "NNE",
+      "distance_km": 1053.6,
+      "matches": []
+    },
     {
       "time": "2026/08/22 19:30:00",
       "place": "熊本県天草・芦北地方",
@@ -913,156 +1041,6 @@
       "bearing": 254.31,
       "dir16": "WSW",
       "distance_km": 798.1,
-      "matches": []
-    },
-    {
-      "time": "2026/08/15 21:03:00",
-      "place": "大阪湾",
-      "mag": 3.0,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 263.24,
-      "dir16": "W",
-      "distance_km": 343.0,
-      "matches": []
-    },
-    {
-      "time": "2026/08/15 20:30:00",
-      "place": "台湾付近",
-      "mag": 4.6,
-      "depth": 70.0,
-      "max_scale": "1",
-      "bearing": 238.75,
-      "dir16": "WSW",
-      "distance_km": 1982.6,
-      "matches": []
-    },
-    {
-      "time": "2026/08/15 20:29:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.8,
-      "depth": 0.0,
-      "max_scale": "2",
-      "bearing": 252.13,
-      "dir16": "WSW",
-      "distance_km": 840.5,
-      "matches": []
-    },
-    {
-      "time": "2026/08/15 18:47:00",
-      "place": "熊本県熊本地方",
-      "mag": 2.3,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 254.54,
-      "dir16": "WSW",
-      "distance_km": 806.9,
-      "matches": []
-    },
-    {
-      "time": "2026/08/15 10:58:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.2,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 253.54,
-      "dir16": "WSW",
-      "distance_km": 832.2,
-      "matches": []
-    },
-    {
-      "time": "2026/08/15 10:10:00",
-      "place": "福島県沖",
-      "mag": 4.5,
-      "depth": 50.0,
-      "max_scale": "3",
-      "bearing": 38.36,
-      "dir16": "NE",
-      "distance_km": 311.9,
-      "matches": [
-        {
-          "name": "布施弁天",
-          "diff": 0.77,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/08/15 10:10:00",
-      "place": "福島県沖",
-      "mag": 4.5,
-      "depth": 50.0,
-      "max_scale": "不明",
-      "bearing": 38.36,
-      "dir16": "NE",
-      "distance_km": 311.9,
-      "matches": [
-        {
-          "name": "布施弁天",
-          "diff": 0.77,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/08/15 10:05:00",
-      "place": "熊本県熊本地方",
-      "mag": 2.7,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 254.31,
-      "dir16": "WSW",
-      "distance_km": 798.1,
-      "matches": []
-    },
-    {
-      "time": "2026/08/15 09:22:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.7,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 254.03,
-      "dir16": "WSW",
-      "distance_km": 819.5,
-      "matches": []
-    },
-    {
-      "time": "2026/08/15 08:13:00",
-      "place": "浦河沖",
-      "mag": 3.1,
-      "depth": 50.0,
-      "max_scale": "1",
-      "bearing": 18.97,
-      "dir16": "NNE",
-      "distance_km": 789.9,
-      "matches": [
-        {
-          "name": "NNE19度軸(封印された神々クラスタ)",
-          "diff": 0.03,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/08/15 07:29:00",
-      "place": "熊本県熊本地方",
-      "mag": 2.7,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 253.31,
-      "dir16": "WSW",
-      "distance_km": 823.5,
-      "matches": []
-    },
-    {
-      "time": "2026/08/15 06:58:00",
-      "place": "インドネシア、フローレス",
-      "mag": 7.7,
-      "depth": -1.0,
-      "max_scale": "不明",
-      "bearing": 204.47,
-      "dir16": "SSW",
-      "distance_km": 5150.2,
       "matches": []
     }
   ]
