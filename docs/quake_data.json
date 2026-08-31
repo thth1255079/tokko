@@ -1,6 +1,50 @@
 {
-  "generated_at": "2026-08-30T16:14:57",
+  "generated_at": "2026-08-31T18:54:28",
   "quakes": [
+    {
+      "time": "2026/08/31 18:49:00",
+      "place": "福島県中通り",
+      "mag": 3.3,
+      "depth": 80.0,
+      "max_scale": "1",
+      "bearing": 26.75,
+      "dir16": "NNE",
+      "distance_km": 272.4,
+      "matches": []
+    },
+    {
+      "time": "2026/08/31 16:02:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 3.1,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 252.83,
+      "dir16": "WSW",
+      "distance_km": 836.3,
+      "matches": []
+    },
+    {
+      "time": "2026/08/31 11:55:00",
+      "place": "奄美大島近海",
+      "mag": 3.5,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 233.47,
+      "dir16": "SW",
+      "distance_km": 1265.7,
+      "matches": []
+    },
+    {
+      "time": "2026/08/31 03:29:00",
+      "place": "福島県会津",
+      "mag": 2.7,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 5.63,
+      "dir16": "N",
+      "distance_km": 254.8,
+      "matches": []
+    },
     {
       "time": "2026/08/30 14:10:00",
       "place": "熊本県天草・芦北地方",
@@ -998,39 +1042,6 @@
       "bearing": 253.31,
       "dir16": "WSW",
       "distance_km": 823.5,
-      "matches": []
-    },
-    {
-      "time": "2026/08/21 21:02:00",
-      "place": "八丈島東方沖",
-      "mag": 5.5,
-      "depth": 60.0,
-      "max_scale": "3",
-      "bearing": 134.48,
-      "dir16": "SE",
-      "distance_km": 192.2,
-      "matches": []
-    },
-    {
-      "time": "2026/08/21 21:02:00",
-      "place": "八丈島東方沖",
-      "mag": 5.5,
-      "depth": 60.0,
-      "max_scale": "不明",
-      "bearing": 134.48,
-      "dir16": "SE",
-      "distance_km": 192.2,
-      "matches": []
-    },
-    {
-      "time": "2026/08/21 09:11:00",
-      "place": "熊本県熊本地方",
-      "mag": 2.2,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 253.8,
-      "dir16": "WSW",
-      "distance_km": 810.8,
       "matches": []
     }
   ]
