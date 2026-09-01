@@ -1,6 +1,61 @@
 {
-  "generated_at": "2026-08-31T18:54:28",
+  "generated_at": "2026-09-01T16:13:51",
   "quakes": [
+    {
+      "time": "2026/09/02 00:58:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.3,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 253.54,
+      "dir16": "WSW",
+      "distance_km": 832.2,
+      "matches": []
+    },
+    {
+      "time": "2026/09/01 23:23:00",
+      "place": "熊本県熊本地方",
+      "mag": 2.7,
+      "depth": 0.0,
+      "max_scale": "2",
+      "bearing": 253.8,
+      "dir16": "WSW",
+      "distance_km": 810.8,
+      "matches": []
+    },
+    {
+      "time": "2026/09/01 18:44:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.7,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 254.03,
+      "dir16": "WSW",
+      "distance_km": 819.5,
+      "matches": []
+    },
+    {
+      "time": "2026/09/01 12:01:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 3.2,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 254.03,
+      "dir16": "WSW",
+      "distance_km": 819.5,
+      "matches": []
+    },
+    {
+      "time": "2026/09/01 11:32:00",
+      "place": "熊本県熊本地方",
+      "mag": 2.7,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 255.06,
+      "dir16": "WSW",
+      "distance_km": 794.3,
+      "matches": []
+    },
     {
       "time": "2026/08/31 18:49:00",
       "place": "福島県中通り",
@@ -981,67 +1036,6 @@
       "bearing": 253.8,
       "dir16": "WSW",
       "distance_km": 810.8,
-      "matches": []
-    },
-    {
-      "time": "2026/08/22 18:32:00",
-      "place": "オホーツク海南部",
-      "mag": 3.4,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 24.45,
-      "dir16": "NNE",
-      "distance_km": 1238.8,
-      "matches": []
-    },
-    {
-      "time": "2026/08/22 17:37:00",
-      "place": "オホーツク海南部",
-      "mag": 4.1,
-      "depth": 10.0,
-      "max_scale": "2",
-      "bearing": 24.52,
-      "dir16": "NNE",
-      "distance_km": 1252.3,
-      "matches": []
-    },
-    {
-      "time": "2026/08/22 11:35:00",
-      "place": "十勝地方南部",
-      "mag": 3.7,
-      "depth": 100.0,
-      "max_scale": "1",
-      "bearing": 21.06,
-      "dir16": "NNE",
-      "distance_km": 910.6,
-      "matches": [
-        {
-          "name": "NNE19度軸(封印された神々クラスタ)",
-          "diff": 2.06,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/08/21 23:32:00",
-      "place": "熊本県熊本地方",
-      "mag": 1.9,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 253.07,
-      "dir16": "WSW",
-      "distance_km": 814.8,
-      "matches": []
-    },
-    {
-      "time": "2026/08/21 23:27:00",
-      "place": "熊本県熊本地方",
-      "mag": 3.1,
-      "depth": 0.0,
-      "max_scale": "2",
-      "bearing": 253.31,
-      "dir16": "WSW",
-      "distance_km": 823.5,
       "matches": []
     }
   ]
