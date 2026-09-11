@@ -1,6 +1,50 @@
 {
-  "generated_at": "2026-09-10T16:00:02",
+  "generated_at": "2026-09-11T16:03:21",
   "quakes": [
+    {
+      "time": "2026/09/11 20:39:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.6,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.83,
+      "dir16": "WSW",
+      "distance_km": 836.3,
+      "matches": []
+    },
+    {
+      "time": "2026/09/11 17:55:00",
+      "place": "鹿児島県薩摩地方",
+      "mag": 2.2,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 251.93,
+      "dir16": "WSW",
+      "distance_km": 862.2,
+      "matches": []
+    },
+    {
+      "time": "2026/09/11 10:07:00",
+      "place": "熊本県熊本地方",
+      "mag": 2.8,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 254.31,
+      "dir16": "WSW",
+      "distance_km": 798.1,
+      "matches": []
+    },
+    {
+      "time": "2026/09/11 02:09:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.5,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.83,
+      "dir16": "WSW",
+      "distance_km": 836.3,
+      "matches": []
+    },
     {
       "time": "2026/09/11 00:52:00",
       "place": "熊本県熊本地方",
@@ -1056,45 +1100,6 @@
       "bearing": 254.03,
       "dir16": "WSW",
       "distance_km": 819.5,
-      "matches": []
-    },
-    {
-      "time": "2026/08/28 07:13:00",
-      "place": "浦河沖",
-      "mag": 4.4,
-      "depth": 60.0,
-      "max_scale": "2",
-      "bearing": 19.22,
-      "dir16": "NNE",
-      "distance_km": 827.0,
-      "matches": [
-        {
-          "name": "NNE19度軸(封印された神々クラスタ)",
-          "diff": 0.22,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/08/28 04:54:00",
-      "place": "青森県東方沖",
-      "mag": 4.6,
-      "depth": 50.0,
-      "max_scale": "3",
-      "bearing": 23.56,
-      "dir16": "NNE",
-      "distance_km": 694.2,
-      "matches": []
-    },
-    {
-      "time": "2026/08/28 04:54:00",
-      "place": "青森県東方沖",
-      "mag": 4.6,
-      "depth": 50.0,
-      "max_scale": "不明",
-      "bearing": 23.56,
-      "dir16": "NNE",
-      "distance_km": 694.2,
       "matches": []
     }
   ]
