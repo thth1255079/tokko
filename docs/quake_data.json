@@ -1,6 +1,94 @@
 {
-  "generated_at": "2026-09-21T17:58:40",
+  "generated_at": "2026-09-22T16:30:01",
   "quakes": [
+    {
+      "time": "2026/09/22 21:51:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.5,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/09/22 19:46:00",
+      "place": "奄美大島北西沖",
+      "mag": 4.9,
+      "depth": 20.0,
+      "max_scale": "1",
+      "bearing": 238.75,
+      "dir16": "WSW",
+      "distance_km": 1174.0,
+      "matches": []
+    },
+    {
+      "time": "2026/09/22 18:49:00",
+      "place": "奄美大島近海",
+      "mag": 3.4,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 232.49,
+      "dir16": "SW",
+      "distance_km": 1258.6,
+      "matches": []
+    },
+    {
+      "time": "2026/09/22 15:34:00",
+      "place": "茨城県南部",
+      "mag": 3.9,
+      "depth": 50.0,
+      "max_scale": "3",
+      "bearing": 31.68,
+      "dir16": "NNE",
+      "distance_km": 167.8,
+      "matches": []
+    },
+    {
+      "time": "2026/09/22 15:34:00",
+      "place": "茨城県南部",
+      "mag": 3.9,
+      "depth": 50.0,
+      "max_scale": "不明",
+      "bearing": 31.68,
+      "dir16": "NNE",
+      "distance_km": 167.8,
+      "matches": []
+    },
+    {
+      "time": "2026/09/22 08:27:00",
+      "place": "熊本県熊本地方",
+      "mag": 3.0,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 253.31,
+      "dir16": "WSW",
+      "distance_km": 823.5,
+      "matches": []
+    },
+    {
+      "time": "2026/09/22 07:30:00",
+      "place": "福島県沖",
+      "mag": 4.5,
+      "depth": 30.0,
+      "max_scale": "1",
+      "bearing": 43.04,
+      "dir16": "NE",
+      "distance_km": 398.4,
+      "matches": [
+        {
+          "name": "龍神社(海神)",
+          "diff": 1.38,
+          "note": ""
+        },
+        {
+          "name": "NE45度軸(香取・江ノ島・熱田)",
+          "diff": 1.96,
+          "note": "NE45度corridor/貝塚"
+        }
+      ]
+    },
     {
       "time": "2026/09/22 01:39:00",
       "place": "熊本県熊本地方",
@@ -999,94 +1087,6 @@
       "bearing": 233.26,
       "dir16": "SW",
       "distance_km": 1718.6,
-      "matches": []
-    },
-    {
-      "time": "2026/09/09 17:38:00",
-      "place": "秋田県内陸北部",
-      "mag": 2.7,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 13.41,
-      "dir16": "NNE",
-      "distance_km": 581.8,
-      "matches": []
-    },
-    {
-      "time": "2026/09/09 14:58:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 3.0,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 253.54,
-      "dir16": "WSW",
-      "distance_km": 832.2,
-      "matches": []
-    },
-    {
-      "time": "2026/09/09 14:27:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.9,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 252.13,
-      "dir16": "WSW",
-      "distance_km": 840.5,
-      "matches": []
-    },
-    {
-      "time": "2026/09/09 10:55:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.0,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 251.68,
-      "dir16": "WSW",
-      "distance_km": 853.5,
-      "matches": []
-    },
-    {
-      "time": "2026/09/09 07:15:00",
-      "place": "釧路沖",
-      "mag": 3.8,
-      "depth": 40.0,
-      "max_scale": "2",
-      "bearing": 30.3,
-      "dir16": "NNE",
-      "distance_km": 1048.9,
-      "matches": []
-    },
-    {
-      "time": "2026/09/09 05:19:00",
-      "place": "熊本県熊本地方",
-      "mag": 2.8,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 253.31,
-      "dir16": "WSW",
-      "distance_km": 823.5,
-      "matches": []
-    },
-    {
-      "time": "2026/09/08 23:40:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.6,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 253.07,
-      "dir16": "WSW",
-      "distance_km": 845.0,
-      "matches": []
-    },
-    {
-      "time": "2026/09/08 22:23:00",
-      "place": "根室半島南東沖",
-      "mag": 3.7,
-      "depth": 80.0,
-      "max_scale": "1",
-      "bearing": 30.69,
-      "dir16": "NNE",
-      "distance_km": 1067.3,
       "matches": []
     }
   ]
