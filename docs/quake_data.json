@@ -1,6 +1,56 @@
 {
-  "generated_at": "2026-09-24T16:41:50",
+  "generated_at": "2026-09-25T16:46:49",
   "quakes": [
+    {
+      "time": "2026/09/25 17:04:00",
+      "place": "熊本県熊本地方",
+      "mag": 2.0,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 253.8,
+      "dir16": "WSW",
+      "distance_km": 810.8,
+      "matches": []
+    },
+    {
+      "time": "2026/09/25 13:11:00",
+      "place": "福島県中通り",
+      "mag": 2.5,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 18.15,
+      "dir16": "NNE",
+      "distance_km": 279.0,
+      "matches": [
+        {
+          "name": "NNE19度軸(封印された神々クラスタ)",
+          "diff": 0.85,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "time": "2026/09/25 08:53:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.8,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 251.68,
+      "dir16": "WSW",
+      "distance_km": 853.5,
+      "matches": []
+    },
+    {
+      "time": "2026/09/25 08:46:00",
+      "place": "福島県会津",
+      "mag": 2.9,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 6.98,
+      "dir16": "N",
+      "distance_km": 277.9,
+      "matches": []
+    },
     {
       "time": "2026/09/24 22:46:00",
       "place": "熊本県熊本地方",
@@ -1071,50 +1121,6 @@
       "bearing": 234.42,
       "dir16": "SW",
       "distance_km": 1016.2,
-      "matches": []
-    },
-    {
-      "time": "2026/09/13 04:18:00",
-      "place": "三宅島近海",
-      "mag": 4.3,
-      "depth": 20.0,
-      "max_scale": "2",
-      "bearing": 164.17,
-      "dir16": "SSE",
-      "distance_km": 129.4,
-      "matches": []
-    },
-    {
-      "time": "2026/09/13 01:03:00",
-      "place": "富山県東部",
-      "mag": 2.9,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 322.51,
-      "dir16": "NW",
-      "distance_km": 208.5,
-      "matches": []
-    },
-    {
-      "time": "2026/09/12 16:49:00",
-      "place": "千葉県南部",
-      "mag": 3.2,
-      "depth": 20.0,
-      "max_scale": "1",
-      "bearing": 74.69,
-      "dir16": "ENE",
-      "distance_km": 120.8,
-      "matches": []
-    },
-    {
-      "time": "2026/09/12 15:56:00",
-      "place": "千葉県南部",
-      "mag": 3.3,
-      "depth": 20.0,
-      "max_scale": "1",
-      "bearing": 74.69,
-      "dir16": "ENE",
-      "distance_km": 120.8,
       "matches": []
     }
   ]
