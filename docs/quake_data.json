@@ -1,6 +1,72 @@
 {
-  "generated_at": "2026-10-11T17:28:21",
+  "generated_at": "2026-10-12T21:01:25",
   "quakes": [
+    {
+      "time": "2026/10/13 02:25:00",
+      "place": "岩手県沖",
+      "mag": 4.3,
+      "depth": 20.0,
+      "max_scale": "1",
+      "bearing": 30.85,
+      "dir16": "NNE",
+      "distance_km": 599.9,
+      "matches": []
+    },
+    {
+      "time": "2026/10/12 20:33:00",
+      "place": "釧路地方中南部",
+      "mag": 3.3,
+      "depth": 80.0,
+      "max_scale": "1",
+      "bearing": 26.68,
+      "dir16": "NNE",
+      "distance_km": 1046.7,
+      "matches": []
+    },
+    {
+      "time": "2026/10/12 16:51:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.9,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/10/12 12:45:00",
+      "place": "釧路沖",
+      "mag": 4.0,
+      "depth": 70.0,
+      "max_scale": "2",
+      "bearing": 26.91,
+      "dir16": "NNE",
+      "distance_km": 958.9,
+      "matches": []
+    },
+    {
+      "time": "2026/10/12 09:53:00",
+      "place": "硫黄島近海",
+      "mag": 5.0,
+      "depth": 180.0,
+      "max_scale": "1",
+      "bearing": 170.25,
+      "dir16": "S",
+      "distance_km": 1061.3,
+      "matches": []
+    },
+    {
+      "time": "2026/10/12 05:05:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 1.9,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
     {
       "time": "2026/10/12 01:24:00",
       "place": "千葉県東方沖",
@@ -1117,67 +1183,6 @@
       "bearing": 235.85,
       "dir16": "SW",
       "distance_km": 1987.5,
-      "matches": []
-    },
-    {
-      "time": "2026/09/30 14:00:00",
-      "place": "与那国島近海",
-      "mag": 6.0,
-      "depth": 10.0,
-      "max_scale": "不明",
-      "bearing": 235.85,
-      "dir16": "SW",
-      "distance_km": 1987.5,
-      "matches": []
-    },
-    {
-      "time": "2026/09/29 22:48:00",
-      "place": "千葉県北東部",
-      "mag": 3.0,
-      "depth": 50.0,
-      "max_scale": "1",
-      "bearing": 58.4,
-      "dir16": "ENE",
-      "distance_km": 167.7,
-      "matches": [
-        {
-          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
-          "diff": 1.4,
-          "note": "岩戸ログ中核軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/09/29 18:12:00",
-      "place": "山口県北部",
-      "mag": 3.2,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 268.18,
-      "dir16": "W",
-      "distance_km": 679.5,
-      "matches": []
-    },
-    {
-      "time": "2026/09/29 10:49:00",
-      "place": "和歌山県南部",
-      "mag": 2.6,
-      "depth": 30.0,
-      "max_scale": "1",
-      "bearing": 248.05,
-      "dir16": "WSW",
-      "distance_km": 320.5,
-      "matches": []
-    },
-    {
-      "time": "2026/09/29 04:45:00",
-      "place": "茨城県南部",
-      "mag": 4.9,
-      "depth": 50.0,
-      "max_scale": "4",
-      "bearing": 31.06,
-      "dir16": "NNE",
-      "distance_km": 153.6,
       "matches": []
     }
   ]
