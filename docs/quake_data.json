@@ -1,6 +1,50 @@
 {
-  "generated_at": "2026-10-12T21:01:25",
+  "generated_at": "2026-10-13T18:59:53",
   "quakes": [
+    {
+      "time": "2026/10/13 22:05:00",
+      "place": "宮城県沖",
+      "mag": 3.5,
+      "depth": 60.0,
+      "max_scale": "1",
+      "bearing": 30.19,
+      "dir16": "NNE",
+      "distance_km": 464.3,
+      "matches": []
+    },
+    {
+      "time": "2026/10/13 20:53:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.7,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 253.54,
+      "dir16": "WSW",
+      "distance_km": 832.2,
+      "matches": []
+    },
+    {
+      "time": "2026/10/13 20:44:00",
+      "place": "紀伊水道",
+      "mag": 3.8,
+      "depth": 40.0,
+      "max_scale": "2",
+      "bearing": 253.78,
+      "dir16": "WSW",
+      "distance_km": 415.4,
+      "matches": []
+    },
+    {
+      "time": "2026/10/13 11:27:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 3.5,
+      "depth": 0.0,
+      "max_scale": "2",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
     {
       "time": "2026/10/13 02:25:00",
       "place": "岩手県沖",
@@ -1140,50 +1184,6 @@
           "note": "岩戸ログ中核軸"
         }
       ]
-    },
-    {
-      "time": "2026/10/01 00:58:00",
-      "place": "福島県会津",
-      "mag": 2.9,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 6.98,
-      "dir16": "N",
-      "distance_km": 277.9,
-      "matches": []
-    },
-    {
-      "time": "2026/09/30 21:28:00",
-      "place": "トカラ列島近海",
-      "mag": 2.5,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 238.71,
-      "dir16": "WSW",
-      "distance_km": 1042.0,
-      "matches": []
-    },
-    {
-      "time": "2026/09/30 18:46:00",
-      "place": "トカラ列島近海",
-      "mag": 2.7,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 238.71,
-      "dir16": "WSW",
-      "distance_km": 1042.0,
-      "matches": []
-    },
-    {
-      "time": "2026/09/30 14:00:00",
-      "place": "与那国島近海",
-      "mag": 6.0,
-      "depth": 10.0,
-      "max_scale": "3",
-      "bearing": 235.85,
-      "dir16": "SW",
-      "distance_km": 1987.5,
-      "matches": []
     }
   ]
 }
