@@ -1,6 +1,83 @@
 {
-  "generated_at": "2026-10-14T16:44:41",
+  "generated_at": "2026-10-15T16:30:04",
   "quakes": [
+    {
+      "time": "2026/10/16 00:13:00",
+      "place": "熊本県熊本地方",
+      "mag": 2.5,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 254.54,
+      "dir16": "WSW",
+      "distance_km": 806.9,
+      "matches": []
+    },
+    {
+      "time": "2026/10/15 14:10:00",
+      "place": "千葉県北西部",
+      "mag": 3.2,
+      "depth": 70.0,
+      "max_scale": "1",
+      "bearing": 52.1,
+      "dir16": "NE",
+      "distance_km": 124.0,
+      "matches": []
+    },
+    {
+      "time": "2026/10/15 07:41:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 3.6,
+      "depth": 0.0,
+      "max_scale": "2",
+      "bearing": 253.54,
+      "dir16": "WSW",
+      "distance_km": 832.2,
+      "matches": []
+    },
+    {
+      "time": "2026/10/15 07:01:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 3.5,
+      "depth": 0.0,
+      "max_scale": "2",
+      "bearing": 253.54,
+      "dir16": "WSW",
+      "distance_km": 832.2,
+      "matches": []
+    },
+    {
+      "time": "2026/10/15 06:58:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 1.6,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 251.68,
+      "dir16": "WSW",
+      "distance_km": 853.5,
+      "matches": []
+    },
+    {
+      "time": "2026/10/15 02:02:00",
+      "place": "宮崎県南部山沿い",
+      "mag": 2.6,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 249.38,
+      "dir16": "WSW",
+      "distance_km": 806.5,
+      "matches": []
+    },
+    {
+      "time": "2026/10/15 01:51:00",
+      "place": "トカラ列島近海",
+      "mag": 3.1,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 237.41,
+      "dir16": "WSW",
+      "distance_km": 1047.6,
+      "matches": []
+    },
     {
       "time": "2026/10/14 22:19:00",
       "place": "宮城県沖",
@@ -1047,131 +1124,6 @@
       "dir16": "NNE",
       "distance_km": 665.4,
       "matches": []
-    },
-    {
-      "time": "2026/10/02 01:20:00",
-      "place": "茨城県北部",
-      "mag": 2.6,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 36.93,
-      "dir16": "NE",
-      "distance_km": 235.1,
-      "matches": []
-    },
-    {
-      "time": "2026/10/02 01:17:00",
-      "place": "茨城県北部",
-      "mag": 2.7,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 36.93,
-      "dir16": "NE",
-      "distance_km": 235.1,
-      "matches": []
-    },
-    {
-      "time": "2026/10/01 21:51:00",
-      "place": "千葉県北東部",
-      "mag": 3.3,
-      "depth": 40.0,
-      "max_scale": "1",
-      "bearing": 56.83,
-      "dir16": "ENE",
-      "distance_km": 181.2,
-      "matches": [
-        {
-          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
-          "diff": 0.17,
-          "note": "岩戸ログ中核軸"
-        },
-        {
-          "name": "龍尾寺",
-          "diff": 0.65,
-          "note": ""
-        },
-        {
-          "name": "芝山",
-          "diff": 1.12,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/10/01 21:31:00",
-      "place": "千葉県北東部",
-      "mag": 3.6,
-      "depth": 40.0,
-      "max_scale": "1",
-      "bearing": 59.91,
-      "dir16": "ENE",
-      "distance_km": 175.5,
-      "matches": [
-        {
-          "name": "銚子・銚港神社",
-          "diff": 0.94,
-          "note": ""
-        },
-        {
-          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
-          "diff": 2.91,
-          "note": "岩戸ログ中核軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/10/01 21:27:00",
-      "place": "千葉県北東部",
-      "mag": 5.1,
-      "depth": 50.0,
-      "max_scale": "3",
-      "bearing": 56.83,
-      "dir16": "ENE",
-      "distance_km": 181.2,
-      "matches": [
-        {
-          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
-          "diff": 0.17,
-          "note": "岩戸ログ中核軸"
-        },
-        {
-          "name": "龍尾寺",
-          "diff": 0.65,
-          "note": ""
-        },
-        {
-          "name": "芝山",
-          "diff": 1.12,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/10/01 21:27:00",
-      "place": "千葉県北東部",
-      "mag": 5.1,
-      "depth": 50.0,
-      "max_scale": "不明",
-      "bearing": 56.83,
-      "dir16": "ENE",
-      "distance_km": 181.2,
-      "matches": [
-        {
-          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
-          "diff": 0.17,
-          "note": "岩戸ログ中核軸"
-        },
-        {
-          "name": "龍尾寺",
-          "diff": 0.65,
-          "note": ""
-        },
-        {
-          "name": "芝山",
-          "diff": 1.12,
-          "note": ""
-        }
-      ]
     }
   ]
 }
