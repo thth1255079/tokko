@@ -1,6 +1,28 @@
 {
-  "generated_at": "2026-10-15T16:30:04",
+  "generated_at": "2026-10-16T16:15:30",
   "quakes": [
+    {
+      "time": "2026/10/16 18:17:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.5,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.37,
+      "dir16": "WSW",
+      "distance_km": 849.2,
+      "matches": []
+    },
+    {
+      "time": "2026/10/16 12:38:00",
+      "place": "カムチャツカ半島付近",
+      "mag": 6.9,
+      "depth": 160.0,
+      "max_scale": "1",
+      "bearing": 36.85,
+      "dir16": "NE",
+      "distance_km": 2280.8,
+      "matches": []
+    },
     {
       "time": "2026/10/16 00:13:00",
       "place": "熊本県熊本地方",
@@ -1112,17 +1134,6 @@
       "bearing": 239.09,
       "dir16": "WSW",
       "distance_km": 1013.3,
-      "matches": []
-    },
-    {
-      "time": "2026/10/02 02:17:00",
-      "place": "三陸沖",
-      "mag": 5.0,
-      "depth": 10.0,
-      "max_scale": "2",
-      "bearing": 32.45,
-      "dir16": "NNE",
-      "distance_km": 665.4,
       "matches": []
     }
   ]
