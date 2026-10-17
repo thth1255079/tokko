@@ -1,6 +1,39 @@
 {
-  "generated_at": "2026-10-16T16:15:30",
+  "generated_at": "2026-10-17T15:09:42",
   "quakes": [
+    {
+      "time": "2026/10/17 23:48:00",
+      "place": "長野県北部",
+      "mag": 2.4,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 331.96,
+      "dir16": "NNW",
+      "distance_km": 212.3,
+      "matches": []
+    },
+    {
+      "time": "2026/10/17 17:42:00",
+      "place": "和歌山県北部",
+      "mag": 2.8,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 253.14,
+      "dir16": "WSW",
+      "distance_km": 368.1,
+      "matches": []
+    },
+    {
+      "time": "2026/10/17 11:54:00",
+      "place": "紀伊水道",
+      "mag": 2.6,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 256.86,
+      "dir16": "WSW",
+      "distance_km": 370.4,
+      "matches": []
+    },
     {
       "time": "2026/10/16 18:17:00",
       "place": "熊本県天草・芦北地方",
@@ -1101,39 +1134,6 @@
       "bearing": 254.31,
       "dir16": "WSW",
       "distance_km": 798.1,
-      "matches": []
-    },
-    {
-      "time": "2026/10/02 06:01:00",
-      "place": "茨城県南部",
-      "mag": 3.9,
-      "depth": 50.0,
-      "max_scale": "2",
-      "bearing": 31.06,
-      "dir16": "NNE",
-      "distance_km": 153.6,
-      "matches": []
-    },
-    {
-      "time": "2026/10/02 04:05:00",
-      "place": "トカラ列島近海",
-      "mag": 3.3,
-      "depth": 10.0,
-      "max_scale": "3",
-      "bearing": 239.09,
-      "dir16": "WSW",
-      "distance_km": 1013.3,
-      "matches": []
-    },
-    {
-      "time": "2026/10/02 04:05:00",
-      "place": "トカラ列島近海",
-      "mag": 3.3,
-      "depth": 10.0,
-      "max_scale": "不明",
-      "bearing": 239.09,
-      "dir16": "WSW",
-      "distance_km": 1013.3,
       "matches": []
     }
   ]
