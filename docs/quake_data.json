@@ -1,6 +1,28 @@
 {
-  "generated_at": "2026-10-19T18:27:58",
+  "generated_at": "2026-10-20T16:30:21",
   "quakes": [
+    {
+      "time": "2026/10/20 20:48:00",
+      "place": "徳島県南部",
+      "mag": 2.7,
+      "depth": 20.0,
+      "max_scale": "1",
+      "bearing": 254.18,
+      "dir16": "WSW",
+      "distance_km": 424.2,
+      "matches": []
+    },
+    {
+      "time": "2026/10/20 05:50:00",
+      "place": "釧路沖",
+      "mag": 4.0,
+      "depth": 30.0,
+      "max_scale": "2",
+      "bearing": 28.93,
+      "dir16": "NNE",
+      "distance_km": 966.5,
+      "matches": []
+    },
     {
       "time": "2026/10/19 22:41:00",
       "place": "沖縄本島近海",
@@ -1123,28 +1145,6 @@
       "bearing": 253.31,
       "dir16": "WSW",
       "distance_km": 823.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/03 15:08:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.8,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 252.83,
-      "dir16": "WSW",
-      "distance_km": 836.3,
-      "matches": []
-    },
-    {
-      "time": "2026/10/03 15:05:00",
-      "place": "奄美大島北東沖",
-      "mag": 4.5,
-      "depth": 20.0,
-      "max_scale": "1",
-      "bearing": 234.55,
-      "dir16": "SW",
-      "distance_km": 1001.6,
       "matches": []
     }
   ]
