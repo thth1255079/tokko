@@ -1,6 +1,94 @@
 {
-  "generated_at": "2026-10-24T15:33:11",
+  "generated_at": "2026-10-25T15:42:48",
   "quakes": [
+    {
+      "time": "2026/10/25 19:14:00",
+      "place": "茨城県北部",
+      "mag": 3.8,
+      "depth": 90.0,
+      "max_scale": "1",
+      "bearing": 30.38,
+      "dir16": "NNE",
+      "distance_km": 243.3,
+      "matches": []
+    },
+    {
+      "time": "2026/10/25 15:04:00",
+      "place": "福島県沖",
+      "mag": 4.2,
+      "depth": 40.0,
+      "max_scale": "2",
+      "bearing": 37.06,
+      "dir16": "NE",
+      "distance_km": 405.7,
+      "matches": []
+    },
+    {
+      "time": "2026/10/25 12:23:00",
+      "place": "苫小牧沖",
+      "mag": 3.7,
+      "depth": 90.0,
+      "max_scale": "1",
+      "bearing": 15.93,
+      "dir16": "NNE",
+      "distance_km": 810.4,
+      "matches": []
+    },
+    {
+      "time": "2026/10/25 11:10:00",
+      "place": "小笠原諸島西方沖",
+      "mag": 7.0,
+      "depth": 470.0,
+      "max_scale": "3",
+      "bearing": 173.56,
+      "dir16": "S",
+      "distance_km": 774.0,
+      "matches": []
+    },
+    {
+      "time": "2026/10/25 11:10:00",
+      "place": "小笠原諸島西方沖",
+      "mag": 7.0,
+      "depth": 470.0,
+      "max_scale": "不明",
+      "bearing": 173.56,
+      "dir16": "S",
+      "distance_km": 774.0,
+      "matches": []
+    },
+    {
+      "time": "2026/10/25 08:59:00",
+      "place": "日向灘",
+      "mag": 5.3,
+      "depth": 0.0,
+      "max_scale": "3",
+      "bearing": 244.3,
+      "dir16": "WSW",
+      "distance_km": 746.3,
+      "matches": []
+    },
+    {
+      "time": "2026/10/25 08:59:00",
+      "place": "日向灘",
+      "mag": 5.3,
+      "depth": 0.0,
+      "max_scale": "不明",
+      "bearing": 244.3,
+      "dir16": "WSW",
+      "distance_km": 746.3,
+      "matches": []
+    },
+    {
+      "time": "2026/10/25 07:53:00",
+      "place": "熊本県熊本地方",
+      "mag": 2.1,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 254.84,
+      "dir16": "WSW",
+      "distance_km": 785.5,
+      "matches": []
+    },
     {
       "time": "2026/10/24 21:08:00",
       "place": "薩摩半島西方沖",
@@ -1025,144 +1113,6 @@
       "bearing": 253.31,
       "dir16": "WSW",
       "distance_km": 823.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/08 04:36:00",
-      "place": "千葉県東方沖",
-      "mag": 3.9,
-      "depth": 50.0,
-      "max_scale": "2",
-      "bearing": 63.18,
-      "dir16": "ENE",
-      "distance_km": 170.4,
-      "matches": []
-    },
-    {
-      "time": "2026/10/08 04:13:00",
-      "place": "千葉県北東部",
-      "mag": 4.8,
-      "depth": 50.0,
-      "max_scale": "4",
-      "bearing": 59.91,
-      "dir16": "ENE",
-      "distance_km": 175.5,
-      "matches": [
-        {
-          "name": "銚子・銚港神社",
-          "diff": 0.94,
-          "note": ""
-        },
-        {
-          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
-          "diff": 2.91,
-          "note": "岩戸ログ中核軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/10/08 04:13:00",
-      "place": "千葉県北東部",
-      "mag": 4.8,
-      "depth": 50.0,
-      "max_scale": "不明",
-      "bearing": 59.91,
-      "dir16": "ENE",
-      "distance_km": 175.5,
-      "matches": [
-        {
-          "name": "銚子・銚港神社",
-          "diff": 0.94,
-          "note": ""
-        },
-        {
-          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
-          "diff": 2.91,
-          "note": "岩戸ログ中核軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/10/07 23:23:00",
-      "place": "熊本県熊本地方",
-      "mag": 2.6,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 253.31,
-      "dir16": "WSW",
-      "distance_km": 823.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/07 16:03:00",
-      "place": "奄美大島北東沖",
-      "mag": 3.5,
-      "depth": 60.0,
-      "max_scale": "1",
-      "bearing": 236.4,
-      "dir16": "WSW",
-      "distance_km": 988.1,
-      "matches": []
-    },
-    {
-      "time": "2026/10/07 09:22:00",
-      "place": "福島県沖",
-      "mag": 4.1,
-      "depth": 60.0,
-      "max_scale": "2",
-      "bearing": 38.41,
-      "dir16": "NE",
-      "distance_km": 297.7,
-      "matches": [
-        {
-          "name": "布施弁天",
-          "diff": 0.72,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/10/07 02:47:00",
-      "place": "北海道東方沖",
-      "mag": 4.6,
-      "depth": 10.0,
-      "max_scale": "2",
-      "bearing": 32.01,
-      "dir16": "NNE",
-      "distance_km": 1210.0,
-      "matches": []
-    },
-    {
-      "time": "2026/10/07 02:01:00",
-      "place": "沖縄本島近海",
-      "mag": 2.8,
-      "depth": 30.0,
-      "max_scale": "1",
-      "bearing": 231.38,
-      "dir16": "SW",
-      "distance_km": 1281.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/06 23:47:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 1.9,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 252.13,
-      "dir16": "WSW",
-      "distance_km": 840.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/06 19:53:00",
-      "place": "神奈川県西部",
-      "mag": 3.4,
-      "depth": 40.0,
-      "max_scale": "2",
-      "bearing": 25.57,
-      "dir16": "NNE",
-      "distance_km": 59.2,
       "matches": []
     }
   ]
