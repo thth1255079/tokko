@@ -1,6 +1,72 @@
 {
-  "generated_at": "2026-10-28T18:00:15",
+  "generated_at": "2026-10-29T18:09:37",
   "quakes": [
+    {
+      "time": "2026/10/30 01:06:00",
+      "place": "岐阜県飛騨地方",
+      "mag": 2.3,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 298.26,
+      "dir16": "WNW",
+      "distance_km": 186.4,
+      "matches": []
+    },
+    {
+      "time": "2026/10/29 08:14:00",
+      "place": "釧路地方中南部",
+      "mag": 4.4,
+      "depth": 120.0,
+      "max_scale": "2",
+      "bearing": 25.82,
+      "dir16": "NNE",
+      "distance_km": 1024.9,
+      "matches": []
+    },
+    {
+      "time": "2026/10/29 05:22:00",
+      "place": "千葉県北東部",
+      "mag": 3.5,
+      "depth": 50.0,
+      "max_scale": "1",
+      "bearing": 59.91,
+      "dir16": "ENE",
+      "distance_km": 175.5,
+      "matches": [
+        {
+          "name": "銚子・銚港神社",
+          "diff": 0.94,
+          "note": ""
+        },
+        {
+          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
+          "diff": 2.91,
+          "note": "岩戸ログ中核軸"
+        }
+      ]
+    },
+    {
+      "time": "2026/10/29 03:32:00",
+      "place": "千葉県北東部",
+      "mag": 4.4,
+      "depth": 50.0,
+      "max_scale": "2",
+      "bearing": 59.91,
+      "dir16": "ENE",
+      "distance_km": 175.5,
+      "matches": [
+        {
+          "name": "銚子・銚港神社",
+          "diff": 0.94,
+          "note": ""
+        },
+        {
+          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
+          "diff": 2.91,
+          "note": "岩戸ログ中核軸"
+        }
+      ]
+    },
     {
       "time": "2026/10/29 02:45:00",
       "place": "茨城県北部",
@@ -1063,50 +1129,6 @@
       "bearing": 253.54,
       "dir16": "WSW",
       "distance_km": 832.2,
-      "matches": []
-    },
-    {
-      "time": "2026/10/13 20:44:00",
-      "place": "紀伊水道",
-      "mag": 3.8,
-      "depth": 40.0,
-      "max_scale": "2",
-      "bearing": 253.78,
-      "dir16": "WSW",
-      "distance_km": 415.4,
-      "matches": []
-    },
-    {
-      "time": "2026/10/13 11:27:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 3.5,
-      "depth": 0.0,
-      "max_scale": "2",
-      "bearing": 252.13,
-      "dir16": "WSW",
-      "distance_km": 840.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/13 02:25:00",
-      "place": "岩手県沖",
-      "mag": 4.3,
-      "depth": 20.0,
-      "max_scale": "1",
-      "bearing": 30.85,
-      "dir16": "NNE",
-      "distance_km": 599.9,
-      "matches": []
-    },
-    {
-      "time": "2026/10/12 20:33:00",
-      "place": "釧路地方中南部",
-      "mag": 3.3,
-      "depth": 80.0,
-      "max_scale": "1",
-      "bearing": 26.68,
-      "dir16": "NNE",
-      "distance_km": 1046.7,
       "matches": []
     }
   ]
