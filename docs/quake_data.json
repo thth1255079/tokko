@@ -1,6 +1,89 @@
 {
-  "generated_at": "2026-10-29T18:09:37",
+  "generated_at": "2026-10-30T17:48:39",
   "quakes": [
+    {
+      "time": "2026/10/31 01:45:00",
+      "place": "熊本県熊本地方",
+      "mag": 4.1,
+      "depth": 10.0,
+      "max_scale": "3",
+      "bearing": 254.54,
+      "dir16": "WSW",
+      "distance_km": 806.9,
+      "matches": []
+    },
+    {
+      "time": "2026/10/31 01:45:00",
+      "place": "熊本県熊本地方",
+      "mag": 4.1,
+      "depth": 10.0,
+      "max_scale": "不明",
+      "bearing": 254.54,
+      "dir16": "WSW",
+      "distance_km": 806.9,
+      "matches": []
+    },
+    {
+      "time": "2026/10/30 23:11:00",
+      "place": "島根県東部",
+      "mag": 3.5,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 276.24,
+      "dir16": "W",
+      "distance_km": 530.8,
+      "matches": [
+        {
+          "name": "W277度軸(出雲・難波宮)",
+          "diff": 0.76,
+          "note": "国譲り軸"
+        }
+      ]
+    },
+    {
+      "time": "2026/10/30 22:18:00",
+      "place": "岩手県沖",
+      "mag": 4.0,
+      "depth": 20.0,
+      "max_scale": "1",
+      "bearing": 27.36,
+      "dir16": "NNE",
+      "distance_km": 680.3,
+      "matches": []
+    },
+    {
+      "time": "2026/10/30 17:45:00",
+      "place": "根室半島南東沖",
+      "mag": 4.2,
+      "depth": 50.0,
+      "max_scale": "2",
+      "bearing": 31.75,
+      "dir16": "NNE",
+      "distance_km": 1122.8,
+      "matches": []
+    },
+    {
+      "time": "2026/10/30 13:58:00",
+      "place": "岩手県沖",
+      "mag": 4.1,
+      "depth": 40.0,
+      "max_scale": "1",
+      "bearing": 27.02,
+      "dir16": "NNE",
+      "distance_km": 652.6,
+      "matches": []
+    },
+    {
+      "time": "2026/10/30 13:24:00",
+      "place": "宮城県沖",
+      "mag": 4.1,
+      "depth": 50.0,
+      "max_scale": "2",
+      "bearing": 32.51,
+      "dir16": "NNE",
+      "distance_km": 436.3,
+      "matches": []
+    },
     {
       "time": "2026/10/30 01:06:00",
       "place": "岐阜県飛騨地方",
@@ -1041,94 +1124,6 @@
       "bearing": 251.68,
       "dir16": "WSW",
       "distance_km": 853.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/15 02:02:00",
-      "place": "宮崎県南部山沿い",
-      "mag": 2.6,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 249.38,
-      "dir16": "WSW",
-      "distance_km": 806.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/15 01:51:00",
-      "place": "トカラ列島近海",
-      "mag": 3.1,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 237.41,
-      "dir16": "WSW",
-      "distance_km": 1047.6,
-      "matches": []
-    },
-    {
-      "time": "2026/10/14 22:19:00",
-      "place": "宮城県沖",
-      "mag": 4.1,
-      "depth": 50.0,
-      "max_scale": "2",
-      "bearing": 31.25,
-      "dir16": "NNE",
-      "distance_km": 483.0,
-      "matches": []
-    },
-    {
-      "time": "2026/10/14 16:07:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 1.4,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 251.68,
-      "dir16": "WSW",
-      "distance_km": 853.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/14 07:56:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.8,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 252.83,
-      "dir16": "WSW",
-      "distance_km": 836.3,
-      "matches": []
-    },
-    {
-      "time": "2026/10/14 04:33:00",
-      "place": "天草灘",
-      "mag": 2.6,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 251.08,
-      "dir16": "WSW",
-      "distance_km": 888.3,
-      "matches": []
-    },
-    {
-      "time": "2026/10/13 22:05:00",
-      "place": "宮城県沖",
-      "mag": 3.5,
-      "depth": 60.0,
-      "max_scale": "1",
-      "bearing": 30.19,
-      "dir16": "NNE",
-      "distance_km": 464.3,
-      "matches": []
-    },
-    {
-      "time": "2026/10/13 20:53:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.7,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 253.54,
-      "dir16": "WSW",
-      "distance_km": 832.2,
       "matches": []
     }
   ]
