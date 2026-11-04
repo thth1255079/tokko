@@ -1,6 +1,56 @@
 {
-  "generated_at": "2026-11-03T19:13:16",
+  "generated_at": "2026-11-04T19:28:50",
   "quakes": [
+    {
+      "time": "2026/11/05 04:21:00",
+      "place": "宮城県沖",
+      "mag": 4.1,
+      "depth": 50.0,
+      "max_scale": "1",
+      "bearing": 32.63,
+      "dir16": "NNE",
+      "distance_km": 450.4,
+      "matches": []
+    },
+    {
+      "time": "2026/11/04 07:28:00",
+      "place": "熊本県熊本地方",
+      "mag": 2.5,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 253.31,
+      "dir16": "WSW",
+      "distance_km": 823.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/04 05:34:00",
+      "place": "千葉県東方沖",
+      "mag": 3.4,
+      "depth": 60.0,
+      "max_scale": "2",
+      "bearing": 66.59,
+      "dir16": "ENE",
+      "distance_km": 136.5,
+      "matches": [
+        {
+          "name": "玉前",
+          "diff": 0.46,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "time": "2026/11/04 05:11:00",
+      "place": "和歌山県北部",
+      "mag": 1.9,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 257.83,
+      "dir16": "WSW",
+      "distance_km": 349.7,
+      "matches": []
+    },
     {
       "time": "2026/11/04 01:48:00",
       "place": "硫黄島近海",
@@ -1047,73 +1097,6 @@
       "bearing": 254.31,
       "dir16": "WSW",
       "distance_km": 798.1,
-      "matches": []
-    },
-    {
-      "time": "2026/10/22 02:10:00",
-      "place": "浦河沖",
-      "mag": 3.3,
-      "depth": 50.0,
-      "max_scale": "1",
-      "bearing": 18.97,
-      "dir16": "NNE",
-      "distance_km": 789.9,
-      "matches": [
-        {
-          "name": "NNE19度軸(封印された神々クラスタ)",
-          "diff": 0.03,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/10/21 23:41:00",
-      "place": "日高地方中部",
-      "mag": 4.2,
-      "depth": 100.0,
-      "max_scale": "2",
-      "bearing": 19.36,
-      "dir16": "NNE",
-      "distance_km": 911.4,
-      "matches": [
-        {
-          "name": "NNE19度軸(封印された神々クラスタ)",
-          "diff": 0.36,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/10/21 10:04:00",
-      "place": "千葉県北西部",
-      "mag": 4.0,
-      "depth": 70.0,
-      "max_scale": "2",
-      "bearing": 44.77,
-      "dir16": "NE",
-      "distance_km": 138.6,
-      "matches": [
-        {
-          "name": "NE45度軸(香取・江ノ島・熱田)",
-          "diff": 0.23,
-          "note": "NE45度corridor/貝塚"
-        },
-        {
-          "name": "龍神社(海神)",
-          "diff": 0.35,
-          "note": ""
-        }
-      ]
-    },
-    {
-      "time": "2026/10/21 02:40:00",
-      "place": "神奈川県西部",
-      "mag": 2.3,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 356.99,
-      "dir16": "N",
-      "distance_km": 31.2,
       "matches": []
     }
   ]
