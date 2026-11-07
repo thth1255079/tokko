@@ -1,6 +1,133 @@
 {
-  "generated_at": "2026-11-06T19:00:18",
+  "generated_at": "2026-11-07T17:33:07",
   "quakes": [
+    {
+      "time": "2026/11/08 02:03:00",
+      "place": "愛知県東部",
+      "mag": 3.3,
+      "depth": 40.0,
+      "max_scale": "2",
+      "bearing": 269.42,
+      "dir16": "W",
+      "distance_km": 129.3,
+      "matches": []
+    },
+    {
+      "time": "2026/11/08 01:04:00",
+      "place": "静岡県西部",
+      "mag": 5.7,
+      "depth": 40.0,
+      "max_scale": "5強",
+      "bearing": 269.32,
+      "dir16": "W",
+      "distance_km": 120.2,
+      "matches": []
+    },
+    {
+      "time": "2026/11/08 01:04:00",
+      "place": "静岡県西部",
+      "mag": 5.7,
+      "depth": 40.0,
+      "max_scale": "5強",
+      "bearing": 269.32,
+      "dir16": "W",
+      "distance_km": 120.2,
+      "matches": []
+    },
+    {
+      "time": "2026/11/08 01:04:00",
+      "place": "静岡県西部",
+      "mag": 5.7,
+      "depth": 40.0,
+      "max_scale": "不明",
+      "bearing": 269.32,
+      "dir16": "W",
+      "distance_km": 120.2,
+      "matches": []
+    },
+    {
+      "time": "2026/11/08 00:42:00",
+      "place": "岩手県沖",
+      "mag": 4.1,
+      "depth": 20.0,
+      "max_scale": "1",
+      "bearing": 27.36,
+      "dir16": "NNE",
+      "distance_km": 680.3,
+      "matches": []
+    },
+    {
+      "time": "2026/11/07 22:48:00",
+      "place": "福島県沖",
+      "mag": 3.6,
+      "depth": 60.0,
+      "max_scale": "1",
+      "bearing": 38.26,
+      "dir16": "NE",
+      "distance_km": 340.3,
+      "matches": [
+        {
+          "name": "布施弁天",
+          "diff": 0.87,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "time": "2026/11/07 20:07:00",
+      "place": "茨城県沖",
+      "mag": 5.6,
+      "depth": 20.0,
+      "max_scale": "3",
+      "bearing": 57.9,
+      "dir16": "ENE",
+      "distance_km": 273.5,
+      "matches": [
+        {
+          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
+          "diff": 0.9,
+          "note": "岩戸ログ中核軸"
+        },
+        {
+          "name": "龍尾寺",
+          "diff": 1.72,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "time": "2026/11/07 20:07:00",
+      "place": "茨城県沖",
+      "mag": 5.6,
+      "depth": 20.0,
+      "max_scale": "不明",
+      "bearing": 57.9,
+      "dir16": "ENE",
+      "distance_km": 273.5,
+      "matches": [
+        {
+          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
+          "diff": 0.9,
+          "note": "岩戸ログ中核軸"
+        },
+        {
+          "name": "龍尾寺",
+          "diff": 1.72,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "time": "2026/11/07 06:30:00",
+      "place": "山口県中部",
+      "mag": 2.9,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 265.39,
+      "dir16": "W",
+      "distance_km": 683.8,
+      "matches": []
+    },
     {
       "time": "2026/11/07 03:54:00",
       "place": "和歌山県北部",
@@ -991,116 +1118,6 @@
       "bearing": 6.98,
       "dir16": "N",
       "distance_km": 277.9,
-      "matches": []
-    },
-    {
-      "time": "2026/10/25 19:14:00",
-      "place": "茨城県北部",
-      "mag": 3.8,
-      "depth": 90.0,
-      "max_scale": "1",
-      "bearing": 30.38,
-      "dir16": "NNE",
-      "distance_km": 243.3,
-      "matches": []
-    },
-    {
-      "time": "2026/10/25 15:04:00",
-      "place": "福島県沖",
-      "mag": 4.2,
-      "depth": 40.0,
-      "max_scale": "2",
-      "bearing": 37.06,
-      "dir16": "NE",
-      "distance_km": 405.7,
-      "matches": []
-    },
-    {
-      "time": "2026/10/25 12:23:00",
-      "place": "苫小牧沖",
-      "mag": 3.7,
-      "depth": 90.0,
-      "max_scale": "1",
-      "bearing": 15.93,
-      "dir16": "NNE",
-      "distance_km": 810.4,
-      "matches": []
-    },
-    {
-      "time": "2026/10/25 11:10:00",
-      "place": "小笠原諸島西方沖",
-      "mag": 7.0,
-      "depth": 470.0,
-      "max_scale": "3",
-      "bearing": 173.56,
-      "dir16": "S",
-      "distance_km": 774.0,
-      "matches": []
-    },
-    {
-      "time": "2026/10/25 11:10:00",
-      "place": "小笠原諸島西方沖",
-      "mag": 7.0,
-      "depth": 470.0,
-      "max_scale": "不明",
-      "bearing": 173.56,
-      "dir16": "S",
-      "distance_km": 774.0,
-      "matches": []
-    },
-    {
-      "time": "2026/10/25 08:59:00",
-      "place": "日向灘",
-      "mag": 5.3,
-      "depth": 0.0,
-      "max_scale": "3",
-      "bearing": 244.3,
-      "dir16": "WSW",
-      "distance_km": 746.3,
-      "matches": []
-    },
-    {
-      "time": "2026/10/25 08:59:00",
-      "place": "日向灘",
-      "mag": 5.3,
-      "depth": 0.0,
-      "max_scale": "不明",
-      "bearing": 244.3,
-      "dir16": "WSW",
-      "distance_km": 746.3,
-      "matches": []
-    },
-    {
-      "time": "2026/10/25 07:53:00",
-      "place": "熊本県熊本地方",
-      "mag": 2.1,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 254.84,
-      "dir16": "WSW",
-      "distance_km": 785.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/24 21:08:00",
-      "place": "薩摩半島西方沖",
-      "mag": 3.6,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 246.59,
-      "dir16": "WSW",
-      "distance_km": 944.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/24 12:44:00",
-      "place": "陸奥湾",
-      "mag": 2.9,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 14.48,
-      "dir16": "NNE",
-      "distance_km": 700.2,
       "matches": []
     }
   ]
