@@ -1,6 +1,77 @@
 {
-  "generated_at": "2026-11-09T22:01:22",
+  "generated_at": "2026-11-10T19:26:02",
   "quakes": [
+    {
+      "time": "2026/11/10 22:23:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.5,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/10 16:53:00",
+      "place": "愛媛県南予",
+      "mag": 3.0,
+      "depth": 40.0,
+      "max_scale": "1",
+      "bearing": 256.36,
+      "dir16": "WSW",
+      "distance_km": 631.8,
+      "matches": []
+    },
+    {
+      "time": "2026/11/10 16:14:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.3,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 251.43,
+      "dir16": "WSW",
+      "distance_km": 844.9,
+      "matches": []
+    },
+    {
+      "time": "2026/11/10 15:36:00",
+      "place": "房総半島南方沖",
+      "mag": 4.5,
+      "depth": 20.0,
+      "max_scale": "2",
+      "bearing": 122.17,
+      "dir16": "ESE",
+      "distance_km": 128.3,
+      "matches": []
+    },
+    {
+      "time": "2026/11/10 14:20:00",
+      "place": "茨城県沖",
+      "mag": 4.5,
+      "depth": 30.0,
+      "max_scale": "1",
+      "bearing": 55.93,
+      "dir16": "NE",
+      "distance_km": 279.3,
+      "matches": [
+        {
+          "name": "芝山",
+          "diff": 0.22,
+          "note": ""
+        },
+        {
+          "name": "龍尾寺",
+          "diff": 0.25,
+          "note": ""
+        },
+        {
+          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
+          "diff": 1.07,
+          "note": "岩戸ログ中核軸"
+        }
+      ]
+    },
     {
       "time": "2026/11/10 06:16:00",
       "place": "橘湾",
@@ -1070,39 +1141,6 @@
           "note": "岩戸ログ中核軸"
         }
       ]
-    },
-    {
-      "time": "2026/10/28 23:54:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 3.0,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 254.03,
-      "dir16": "WSW",
-      "distance_km": 819.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/28 17:17:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.7,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 253.07,
-      "dir16": "WSW",
-      "distance_km": 845.0,
-      "matches": []
-    },
-    {
-      "time": "2026/10/28 14:28:00",
-      "place": "奄美大島近海",
-      "mag": 3.5,
-      "depth": 40.0,
-      "max_scale": "1",
-      "bearing": 233.34,
-      "dir16": "SW",
-      "distance_km": 1162.7,
-      "matches": []
     }
   ]
 }
