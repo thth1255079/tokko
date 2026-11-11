@@ -1,6 +1,100 @@
 {
-  "generated_at": "2026-11-10T19:26:02",
+  "generated_at": "2026-11-11T19:20:40",
   "quakes": [
+    {
+      "time": "2026/11/12 02:15:00",
+      "place": "青森県東方沖",
+      "mag": 3.6,
+      "depth": 60.0,
+      "max_scale": "2",
+      "bearing": 20.24,
+      "dir16": "NNE",
+      "distance_km": 724.7,
+      "matches": [
+        {
+          "name": "NNE19度軸(封印された神々クラスタ)",
+          "diff": 1.24,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "time": "2026/11/11 21:13:00",
+      "place": "橘湾",
+      "mag": 2.3,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 255.84,
+      "dir16": "WSW",
+      "distance_km": 859.8,
+      "matches": []
+    },
+    {
+      "time": "2026/11/11 15:21:00",
+      "place": "熊本県阿蘇地方",
+      "mag": 2.4,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 255.94,
+      "dir16": "WSW",
+      "distance_km": 760.6,
+      "matches": []
+    },
+    {
+      "time": "2026/11/11 12:57:00",
+      "place": "茨城県沖",
+      "mag": 4.6,
+      "depth": 20.0,
+      "max_scale": "1",
+      "bearing": 56.89,
+      "dir16": "ENE",
+      "distance_km": 286.9,
+      "matches": [
+        {
+          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
+          "diff": 0.11,
+          "note": "岩戸ログ中核軸"
+        },
+        {
+          "name": "龍尾寺",
+          "diff": 0.71,
+          "note": ""
+        },
+        {
+          "name": "芝山",
+          "diff": 1.18,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "time": "2026/11/11 08:33:00",
+      "place": "熊本県熊本地方",
+      "mag": 2.7,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 255.06,
+      "dir16": "WSW",
+      "distance_km": 794.3,
+      "matches": []
+    },
+    {
+      "time": "2026/11/11 07:36:00",
+      "place": "岩手県内陸南部",
+      "mag": 2.9,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 19.21,
+      "dir16": "NNE",
+      "distance_km": 493.9,
+      "matches": [
+        {
+          "name": "NNE19度軸(封印された神々クラスタ)",
+          "diff": 0.21,
+          "note": ""
+        }
+      ]
+    },
     {
       "time": "2026/11/10 22:23:00",
       "place": "熊本県天草・芦北地方",
@@ -1027,105 +1121,6 @@
       "mag": 4.4,
       "depth": 50.0,
       "max_scale": "2",
-      "bearing": 59.91,
-      "dir16": "ENE",
-      "distance_km": 175.5,
-      "matches": [
-        {
-          "name": "銚子・銚港神社",
-          "diff": 0.94,
-          "note": ""
-        },
-        {
-          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
-          "diff": 2.91,
-          "note": "岩戸ログ中核軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/10/29 02:45:00",
-      "place": "茨城県北部",
-      "mag": 3.1,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 32.14,
-      "dir16": "NNE",
-      "distance_km": 248.1,
-      "matches": []
-    },
-    {
-      "time": "2026/10/29 01:04:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.4,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 252.13,
-      "dir16": "WSW",
-      "distance_km": 840.5,
-      "matches": []
-    },
-    {
-      "time": "2026/10/29 00:50:00",
-      "place": "紀伊水道",
-      "mag": 2.5,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 256.86,
-      "dir16": "WSW",
-      "distance_km": 370.4,
-      "matches": []
-    },
-    {
-      "time": "2026/10/29 00:07:00",
-      "place": "千葉県北東部",
-      "mag": 5.4,
-      "depth": 50.0,
-      "max_scale": "5弱",
-      "bearing": 59.91,
-      "dir16": "ENE",
-      "distance_km": 175.5,
-      "matches": [
-        {
-          "name": "銚子・銚港神社",
-          "diff": 0.94,
-          "note": ""
-        },
-        {
-          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
-          "diff": 2.91,
-          "note": "岩戸ログ中核軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/10/29 00:07:00",
-      "place": "千葉県北東部",
-      "mag": 5.4,
-      "depth": 50.0,
-      "max_scale": "5弱",
-      "bearing": 59.91,
-      "dir16": "ENE",
-      "distance_km": 175.5,
-      "matches": [
-        {
-          "name": "銚子・銚港神社",
-          "diff": 0.94,
-          "note": ""
-        },
-        {
-          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
-          "diff": 2.91,
-          "note": "岩戸ログ中核軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/10/29 00:07:00",
-      "place": "千葉県北東部",
-      "mag": 5.4,
-      "depth": 50.0,
-      "max_scale": "不明",
       "bearing": 59.91,
       "dir16": "ENE",
       "distance_km": 175.5,
