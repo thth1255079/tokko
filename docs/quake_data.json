@@ -1,6 +1,67 @@
 {
-  "generated_at": "2026-11-12T19:39:14",
+  "generated_at": "2026-11-13T19:20:08",
   "quakes": [
+    {
+      "time": "2026/11/14 00:03:00",
+      "place": "島根県西部",
+      "mag": 3.5,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 274.89,
+      "dir16": "W",
+      "distance_km": 584.9,
+      "matches": [
+        {
+          "name": "W277度軸(出雲・難波宮)",
+          "diff": 2.11,
+          "note": "国譲り軸"
+        }
+      ]
+    },
+    {
+      "time": "2026/11/13 19:42:00",
+      "place": "和歌山県北部",
+      "mag": 2.4,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 258.19,
+      "dir16": "WSW",
+      "distance_km": 358.6,
+      "matches": []
+    },
+    {
+      "time": "2026/11/13 15:26:00",
+      "place": "熊本県熊本地方",
+      "mag": 2.2,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 253.31,
+      "dir16": "WSW",
+      "distance_km": 823.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/13 10:52:00",
+      "place": "熊本県熊本地方",
+      "mag": 4.0,
+      "depth": 10.0,
+      "max_scale": "3",
+      "bearing": 253.31,
+      "dir16": "WSW",
+      "distance_km": 823.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/13 10:52:00",
+      "place": "熊本県熊本地方",
+      "mag": 4.0,
+      "depth": 10.0,
+      "max_scale": "不明",
+      "bearing": 253.31,
+      "dir16": "WSW",
+      "distance_km": 823.5,
+      "matches": []
+    },
     {
       "time": "2026/11/13 03:48:00",
       "place": "茨城県沖",
@@ -1069,67 +1130,6 @@
       "bearing": 254.31,
       "dir16": "WSW",
       "distance_km": 798.1,
-      "matches": []
-    },
-    {
-      "time": "2026/10/31 01:45:00",
-      "place": "熊本県熊本地方",
-      "mag": 4.1,
-      "depth": 10.0,
-      "max_scale": "3",
-      "bearing": 254.54,
-      "dir16": "WSW",
-      "distance_km": 806.9,
-      "matches": []
-    },
-    {
-      "time": "2026/10/31 01:45:00",
-      "place": "熊本県熊本地方",
-      "mag": 4.1,
-      "depth": 10.0,
-      "max_scale": "不明",
-      "bearing": 254.54,
-      "dir16": "WSW",
-      "distance_km": 806.9,
-      "matches": []
-    },
-    {
-      "time": "2026/10/30 23:11:00",
-      "place": "島根県東部",
-      "mag": 3.5,
-      "depth": 10.0,
-      "max_scale": "2",
-      "bearing": 276.24,
-      "dir16": "W",
-      "distance_km": 530.8,
-      "matches": [
-        {
-          "name": "W277度軸(出雲・難波宮)",
-          "diff": 0.76,
-          "note": "国譲り軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/10/30 22:18:00",
-      "place": "岩手県沖",
-      "mag": 4.0,
-      "depth": 20.0,
-      "max_scale": "1",
-      "bearing": 27.36,
-      "dir16": "NNE",
-      "distance_km": 680.3,
-      "matches": []
-    },
-    {
-      "time": "2026/10/30 17:45:00",
-      "place": "根室半島南東沖",
-      "mag": 4.2,
-      "depth": 50.0,
-      "max_scale": "2",
-      "bearing": 31.75,
-      "dir16": "NNE",
-      "distance_km": 1122.8,
       "matches": []
     }
   ]
