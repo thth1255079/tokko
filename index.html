@@ -235,6 +235,20 @@ nav.tabs a.on{color:var(--purple)}
 .lightbox img{max-width:100%;max-height:80vh;border-radius:14px}
 .lb-cap{color:#E2DCF8;font-size:.85rem;text-align:center}
 .lb-x{color:#9A92BA;font-size:.7rem;letter-spacing:.2em}
+
+/* はじまり */
+.story{display:grid;gap:1rem;margin-top:.6rem}
+@media(min-width:820px){.story{grid-template-columns:1fr 1fr}}
+.story-card{background:#fff;border-radius:var(--r);padding:1.2rem 1.25rem .4rem;border:3px solid transparent;
+  background-image:linear-gradient(#fff,#fff),var(--grad);background-origin:border-box;background-clip:padding-box,border-box;box-shadow:0 10px 26px rgba(120,60,160,.12)}
+.story-card.s2{background-image:linear-gradient(#fff,#fff),linear-gradient(100deg,#E9B949,#F0703A)}
+.story-badge{display:inline-block;background:var(--goldtx);color:#4A2A00;font-weight:900;font-size:.8rem;border-radius:999px;padding:.08rem .85rem}
+.story-card h2{font-size:1.35rem;font-weight:900;margin:.45rem 0 .4rem}
+.story-card p{font-size:.93rem;margin-bottom:.55rem}
+.story-card b{color:var(--purple)}
+.story-q{font-weight:900;font-size:1.05rem;text-align:center;background:#F6F1FF;border-radius:16px;padding:.6rem .8rem;color:var(--ink)}
+.story-note{font-size:.78rem!important;color:var(--dim)}
+.story .panel-foot{margin:.6rem 0 1rem}
 </style>
 </head>
 <body>
@@ -245,6 +259,7 @@ nav.tabs a.on{color:var(--purple)}
     <a class="brand" href="index.html"><span>情報の岩戸開き</span><b>岩戸ログ</b></a>
     <button class="nav-btn" aria-label="メニュー" onclick="document.querySelector('.nav').classList.toggle('open')">☰</button>
     <div class="nav-links">
+      <a href="#hajimari">📜 はじまり</a>
       <a href="#worldmap">🌏 世界地図</a>
       <a href="#japanmap">🗾 日本地図</a>
       <a href="#cats">📚 研究カテゴリ</a>
@@ -269,10 +284,10 @@ nav.tabs a.on{color:var(--purple)}
   </svg>
   <div class="hero-in">
     <div class="hero-main">
-      <div class="pill"><span>ARCHIVE</span>神話・考古学・地理・方位研究</div>
-      <p class="kicker">天城山を起点に、失われた記憶をひらく</p>
-      <h1>すべての方位は、<em>つながっている。</em></h1>
-      <p class="hero-desc">天城山を起点に、神話・遺跡・地形・神社・地震・伝承をつなぎ、失われた記憶を、事実と仮説の分離を守りながら再構築する。</p>
+      <div class="pill"><span>ARCHIVE</span>方角で読む古代の記憶</div>
+      <p class="kicker">天城山から、世界の伝承をたどる</p>
+      <h1>16人の王子を<em>探せ。</em></h1>
+      <p class="hero-desc">古代日本から、16人の王子が世界へ旅立ったという言い伝えがあります。王子たちは、どこへ消えたのか？<br>伊豆の天城山から16の方角に線を引き、世界に残る伝承の記憶をたどっています。</p>
       <div class="searchbar">
         <input id="q" type="search" placeholder="キーワード（例：麻賀多神社、月、黒又山）" aria-label="サイト内を検索">
         <button onclick="doSearch()">検索</button>
@@ -286,7 +301,7 @@ nav.tabs a.on{color:var(--purple)}
       </div>
       <div class="cta-row">
         <a class="cta main" href="iwato-log.html">🌋 地震ログを見る</a>
-        <a class="cta sub" href="#cats">📚 研究カテゴリ</a>
+        <a class="cta sub" href="#hajimari">📜 はじまりを読む</a>
       </div>
       <div class="stats">
         <div class="stat"><small>研究記録</small><b id="stRep">0</b><b><i>件</i></b></div>
@@ -295,15 +310,34 @@ nav.tabs a.on{color:var(--purple)}
       </div>
     </div>
     <aside class="method-panel" id="about">
-      <h2>🧭 研究の方法論（L1 / L2 / L3）</h2>
-      <div class="m-row"><span class="lv l1">L1</span><span><b>確定。</b>実測・実験・文献で裏付けられた事実。方位は誤差を明記して記録する。</span></div>
-      <div class="m-row"><span class="lv l2">L2</span><span><b>構造の判断。</b>複数のL1事実から導く中間解釈。構造や関係性の理解。</span></div>
-      <div class="m-row"><span class="lv l3">L3</span><span><b>仮説・物語。</b>象徴的・物語的解釈、未確認の接続仮説。魅力的な物語ほど、L1と混同しない。</span></div>
+      <h2>🧭 書き方のルール（3つの色）</h2>
+      <div class="m-row"><span class="lv l1">L1</span><span><b>事実。</b>測ったり、資料で確かめたりできたこと。方角の計算はここ。</span></div>
+      <div class="m-row"><span class="lv l2">L2</span><span><b>読み取り。</b>いくつかの事実を並べて、見えてきたこと。</span></div>
+      <div class="m-row"><span class="lv l3">L3</span><span><b>推測・物語。</b>まだ確かめられていない考えや言い伝え。王子の伝説もここ。おもしろくても、事実とは混ぜません。</span></div>
     </aside>
   </div>
 </div>
 
 <main>
+  <section class="story" id="hajimari">
+    <div class="story-card">
+      <span class="story-badge">📜 はじまり</span>
+      <h2>三種の神器の三角形</h2>
+      <p>天城山を中心に、地図に線を引いてみたのが始まりでした。</p>
+      <p>北の<b>摩周湖</b>を「鏡」、南の<b>雲仙・普賢岳</b>を「剣」、<b>天城山</b>を「勾玉」に見立てて、三種の神器の三角形を描くと、その真ん中は<b>能登半島の沖</b>に来ました。</p>
+      <p class="story-q">場所と場所は、方角でつながっているのでは？</p>
+      <p>このサイトは、その問いから始まった記録です。</p>
+      <a class="panel-foot" href="sanshu.html">🔺 三角形を見てみる →</a>
+    </div>
+    <div class="story-card s2">
+      <span class="story-badge">🧭 16の方角と16人の王子</span>
+      <h2>天城山から、16の方角へ</h2>
+      <p>東・西・南・北を、さらに細かく<b>16の方角</b>に分けて考えます。</p>
+      <p>16の方角それぞれに、一人ずつ王子が旅立った——。そう見立てて、その方角にある神社・遺跡・言い伝え・地震を一つずつ記録しています。</p>
+      <p class="story-note">※王子の話は言い伝え（L3）です。方角の計算（L1）とは分けて書いています。</p>
+      <a class="panel-foot" href="#cats">📚 たどった記録を見る →</a>
+    </div>
+  </section>
   <div id="searchSec">
     <h2 class="sec"><span class="ico">🔍</span>検索結果</h2>
     <div class="count" id="sCount"></div>
@@ -311,17 +345,17 @@ nav.tabs a.on{color:var(--purple)}
   </div>
 
   <h2 class="sec"><span class="ico">🗺️</span>地図と最新情報</h2>
-  <p class="sec-desc">金の線は、天城山からの大円方位。</p>
+  <p class="sec-desc">金色の線は、天城山から見た方角です。</p>
   <div class="row3">
     <div class="panel" id="worldmap">
       <div class="panel-h">🌏 世界地図<span class="en">グローバル研究</span></div>
       <div class="map" id="mapWorld"></div>
-      <div class="panel-b" style="padding-top:.7rem">ソロヴェツキー諸島を中心とした世界聖地ネットワーク、出雲軸などのグローバルな接続を探る。金線は天城からの大円方位。</div>
+      <div class="panel-b" style="padding-top:.7rem">世界の聖地が、天城山から見てどの方角にあるかを地図にしました。金色の線は天城山からの方角です。</div>
     </div>
     <div class="panel" id="japanmap">
       <div class="panel-h">🗾 日本地図<span class="en">国内研究</span></div>
       <div class="map" id="mapJapan"></div>
-      <div class="panel-b" style="padding-top:.7rem">各地の神社・遺跡・地形・地名を天城16方位グリッドで分析。縄文から律令への流れを地域ごとに追う。</div>
+      <div class="panel-b" style="padding-top:.7rem">日本各地の神社や遺跡が、天城山から見てどの方角にあるかを地図にしました。</div>
     </div>
     <div class="panel">
       <div class="panel-h">✨ 最近の更新<span class="en">UPDATES</span></div>
@@ -332,7 +366,7 @@ nav.tabs a.on{color:var(--purple)}
 
   <section id="cats">
     <h2 class="sec"><span class="ico">📚</span>研究カテゴリ<a class="en" href="#cats">すべて見る →</a></h2>
-    <p class="sec-desc">気になるテーマをタップすると、関連する記録が出てきます。</p>
+    <p class="sec-desc">気になるテーマをタップすると、関係する記録が出てきます。</p>
     <div class="cats" id="catGrid"></div>
   </section>
 
@@ -366,8 +400,8 @@ nav.tabs a.on{color:var(--purple)}
       <div class="base-row"><span class="k">北緯</span><span class="v">34.920°</span></div>
       <div class="base-row"><span class="k">東経</span><span class="v">139.018°</span></div>
       <div class="base-row"><span class="k">標高</span><span class="v">1,406 m</span></div>
-      <div class="base-row"><span class="k">役割</span><span class="v">16方位グリッドの起点</span></div>
-      <a class="panel-foot" href="amagi16.html">天城16方位グリッドを見る →</a>
+      <div class="base-row"><span class="k">役割</span><span class="v">すべての方角はここから測る</span></div>
+      <a class="panel-foot" href="amagi16.html">天城山から見た16の方角を見る →</a>
     </div>
   </div>
 
