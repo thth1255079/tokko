@@ -1,6 +1,105 @@
 {
-  "generated_at": "2026-11-14T17:44:47",
+  "generated_at": "2026-11-15T18:35:13",
   "quakes": [
+    {
+      "time": "2026/11/16 02:43:00",
+      "place": "薩摩半島西方沖",
+      "mag": 2.5,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 250.42,
+      "dir16": "WSW",
+      "distance_km": 892.9,
+      "matches": []
+    },
+    {
+      "time": "2026/11/16 00:57:00",
+      "place": "大阪府北部",
+      "mag": 2.7,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 270.57,
+      "dir16": "W",
+      "distance_km": 311.7,
+      "matches": []
+    },
+    {
+      "time": "2026/11/15 16:23:00",
+      "place": "熊本県熊本地方",
+      "mag": 3.1,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 253.31,
+      "dir16": "WSW",
+      "distance_km": 823.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/15 14:00:00",
+      "place": "茨城県沖",
+      "mag": 3.6,
+      "depth": 40.0,
+      "max_scale": "1",
+      "bearing": 44.56,
+      "dir16": "NE",
+      "distance_km": 264.9,
+      "matches": [
+        {
+          "name": "龍神社(海神)",
+          "diff": 0.14,
+          "note": ""
+        },
+        {
+          "name": "NE45度軸(香取・江ノ島・熱田)",
+          "diff": 0.44,
+          "note": "NE45度corridor/貝塚"
+        }
+      ]
+    },
+    {
+      "time": "2026/11/15 13:16:00",
+      "place": "渡島地方東部",
+      "mag": 2.6,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 11.35,
+      "dir16": "NNE",
+      "distance_km": 793.2,
+      "matches": []
+    },
+    {
+      "time": "2026/11/15 06:31:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.3,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.37,
+      "dir16": "WSW",
+      "distance_km": 849.2,
+      "matches": []
+    },
+    {
+      "time": "2026/11/15 06:17:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 3.8,
+      "depth": 10.0,
+      "max_scale": "3",
+      "bearing": 252.83,
+      "dir16": "WSW",
+      "distance_km": 836.3,
+      "matches": []
+    },
+    {
+      "time": "2026/11/15 06:17:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 3.8,
+      "depth": 10.0,
+      "max_scale": "不明",
+      "bearing": 252.83,
+      "dir16": "WSW",
+      "distance_km": 836.3,
+      "matches": []
+    },
     {
       "time": "2026/11/15 01:50:00",
       "place": "茨城県沖",
@@ -1043,94 +1142,6 @@
       "bearing": 252.83,
       "dir16": "WSW",
       "distance_km": 836.3,
-      "matches": []
-    },
-    {
-      "time": "2026/11/02 09:34:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.5,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 252.13,
-      "dir16": "WSW",
-      "distance_km": 840.5,
-      "matches": []
-    },
-    {
-      "time": "2026/11/02 01:21:00",
-      "place": "熊本県熊本地方",
-      "mag": 3.1,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 253.31,
-      "dir16": "WSW",
-      "distance_km": 823.5,
-      "matches": []
-    },
-    {
-      "time": "2026/11/02 01:07:00",
-      "place": "岐阜県飛騨地方",
-      "mag": 2.5,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 309.8,
-      "dir16": "NW",
-      "distance_km": 189.5,
-      "matches": []
-    },
-    {
-      "time": "2026/11/01 16:16:00",
-      "place": "釧路地方中南部",
-      "mag": 2.7,
-      "depth": 20.0,
-      "max_scale": "1",
-      "bearing": 25.91,
-      "dir16": "NNE",
-      "distance_km": 1038.6,
-      "matches": []
-    },
-    {
-      "time": "2026/11/01 13:39:00",
-      "place": "愛知県西部",
-      "mag": 3.6,
-      "depth": 40.0,
-      "max_scale": "2",
-      "bearing": 281.75,
-      "dir16": "WNW",
-      "distance_km": 159.4,
-      "matches": []
-    },
-    {
-      "time": "2026/11/01 11:49:00",
-      "place": "父島近海",
-      "mag": 4.3,
-      "depth": 30.0,
-      "max_scale": "2",
-      "bearing": 162.48,
-      "dir16": "SSE",
-      "distance_km": 954.4,
-      "matches": []
-    },
-    {
-      "time": "2026/11/01 07:15:00",
-      "place": "三重県南東沖",
-      "mag": 6.1,
-      "depth": 350.0,
-      "max_scale": "3",
-      "bearing": 232.94,
-      "dir16": "SW",
-      "distance_km": 222.3,
-      "matches": []
-    },
-    {
-      "time": "2026/11/01 07:15:00",
-      "place": "三重県南東沖",
-      "mag": 6.1,
-      "depth": 350.0,
-      "max_scale": "不明",
-      "bearing": 232.94,
-      "dir16": "SW",
-      "distance_km": 222.3,
       "matches": []
     }
   ]
