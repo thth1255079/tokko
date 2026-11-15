@@ -2,162 +2,178 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>岩戸ログ｜地震と方位の記録</title>
 <meta name="description" content="天城16方位モデルによる地震観測ログ。震源方位と対応神を三層構造（L1/L2/L3）で記録するアーカイブ。">
+<meta name="theme-color" content="#3B2A8C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&family=Zen+Maru+Gothic:wght@500;700;900&family=Shippori+Mincho:wght@700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#EEF1F5;      /* 石白 */
-  --ink:#1D2433;        /* 墨 */
-  --rock:#0D1424;       /* 岩戸 */
-  --rock-2:#16203A;
-  --vermilion:#C43D4B;  /* 朱 */
-  --indigo:#2B5FD9;     /* 藍 */
-  --line:#D8DDE6;       /* 薄墨 */
-  --dim:#68707E;
-  --card:#FFFFFF;
+  --cream:#FFF8EE; --card:#fff; --line:#F0E4D2;
+  --ink:#2A2140; --dim:#6E6682;
+  --purple:#5B3FD0; --orange:#F0703A; --gold:#E9B949; --red:#D94457;
+  --grad:linear-gradient(100deg,#5B3FD0 0%,#A44BB8 50%,#F0703A 100%);
+  --goldtx:linear-gradient(90deg,#FFE08A,#FFB25A 55%,#F58BA8);
+  --night:#171236;
+  --round:'Zen Maru Gothic','M PLUS Rounded 1c','Hiragino Maru Gothic ProN',sans-serif;
   --serif:'Shippori Mincho','Hiragino Mincho ProN',serif;
-  --sans:'Zen Kaku Gothic New','Hiragino Kaku Gothic ProN',sans-serif;
   --mono:'IBM Plex Mono',monospace;
+  --r:24px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.85;font-size:15.5px}
+body{background:var(--cream);color:var(--ink);font-family:var(--round);font-weight:500;line-height:1.85;font-size:15.5px;
+  padding-bottom:calc(78px + env(safe-area-inset-bottom))}
 
-/* ── 岩戸（ヘッダー） ── */
-header{background:var(--rock);color:#E8E6E1;padding:2.6rem 1.2rem 2.2rem}
-.h-inner{max-width:860px;margin:0 auto}
-.h-eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.28em;color:#9BA0A6;text-transform:uppercase}
-h1{font-family:var(--serif);font-weight:800;font-size:clamp(1.9rem,5vw,2.7rem);letter-spacing:.14em;margin:.35rem 0 .5rem}
-h1 .sub{font-size:.45em;font-weight:600;letter-spacing:.22em;color:#B9BDC2;margin-left:.9em}
-.h-desc{font-size:.86rem;color:#B9BDC2;max-width:38em}
-.h-desc b{color:#E8E6E1;font-weight:500}
+/* ヘッダー */
+.nav{position:sticky;top:0;z-index:40;background:rgba(255,248,238,.92);backdrop-filter:blur(10px);border-bottom:1px solid #EFE3D2}
+.nav-in{max-width:960px;margin:0 auto;padding:.55rem 1rem;display:flex;align-items:center;gap:.7rem}
+.logo{width:44px;height:44px;border-radius:13px;background:var(--grad);display:grid;place-items:center;flex-shrink:0;box-shadow:0 4px 12px rgba(91,63,208,.3)}
+.logo svg{width:28px;height:28px}
+.brand{display:flex;flex-direction:column;text-decoration:none;line-height:1.2}
+.brand span{font-size:.68rem;font-weight:700;color:var(--purple)}
+.brand b{font-size:1.35rem;font-weight:900;letter-spacing:.06em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hbtn{margin-left:auto;text-decoration:none;font-weight:900;font-size:.82rem;color:var(--purple);background:#fff;border:1.5px solid #EADBC6;border-radius:999px;padding:.3rem .9rem}
 
-/* ── 方位盤 ── */
-.dial-wrap{max-width:860px;margin:-1px auto 0;background:var(--rock);padding:0 1.2rem 2.4rem;border-radius:0 0 6px 6px}
-@media(max-width:900px){.dial-wrap{border-radius:0}}
-.dial-flex{display:flex;gap:2rem;align-items:center;flex-wrap:wrap}
-.dial-box{flex:0 0 auto}
-svg.dial{display:block;width:min(300px,78vw);height:auto}
-.dial-legend{flex:1;min-width:220px;color:#C9CCC7;font-size:.82rem}
-.dial-legend p{margin-bottom:.6rem}
-.dial-legend .k{font-family:var(--mono);color:#E8E6E1}
-.sector{fill:#232E4A;stroke:var(--rock);stroke-width:1.5;cursor:pointer;transition:fill .18s}
-.sector:hover{fill:#2E3B5E}
-.sector.has{fill:#3A5A8C}
-.sector.has:hover{fill:#4A6EA8}
-.sector.on{fill:var(--vermilion)}
-.dir-label{font-family:var(--mono);font-size:11px;fill:#B9BDC2;text-anchor:middle;pointer-events:none}
-.dir-label.on{fill:#FFD9CF;font-weight:600}
-.dial-center{font-family:var(--serif);font-size:22px;fill:#E8E6E1;text-anchor:middle;letter-spacing:.1em}
-.dial-center-sub{font-family:var(--mono);font-size:8.5px;fill:#9BA0A6;text-anchor:middle;letter-spacing:.12em}
+/* ヒーロー＋方位盤 */
+.hero{position:relative;overflow:hidden;color:#fff;background:var(--night)}
+.sky{position:absolute;inset:0;background:
+  radial-gradient(800px 480px at 85% 15%,rgba(164,75,184,.55),transparent 60%),
+  radial-gradient(700px 480px at 5% 35%,rgba(46,107,230,.45),transparent 60%),
+  radial-gradient(600px 300px at 50% 100%,rgba(240,112,58,.4),transparent 70%),
+  linear-gradient(180deg,#120E2E 0%,#241A5A 50%,#3B2470 100%)}
+#stars{position:absolute;inset:0;width:100%;height:100%}
+.hero-in{position:relative;z-index:2;max-width:960px;margin:0 auto;padding:1.8rem 1.2rem 2.2rem}
+.pill{display:inline-flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.14);backdrop-filter:blur(8px);
+  border:1.5px solid rgba(255,255,255,.35);border-radius:999px;padding:.3rem 1rem .3rem .3rem;font-weight:700;font-size:.85rem}
+.pill span{background:linear-gradient(90deg,#FFC24A,#F5852E);color:#3A1D00;border-radius:999px;padding:.05rem .8rem;font-family:'M PLUS Rounded 1c',sans-serif;font-weight:800;letter-spacing:.08em}
+h1{font-weight:900;font-size:clamp(2.1rem,9vw,3.3rem);line-height:1.25;margin:1rem 0 .3rem;text-shadow:0 4px 18px rgba(0,0,0,.4)}
+h1 em{font-style:normal;display:block;background:var(--goldtx);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35))}
+.h-desc{font-size:.92rem;opacity:.93;max-width:36em}
+.layers{display:flex;gap:.45rem;flex-wrap:wrap;margin:.8rem 0 0}
+.layers span{font-size:.78rem;font-weight:900;border-radius:999px;padding:.08rem .8rem;color:#fff}
+.dial-flex{display:flex;gap:1.6rem;align-items:center;flex-wrap:wrap;margin-top:1.4rem}
+.dial-box{flex:0 0 auto;margin:0 auto}
+svg.dial{display:block;width:min(330px,84vw);height:auto;filter:drop-shadow(0 0 18px rgba(233,185,73,.35))}
+.dial-legend{flex:1;min-width:220px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.28);border-radius:var(--r);padding:1rem 1.15rem;backdrop-filter:blur(8px);font-size:.86rem}
+.dial-legend p{margin-bottom:.4rem}
+.dial-legend p:last-child{margin-bottom:0}
+.dial-legend .k{font-weight:900;color:#FFE08A}
+.sector{fill:rgba(255,255,255,.08);stroke:#241A5A;stroke-width:1.5;cursor:pointer;transition:fill .18s}
+.sector:hover{fill:rgba(255,255,255,.2)}
+.sector.has{fill:#6B52D6}
+.sector.has:hover{fill:#8569F0}
+.sector.on{fill:#F0703A}
+.dir-label{font-family:var(--mono);font-size:11px;fill:#D9D2F5;text-anchor:middle;pointer-events:none}
+.dir-label.on{fill:#FFE08A;font-weight:600}
+.dial-center{font-family:var(--serif);font-weight:800;font-size:22px;fill:#FFE08A;text-anchor:middle;letter-spacing:.1em}
+.dial-center-sub{font-family:var(--mono);font-size:8.5px;fill:#C9C1EA;text-anchor:middle;letter-spacing:.12em}
 
-/* ── フィルタ帯 ── */
-.filters{max-width:860px;margin:1.4rem auto 0;padding:0 1.2rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
-.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;
-  padding:.28rem .85rem;font-size:.8rem;cursor:pointer;font-family:var(--sans);color:var(--ink);transition:all .15s}
-.chip:hover{border-color:var(--indigo);color:var(--indigo)}
-.chip.on{background:var(--indigo);border-color:var(--indigo);color:#fff}
-.chip:focus-visible,.sector:focus-visible{outline:2px solid var(--vermilion);outline-offset:2px}
-.search{margin-left:auto;border:1px solid var(--line);border-radius:999px;padding:.3rem .95rem;
-  font-size:.82rem;background:var(--card);font-family:var(--sans);min-width:170px}
-.search:focus{outline:2px solid var(--indigo);outline-offset:1px}
-.f-label{font-size:.75rem;color:var(--dim);letter-spacing:.08em}
-.clear-btn{background:none;border:none;font-size:.78rem;color:var(--vermilion);cursor:pointer;
-  text-decoration:underline;text-underline-offset:3px;display:none;font-family:var(--sans)}
+/* フィルタ */
+.filters{max-width:960px;margin:1.4rem auto 0;padding:0 1rem;display:flex;gap:.45rem;flex-wrap:wrap;align-items:center}
+.f-label{font-size:.8rem;color:var(--dim);font-weight:900}
+.chip{border:none;background:#F1ECFF;border-radius:999px;padding:.25rem .9rem;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--round);color:var(--purple);transition:all .15s}
+.chip:hover{background:#E2D8FF}
+.chip.on{background:var(--grad);color:#fff}
+.chip:focus-visible,.sector:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.search{flex:1 1 100%;border:2px solid #EADBC6;border-radius:999px;padding:.6rem 1.1rem;font-size:.9rem;background:#fff;font-family:var(--round);margin-top:.3rem}
+.search:focus{outline:none;border-color:var(--purple)}
+.clear-btn{background:none;border:none;font-size:.82rem;font-weight:900;color:var(--orange);cursor:pointer;display:none;font-family:var(--round)}
 .clear-btn.show{display:inline}
 
-/* ── ログ一覧 ── */
-main{max-width:860px;margin:1.6rem auto 4rem;padding:0 1.2rem}
-.count{font-size:.78rem;color:var(--dim);margin-bottom:1rem;font-family:var(--mono)}
-article.log{background:var(--card);border:1px solid var(--line);border-radius:6px;
-  margin-bottom:1.6rem;overflow:hidden}
-.log-head{padding:1.15rem 1.4rem .9rem;border-bottom:1px solid var(--line);
-  border-left:4px solid var(--vermilion)}
-.log-date{font-family:var(--mono);font-size:.76rem;color:var(--dim);letter-spacing:.06em}
-.log-title{font-family:var(--serif);font-weight:600;font-size:1.22rem;letter-spacing:.04em;margin-top:.15rem;line-height:1.6}
-.log-tags{margin-top:.5rem;display:flex;gap:.4rem;flex-wrap:wrap}
-.tag{font-size:.7rem;padding:.1rem .6rem;border-radius:3px;letter-spacing:.05em}
-.tag.band{background:#E4EAF1;color:var(--indigo)}
-.tag.deity{background:#F3E4E0;color:var(--vermilion)}
-.tag.layer{color:#fff;font-family:var(--mono);font-weight:600}
-.tag.layer.l1{background:#2B5FD9}.tag.layer.l2{background:#D97F0E}.tag.layer.l3{background:#C43D4B}
+/* ログ */
+main{max-width:960px;margin:1.3rem auto 3rem;padding:0 1rem}
+.count{font-size:.8rem;color:var(--dim);margin-bottom:.9rem;font-family:var(--mono)}
+#list{display:grid;gap:1.1rem}
+@media(min-width:820px){#list{grid-template-columns:1fr 1fr}}
+article.log{background:#fff;border:1.5px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:0 8px 22px rgba(120,90,50,.1);display:flex;flex-direction:column}
+.log-head{position:relative;padding:1.1rem 1.25rem .95rem;color:#fff;background:
+  radial-gradient(circle at 85% 20%,rgba(255,255,255,.4) 0 1.5px,transparent 2px),
+  radial-gradient(circle at 70% 70%,rgba(255,255,255,.3) 0 1px,transparent 1.5px),
+  radial-gradient(circle at 92% 60%,rgba(255,255,255,.35) 0 1px,transparent 1.5px),
+  linear-gradient(140deg,#3B2A8C,#7A3A9E 70%,#C2553E)}
+.log-date{font-family:var(--mono);font-size:.76rem;opacity:.85}
+.log-title{font-weight:900;font-size:1.18rem;margin-top:.15rem;line-height:1.55}
+.log-tags{margin-top:.55rem;display:flex;gap:.35rem;flex-wrap:wrap}
+.tag{font-size:.72rem;font-weight:900;padding:.05rem .7rem;border-radius:999px}
+.tag.band{background:rgba(255,255,255,.92);color:var(--purple)}
+.tag.deity{background:#FFE08A;color:#5A3300}
+.tag.layer{color:#fff;font-family:'M PLUS Rounded 1c',sans-serif}
+.tag.layer.l1{background:#2E6BE6}.tag.layer.l2{background:#E58A12}.tag.layer.l3{background:#D94457}
 
-/* 定型表（まほろば式） */
 table.spec{width:100%;border-collapse:collapse;font-size:.86rem}
-table.spec th{width:8.5em;text-align:left;font-weight:500;color:var(--dim);
-  padding:.55rem 1.4rem;border-bottom:1px solid #E4E8EF;background:#F4F6FA;
-  letter-spacing:.06em;vertical-align:top;white-space:nowrap}
-table.spec td{padding:.55rem 1rem .55rem 0;border-bottom:1px solid #E4E8EF;vertical-align:top}
+table.spec th{width:7.5em;text-align:left;font-weight:900;color:var(--dim);padding:.5rem 1.25rem;border-bottom:1.5px dashed #F1E6D6;background:#FFF8EE;vertical-align:top;white-space:nowrap}
+table.spec td{padding:.5rem 1rem .5rem .6rem;border-bottom:1.5px dashed #F1E6D6;vertical-align:top}
 table.spec tr:last-child th,table.spec tr:last-child td{border-bottom:none}
 .v-num{font-family:var(--mono);font-size:.92em}
-.v-bearing{font-family:var(--mono);color:var(--indigo);font-weight:500}
-.v-deity{font-family:var(--serif);font-weight:600;letter-spacing:.06em}
-.todo{color:var(--vermilion);font-size:.8em;border:1px dashed var(--vermilion);
-  border-radius:3px;padding:0 .45em}
+.v-bearing{font-family:var(--mono);color:var(--purple);font-weight:600}
+.v-deity{font-weight:900}
+.todo{color:var(--red);font-size:.78em;font-weight:900;background:#FFECEE;border-radius:999px;padding:0 .6em}
 
-.log-body{padding:1rem 1.4rem 1.2rem;font-size:.9rem;color:#3B3F42}
-.log-body .memo-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--dim);display:block;margin-bottom:.25rem}
-.log-foot{padding: .75rem 1.4rem 1rem;display:flex;justify-content:flex-end}
-.note-link{font-size:.82rem;color:var(--indigo);text-decoration:none;
-  border-bottom:1px solid var(--indigo);padding-bottom:1px;letter-spacing:.04em}
-.note-link:hover{color:var(--vermilion);border-color:var(--vermilion)}
+.log-body{padding:1rem 1.25rem .6rem;font-size:.9rem;color:#3E3852;flex:1}
+.log-body .memo-label{display:inline-block;font-size:.72rem;font-weight:900;color:#fff;background:var(--orange);border-radius:999px;padding:0 .7rem;margin-bottom:.35rem}
+.log-foot{padding:.4rem 1.25rem 1.2rem}
+.note-link{display:block;text-align:center;font-size:.9rem;font-weight:900;color:#fff;text-decoration:none;background:var(--grad);border-radius:999px;padding:.65rem;box-shadow:0 6px 16px rgba(164,75,184,.3)}
 
-/* 写真・添付 */
-.r-photos{display:flex;gap:.5rem;flex-wrap:wrap;padding:.2rem 1.4rem .4rem}
+.r-photos{display:flex;gap:.5rem;flex-wrap:wrap;padding:.2rem 1.25rem .4rem}
 .r-photos figure{margin:0;width:110px}
-.r-photos img{width:110px;height:82px;object-fit:cover;border-radius:4px;
-  border:1px solid var(--line);cursor:pointer;display:block;transition:transform .15s}
+.r-photos img{width:110px;height:82px;object-fit:cover;border-radius:14px;cursor:pointer;display:block;transition:transform .15s}
 .r-photos img:hover{transform:scale(1.03)}
 .r-photos figcaption{font-size:.66rem;color:var(--dim);line-height:1.5;margin-top:.15rem}
-.r-files{display:flex;gap:.6rem;flex-wrap:wrap;padding:0 1.4rem .3rem}
-.r-file{font-size:.76rem;color:var(--indigo);text-decoration:none;
-  border:1px solid var(--line);border-radius:3px;padding:.14rem .65rem;background:#fff}
+.r-files{display:flex;gap:.6rem;flex-wrap:wrap;padding:0 1.25rem .3rem}
+.r-file{font-size:.78rem;font-weight:700;color:var(--purple);text-decoration:none;border:1.5px solid #E2D8FF;border-radius:999px;padding:.12rem .8rem;background:#F7F4FF}
 .r-file::before{content:"📄 "}
-.r-file:hover{border-color:var(--indigo)}
-.lightbox{position:fixed;inset:0;background:rgba(20,22,25,.93);display:none;
-  align-items:center;justify-content:center;flex-direction:column;gap:.7rem;z-index:50;padding:1rem;cursor:zoom-out}
+.lightbox{position:fixed;inset:0;background:rgba(18,14,46,.94);display:none;align-items:center;justify-content:center;flex-direction:column;gap:.7rem;z-index:60;padding:1rem;cursor:zoom-out}
 .lightbox.on{display:flex}
-.lightbox img{max-width:100%;max-height:80vh;border-radius:4px}
-.lb-cap{color:#C9CCC7;font-size:.8rem;text-align:center}
-.lb-x{color:#8A8F95;font-size:.7rem;font-family:var(--mono);letter-spacing:.2em}
-.empty{padding:3rem 1rem;text-align:center;color:var(--dim);font-size:.88rem}
-.empty b{font-family:var(--serif)}
+.lightbox img{max-width:100%;max-height:80vh;border-radius:14px}
+.lb-cap{color:#E2DCF8;font-size:.85rem;text-align:center}
+.lb-x{color:#9A92BA;font-size:.7rem;letter-spacing:.2em}
+.empty{padding:3rem 1rem;text-align:center;color:var(--dim);font-size:.9rem;background:#fff;border-radius:var(--r);border:1.5px dashed #EADBC6}
+.empty b{font-weight:900;color:var(--ink)}
 
-footer{background:var(--rock);padding:1.8rem 1.2rem 2.4rem;text-align:center;
-  font-size:.78rem;color:#7C87A0;margin-top:2rem}
-footer a{color:#AEB7C9}
-@media(max-width:560px){
-  table.spec th{width:7em;padding:.5rem .9rem}
-  .log-head,.log-body{padding-left:1rem;padding-right:1rem}
-  table.spec td{padding-right:.6rem}
-  .search{min-width:0;flex:1}
-}
+footer{background:var(--night);padding:1.8rem 1.2rem 2.2rem;text-align:center;font-size:.82rem;color:#B9B2D6;margin-top:2rem;border-radius:28px 28px 0 0}
+footer a{color:#E2DCF8;font-weight:700}
+
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:45;display:grid;grid-template-columns:repeat(5,1fr);
+  background:rgba(250,244,236,.96);backdrop-filter:blur(10px);border-top:1px solid #E8DCCB;padding:.35rem .2rem calc(.35rem + env(safe-area-inset-bottom))}
+nav.tabs a{text-decoration:none;text-align:center;font-size:.7rem;font-weight:900;color:var(--dim);line-height:1.3}
+nav.tabs a span{display:block;font-size:1.45rem}
+nav.tabs a.on{color:var(--purple)}
+.up{position:fixed;right:14px;bottom:calc(86px + env(safe-area-inset-bottom));z-index:44;width:52px;height:52px;border-radius:50%;
+  background:var(--grad);color:#fff;font-size:1.5rem;font-weight:900;display:grid;place-items:center;text-decoration:none;box-shadow:0 8px 20px rgba(140,60,180,.4)}
+@media(min-width:900px){body{padding-bottom:0}nav.tabs,.up{display:none}}
+@media(max-width:560px){table.spec th{width:6.5em;padding:.5rem .9rem}.log-head,.log-body{padding-left:1rem;padding-right:1rem}}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="h-inner">
-    <div class="h-eyebrow">IWATO LOG — SEISMIC / DIRECTIONAL ARCHIVE</div>
-    <h1>岩戸ログ<span class="sub">地震と方位の記録</span></h1>
-    <p class="h-desc">天城（34.920°N / 139.018°E）を原点とする16方位モデルで震源方位を記録する観測ログ。
-    <b>L1＝計算・記録</b>／<b>L2＝観測パターン</b>／<b>L3＝仮説</b> の三層を厳密に区別して記述する。</p>
+<nav class="nav" id="top">
+  <div class="nav-in">
+    <div class="logo" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M20 5 L23 20 L20 35 L17 20 Z" fill="#FFE08A"/><path d="M5 20 L20 17 L35 20 L20 23 Z" fill="#fff" opacity=".85"/></svg></div>
+    <a class="brand" href="index.html"><span>情報の岩戸開き</span><b>岩戸ログ</b></a>
+    <a class="hbtn" href="index.html">🏡 トップへ</a>
   </div>
-</header>
+</nav>
 
-<div class="dial-wrap">
-  <div class="h-inner dial-flex">
-    <div class="dial-box">
-      <svg class="dial" viewBox="0 0 320 320" role="group" aria-label="16方位フィルタ盤" id="dial"></svg>
-    </div>
-    <div class="dial-legend">
-      <p><span class="k">方位盤</span>の各扇をタップすると、その方位帯のログだけを表示します。</p>
-      <p>明るい扇＝ログのある方位帯。<span class="k" style="color:#E0866F">朱</span>＝選択中。もう一度タップで解除。</p>
+<div class="hero">
+  <div class="sky" aria-hidden="true"></div>
+  <svg id="stars" aria-hidden="true" preserveAspectRatio="none"></svg>
+  <div class="hero-in">
+    <div class="pill"><span>SEISMIC</span>地震と方位の記録</div>
+    <h1>地震ログ<em>震源は、<br>どの方位から。</em></h1>
+    <p class="h-desc">天城（34.920°N / 139.018°E）を原点とする16方位モデルで震源方位を記録する観測ログ。三層を厳密に区別して記述する。</p>
+    <div class="layers"><span style="background:#2E6BE6">L1＝計算・記録</span><span style="background:#E58A12">L2＝観測パターン</span><span style="background:#D94457">L3＝仮説</span></div>
+    <div class="dial-flex">
+      <div class="dial-box">
+        <svg class="dial" viewBox="0 0 320 320" role="group" aria-label="16方位フィルタ盤" id="dial"></svg>
+      </div>
+      <div class="dial-legend">
+        <p>🧭 <span class="k">方位盤</span>の扇をタップすると、その方位帯のログだけを表示します。</p>
+        <p>紫の扇＝ログのある方位帯。<span class="k" style="color:#FFB25A">オレンジ</span>＝選択中。もう一度タップで解除。</p>
+      </div>
     </div>
   </div>
 </div>
@@ -165,11 +181,11 @@ footer a{color:#AEB7C9}
 <div class="filters" id="deityFilters">
   <span class="f-label">神別：</span>
   <!-- 神チップはJSが生成 -->
-  <input class="search" id="q" type="search" placeholder="検索（震源・語句）" aria-label="ログを検索">
-  <button class="clear-btn" id="clearBtn">絞り込み解除</button>
+  <input class="search" id="q" type="search" placeholder="🔍 検索（震源・語句）" aria-label="ログを検索">
+  <button class="clear-btn" id="clearBtn">× 絞り込み解除</button>
 </div>
 
-<main>
+<main id="logs">
   <div class="count" id="count"></div>
   <div id="list"></div>
 </main>
@@ -182,12 +198,31 @@ footer a{color:#AEB7C9}
 
 <footer>
   岩戸ログ｜<a href="https://note.com/tokko_geo" target="_blank" rel="noopener">note（tokko_geo）</a>｜
-  <a href="../">tokko トップへ戻る</a>
+  <a href="index.html">岩戸ログ トップへ戻る</a>
 </footer>
+
+<a class="up" href="#top" aria-label="上へ">↑</a>
+<nav class="tabs">
+  <a href="index.html"><span>🏡</span>ホーム</a>
+  <a href="index.html#worldmap"><span>🗺️</span>地図</a>
+  <a href="index.html#cats"><span>📚</span>研究</a>
+  <a class="on" href="#top"><span>🌋</span>地震</a>
+  <a href="index.html#field"><span>🥾</span>調査</a>
+</nav>
 
 <script src="data.js"></script>
 <script>
 /* ログデータは data.js（共有データファイル）で管理する */
+
+/* ── 星空 ── */
+(function(){
+  let s="";
+  for(let i=0;i<70;i++){
+    const x=Math.random()*100, y=Math.random()*100, r=Math.random()*1.2+.3, o=(Math.random()*.6+.3).toFixed(2);
+    s+=`<circle cx="${x}%" cy="${y}%" r="${r}" fill="#fff" opacity="${o}"><animate attributeName="opacity" values="${o};.12;${o}" dur="${(Math.random()*4+3).toFixed(1)}s" repeatCount="indefinite"/></circle>`;
+  }
+  document.getElementById("stars").innerHTML=s;
+})();
 
 /* ── 16方位 ── */
 const DIRS = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
@@ -211,7 +246,7 @@ const state = { band:null, deity:null, q:"" };
     const [lx,ly]=p(rl,am);
     out += `<text class="dir-label" data-band="${d}" x="${lx}" y="${ly+4}">${d}</text>`;
   });
-  out += `<circle cx="${cx}" cy="${cy}" r="${r1-8}" fill="#0A101D" />`;
+  out += `<circle cx="${cx}" cy="${cy}" r="${r1-8}" fill="#171236" stroke="#E9B949" stroke-width="1.5" />`;
   out += `<text class="dial-center" x="${cx}" y="${cy+2}">天城</text>`;
   out += `<text class="dial-center-sub" x="${cx}" y="${cy+20}">34.920N 139.018E</text>`;
   svg.innerHTML = out;
