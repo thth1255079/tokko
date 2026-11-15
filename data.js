@@ -7,22 +7,22 @@
 /* ── 研究カテゴリ ──
    photo: img/ 内のタイル写真。無ければSVGの意匠が表示される */
 const CATS = [
-  { id:"tsuki", name:"月研究", photo:"img/cat-tsuki.jpg",
-    desc:"月メジャースタンドスティル・月暦・月読命・環状列石" },
-  { id:"shio",  name:"海民研究", photo:"img/cat-shio.jpg",
-    desc:"塩ハイウェイ・布良・黒潮ネットワーク・海人族" },
-  { id:"fuin",  name:"封印構造研究", photo:"img/cat-fuin.jpg",
-    desc:"月読命封印・地名封印・禁足地・龍形地形研究" },
-  { id:"world", name:"世界岩戸研究", photo:"img/cat-world.jpg",
-    desc:"サグラダ・ストーンヘンジ・ソロヴェツキー・世界聖地の岩戸構造" },
+  { id:"tsuki", name:"月のなぞ", photo:"img/cat-tsuki.jpg",
+    desc:"18.6年ごとに大きく動く月の通り道と、ストーンサークル・月の神様（ツクヨミ）の関係を調べています" },
+  { id:"shio",  name:"海の民", photo:"img/cat-shio.jpg",
+    desc:"海を渡って塩や物を運んだ人たち。黒潮に乗った海の道と、房総の布良（めら）などの土地をたどります" },
+  { id:"fuin",  name:"封じられた場所", photo:"img/cat-fuin.jpg",
+    desc:"入ってはいけない森、名前を変えられた土地、龍の形をした地形など、何かを「封じた」跡を探します" },
+  { id:"world", name:"世界の岩戸", photo:"img/cat-world.jpg",
+    desc:"ストーンヘンジ、サグラダ・ファミリア、ロシアのソロヴェツキー諸島など、世界の聖地を天城山からの方角でたどります" },
   { id:"iwato", name:"地震ログ", photo:"img/cat-iwato.jpg", href:"iwato-log.html",
-    desc:"天城16方位モデルによる地震と神格の対応分析" },
+    desc:"地震が起きた方角と、その方角にまつられた神様を記録しています" },
   { id:"field", name:"現地調査ログ", photo:"img/cat-field.jpg",
-    desc:"現地調査・実測・写真・考察を時系列で記録" },
+    desc:"実際に現地へ行って、測ったこと・撮った写真・気づいたことを日付順に記録しています" },
   { id:"chiba", name:"千葉という場所", photo:"img/cat-chiba.jpg",
-    desc:"貝塚・麻賀多十八社・印旛沼・地名語源" },
-  { id:"kami",  name:"隠蔽された神々", photo:"img/cat-kami.jpg",
-    desc:"記紀が消した神々——ツクヨミ・フツヌシ・アマツミカボシ" },
+    desc:"貝塚、麻賀多（まかた）神社の18社、印旛沼、地名の由来など、千葉の昔を掘り起こします" },
+  { id:"kami",  name:"消された神々", photo:"img/cat-kami.jpg",
+    desc:"古事記・日本書紀であまり語られなかった神様たち。ツクヨミ、フツヌシ、アマツミカボシなど" },
 ];
 
 /* ── 活動報告・研究記録 ──
