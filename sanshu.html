@@ -7,17 +7,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
-.tri-map{height:380px;border-radius:12px;overflow:hidden;border:1px solid #1e3a5f;background:#0d1829}
-.leaflet-tooltip.tri-tip{background:#111827;color:#f1f5f9;border:1px solid #334155;font-size:11px;font-weight:bold}
+.tri-map{height:380px;border-radius:20px;overflow:hidden;border:1.5px solid #F0E4D2;background:#F3EFE6;box-shadow:0 6px 18px rgba(120,90,50,.1)}
+.leaflet-tooltip.tri-tip{background:#fff;color:#2A2140;border:1.5px solid #EADBC6;border-radius:999px;font-size:11px;font-weight:900;font-family:inherit}
 .leaflet-tooltip.tri-tip:before{display:none}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:sans-serif;background:#080e1d;color:#e2e8f0;min-height:100vh}
+body{font-family:'Zen Maru Gothic','M PLUS Rounded 1c','Hiragino Maru Gothic ProN',sans-serif;font-weight:500;background:#FFF8EE;color:#2A2140;min-height:100vh}
 a{color:inherit}
 input,button{font-family:inherit}
-#loading{display:flex;align-items:center;justify-content:center;height:100vh;color:#475569;font-size:13px}
+#loading{display:flex;align-items:center;justify-content:center;height:100vh;color:#8A82A0;font-size:13px}
 </style>
 </head>
 <body>
@@ -307,12 +308,12 @@ const BARRIERS=[
 const ALL=[...FIXED,...SV,...MOUNTAINS,...SHRINES,...KOFUN,...RUINS,...RIVERS,...LAKES,...BARRIERS];
 
 const CATS=[
-  {key:"聖地",label:"⛩ 聖地",  color:"#fbbf24"},
-  {key:"SV",  label:"🏛 SV",   color:"#60a5fa"},
-  {key:"山",  label:"🗻 山",   color:"#4ade80"},
+  {key:"聖地",label:"⛩ 聖地",  color:"#B8650A"},
+  {key:"SV",  label:"🏛 SV",   color:"#2E6BE6"},
+  {key:"山",  label:"🗻 山",   color:"#2E9A5A"},
   {key:"神社",label:"⛩ 神社", color:"#fb923c"},
   {key:"古墳",label:"🏔 古墳", color:"#c084fc"},
-  {key:"遺跡",label:"🪨 遺跡", color:"#94a3b8"},
+  {key:"遺跡",label:"🪨 遺跡", color:"#6E6682"},
   {key:"川",  label:"🌊 川",   color:"#38bdf8"},
   {key:"湖",  label:"💧 湖",   color:"#818cf8"},
   {key:"関",  label:"🚧 関",   color:"#f43f5e"},
@@ -328,7 +329,7 @@ const ctr=pts=>{const s=pts.map(([a,b])=>{const f=a*DEG,l=b*DEG;return[Math.cos(
 const d16=d=>{const D=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"],i=Math.round(d/22.5)%16;let e=Math.abs(d-i*22.5);if(e>180)e=360-e;return{dir:D[i],err:e};};
 
 const SYMS=["勾玉","鏡","剣"];
-const SS={"勾玉":{bg:"#4ade80",txt:"#14532d",em:"🌿"},"鏡":{bg:"#60a5fa",txt:"#1e3a5f",em:"🔵"},"剣":{bg:"#f87171",txt:"#7f1d1d",em:"⚔️"}};
+const SS={"勾玉":{bg:"#4ade80",txt:"#14532d",em:"🌿"},"鏡":{bg:"#60a5fa",txt:"#EADBC6",em:"🔵"},"剣":{bg:"#f87171",txt:"#7f1d1d",em:"⚔️"}};
 
 // ── 三角形マップ ──
 function TriMap({result}){
@@ -337,21 +338,21 @@ function TriMap({result}){
     if(!window.L||!ref.current)return;
     if(!mapRef.current){
       mapRef.current=L.map(ref.current,{scrollWheelZoom:false});
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
         {attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',subdomains:"abcd",maxZoom:19}).addTo(mapRef.current);
     }
     const m=mapRef.current;
     if(layerRef.current)layerRef.current.remove();
     const g=L.layerGroup().addTo(m); layerRef.current=g;
     const ll=result.pts.map(p=>[p.lat,p.lon]);
-    L.polygon(ll,{color:"#fbbf24",weight:2,fillColor:"#fbbf24",fillOpacity:.08}).addTo(g);
-    ll.forEach(p=>L.polyline([p,[result.c.lat,result.c.lon]],{color:"#fbbf24",weight:1,opacity:.5,dashArray:"4 6"}).addTo(g));
+    L.polygon(ll,{color:"#E58A12",weight:2.5,fillColor:"#FFB25A",fillOpacity:.15}).addTo(g);
+    ll.forEach(p=>L.polyline([p,[result.c.lat,result.c.lon]],{color:"#B8650A",weight:1,opacity:.5,dashArray:"4 6"}).addTo(g));
     result.pts.forEach((p,i)=>{
       const st=SS[SYMS[i]];
       L.circleMarker([p.lat,p.lon],{radius:8,color:"#fff",weight:2,fillColor:st.bg,fillOpacity:1}).addTo(g)
         .bindTooltip(`${st.em} ${SYMS[i]}`,{permanent:true,direction:p.lat<result.c.lat?"bottom":"top",offset:[0,p.lat<result.c.lat?8:-8],className:"tri-tip"}).bindPopup(`<b>${SYMS[i]}</b><br>${p.name}`);
     });
-    L.circleMarker([result.c.lat,result.c.lon],{radius:10,color:"#fbbf24",weight:3,fillColor:"#080e1d",fillOpacity:1}).addTo(g)
+    L.circleMarker([result.c.lat,result.c.lon],{radius:10,color:"#B8650A",weight:3,fillColor:"#fff",fillOpacity:1}).addTo(g)
       .bindTooltip("★ 真ん中",{permanent:true,direction:"right",offset:[10,0],className:"tri-tip"});
     m.fitBounds(L.latLngBounds(ll).pad(0.25));
     setTimeout(()=>m.invalidateSize(),50);
@@ -397,12 +398,12 @@ function App(){
   const pick=(sym,id)=>{setSlots(p=>({...p,[sym]:id}));setActive(null);setQ("");};
 
   return(
-    <div style={{fontFamily:"sans-serif",background:"#080e1d",color:"#e2e8f0",minHeight:"100vh",padding:14}}>
+    <div style={{fontFamily:"'Zen Maru Gothic','M PLUS Rounded 1c','Hiragino Maru Gothic ProN',sans-serif",fontWeight:500,background:"#FFF8EE",color:"#2A2140",minHeight:"100vh",padding:14}}>
       <div style={{maxWidth:940,margin:"0 auto"}}>
 
         <div style={{textAlign:"center",marginBottom:16}}>
-          <h1 style={{fontSize:18,color:"#fbbf24",margin:0,letterSpacing:2}}>⛩ 三種の神器 三角形計算器 v4</h1>
-          <p style={{fontSize:11,color:"#475569",margin:"4px 0 0"}}>SV・山・川・湖・関・峠・岬・古墳・神社・遺跡（307件）× 神話情報付き</p>
+          <h1 style={{fontSize:21,fontWeight:900,margin:0,letterSpacing:1,background:"linear-gradient(100deg,#5B3FD0,#A44BB8 50%,#F0703A)",WebkitBackgroundClip:"text",backgroundClip:"text",color:"transparent"}}>⛩ 三種の神器 三角形計算器 v4</h1>
+          <p style={{fontSize:11,color:"#8A82A0",margin:"4px 0 0"}}>SV・山・川・湖・関・峠・岬・古墳・神社・遺跡（307件）× 神話情報付き</p>
         </div>
 
         {/* スロット */}
@@ -411,12 +412,12 @@ function App(){
             const site=get(slots[sym]),s=SS[sym],open=active===sym;
             return(
               <div key={sym} onClick={()=>{setActive(open?null:sym);setQ("");}}
-                style={{background:open?"#1a2744":"#111827",border:`2px solid ${s.bg}`,borderRadius:10,padding:"10px 12px",cursor:"pointer"}}>
-                <div style={{fontSize:11,color:s.bg,fontWeight:"bold",marginBottom:2}}>{s.em} {sym}</div>
-                <div style={{fontSize:13,color:"#f1f5f9",fontWeight:"bold",lineHeight:1.3}}>{site?site.name:"—"}</div>
-                {site&&<div style={{fontSize:10,color:"#475569",marginTop:2}}>{site.lat.toFixed(3)}N {site.lon.toFixed(3)}E</div>}
-                {site?.myth&&<div style={{fontSize:9,color:"#64748b",marginTop:3,lineHeight:1.4}}>{site.myth.slice(0,45)}…</div>}
-                <div style={{fontSize:9,color:"#334155",marginTop:3}}>{open?"▲ 閉じる":"▼ 変更"}</div>
+                style={{background:open?"#F1ECFF":"#fff",border:`2px solid ${s.bg}`,borderRadius:18,padding:"10px 12px",cursor:"pointer"}}>
+                <div style={{fontSize:11,color:s.bg,fontWeight:900,marginBottom:2}}>{s.em} {sym}</div>
+                <div style={{fontSize:13,color:"#2A2140",fontWeight:900,lineHeight:1.3}}>{site?site.name:"—"}</div>
+                {site&&<div style={{fontSize:10,color:"#8A82A0",marginTop:2}}>{site.lat.toFixed(3)}N {site.lon.toFixed(3)}E</div>}
+                {site?.myth&&<div style={{fontSize:9,color:"#6E6682",marginTop:3,lineHeight:1.4}}>{site.myth.slice(0,45)}…</div>}
+                <div style={{fontSize:9,color:"#E2D8FF",marginTop:3}}>{open?"▲ 閉じる":"▼ 変更"}</div>
               </div>
             );
           })}
@@ -424,20 +425,20 @@ function App(){
 
         {/* 選択パネル */}
         {active&&(
-          <div style={{background:"#0d1829",border:"1px solid #1e3a5f",borderRadius:12,padding:14,marginBottom:16}}>
+          <div style={{background:"#FFFDF8",border:"1.5px solid #F0E4D2",borderRadius:20,padding:14,marginBottom:16}}>
             <div style={{display:"flex",gap:8,marginBottom:10,alignItems:"center"}}>
-              <span style={{color:SS[active].bg,fontWeight:"bold",fontSize:12}}>{SS[active].em} {active}</span>
+              <span style={{color:SS[active].bg,fontWeight:900,fontSize:12}}>{SS[active].em} {active}</span>
               <input value={q} onChange={e=>setQ(e.target.value)}
                 placeholder="名前・神話・都道府県・[記紀][岩戸]で横断検索…"
-                style={{flex:1,background:"#1e293b",border:"1px solid #334155",borderRadius:6,padding:"5px 10px",color:"#e2e8f0",fontSize:12,outline:"none"}}/>
-              {q&&<button onClick={()=>setQ("")} style={{background:"none",border:"none",color:"#64748b",cursor:"pointer",fontSize:14}}>✕</button>}
+                style={{flex:1,background:"#fff",border:"1.5px solid #E2D8FF",borderRadius:6,padding:"5px 10px",color:"#2A2140",fontSize:12,outline:"none"}}/>
+              {q&&<button onClick={()=>setQ("")} style={{background:"none",border:"none",color:"#6E6682",cursor:"pointer",fontSize:14}}>✕</button>}
             </div>
             {!q&&(
               <div style={{display:"flex",gap:4,marginBottom:10,flexWrap:"wrap"}}>
                 {CATS.map(c=>(
                   <button key={c.key} onClick={()=>setTab(c.key)}
-                    style={{background:tab===c.key?c.color:"#1e293b",color:tab===c.key?"#080e1d":"#94a3b8",
-                      border:`1px solid ${tab===c.key?c.color:"#334155"}`,borderRadius:5,padding:"3px 8px",fontSize:10,cursor:"pointer",fontWeight:tab===c.key?"bold":"normal"}}>
+                    style={{background:tab===c.key?c.color:"#F6F1FF",color:tab===c.key?"#2A2140":"#6E6682",
+                      border:`1.5px solid ${tab===c.key?c.color:"#E2D8FF"}`,borderRadius:5,padding:"3px 8px",fontSize:10,cursor:"pointer",fontWeight:tab===c.key?"bold":"normal"}}>
                     {c.label}
                   </button>
                 ))}
@@ -448,23 +449,23 @@ function App(){
                 <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
                   {filtered.map(s=>(
                     <button key={s.id} onClick={()=>pick(active,s.id)}
-                      style={{background:slots[active]===s.id?"#fbbf24":"#1e293b",color:slots[active]===s.id?"#080e1d":"#e2e8f0",
-                        border:"1px solid #334155",borderRadius:6,padding:"4px 9px",fontSize:11,cursor:"pointer",textAlign:"left",maxWidth:220}}>
-                      <div style={{fontWeight:"bold"}}><span style={{fontSize:9,color:"#64748b",marginRight:3}}>{s.cat}</span>{s.name}</div>
-                      {s.myth&&<div style={{fontSize:9,color:"#475569",marginTop:1}}>{s.myth.slice(0,40)}…</div>}
+                      style={{background:slots[active]===s.id?"#FFD36B":"#F6F1FF",color:slots[active]===s.id?"#2A2140":"#2A2140",
+                        border:"1.5px solid #E2D8FF",borderRadius:6,padding:"4px 9px",fontSize:11,cursor:"pointer",textAlign:"left",maxWidth:220}}>
+                      <div style={{fontWeight:900}}><span style={{fontSize:9,color:"#6E6682",marginRight:3}}>{s.cat}</span>{s.name}</div>
+                      {s.myth&&<div style={{fontSize:9,color:"#8A82A0",marginTop:1}}>{s.myth.slice(0,40)}…</div>}
                     </button>
                   ))}
-                  {!filtered.length&&<div style={{color:"#475569",fontSize:12}}>該当なし</div>}
+                  {!filtered.length&&<div style={{color:"#8A82A0",fontSize:12}}>該当なし</div>}
                 </div>
               ):tab==="SV"&&prefGroups?(
                 Object.entries(prefGroups).map(([pref,cs])=>(
                   <div key={pref} style={{marginBottom:8}}>
-                    <div style={{fontSize:10,color:"#475569",marginBottom:3}}>{pref}</div>
+                    <div style={{fontSize:10,color:"#8A82A0",marginBottom:3}}>{pref}</div>
                     <div style={{display:"flex",flexWrap:"wrap",gap:4}}>
                       {cs.map(s=>(
                         <button key={s.id} onClick={()=>pick(active,s.id)}
-                          style={{background:slots[active]===s.id?"#60a5fa":"#1a2744",color:slots[active]===s.id?"#080e1d":"#bfdbfe",
-                            border:"1px solid #1e3a5f",borderRadius:5,padding:"3px 8px",fontSize:11,cursor:"pointer"}}>
+                          style={{background:slots[active]===s.id?"#60a5fa":"#F1ECFF",color:slots[active]===s.id?"#2A2140":"#3B5BB5",
+                            border:"1.5px solid #F0E4D2",borderRadius:5,padding:"3px 8px",fontSize:11,cursor:"pointer"}}>
                           {s.name.replace(/SV$|SVセンター$/,"")}
                         </button>
                       ))}
@@ -475,10 +476,10 @@ function App(){
                 <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
                   {filtered.map(s=>(
                     <button key={s.id} onClick={()=>pick(active,s.id)}
-                      style={{background:slots[active]===s.id?"#fbbf24":"#1e293b",color:slots[active]===s.id?"#080e1d":"#e2e8f0",
-                        border:"1px solid #334155",borderRadius:6,padding:"4px 9px",fontSize:11,cursor:"pointer",textAlign:"left",maxWidth:220}}>
-                      <div style={{fontWeight:"bold"}}>{s.name}</div>
-                      {s.myth&&<div style={{fontSize:9,color:"#64748b",marginTop:1}}>{s.myth.slice(0,40)}…</div>}
+                      style={{background:slots[active]===s.id?"#FFD36B":"#F6F1FF",color:slots[active]===s.id?"#2A2140":"#2A2140",
+                        border:"1.5px solid #E2D8FF",borderRadius:6,padding:"4px 9px",fontSize:11,cursor:"pointer",textAlign:"left",maxWidth:220}}>
+                      <div style={{fontWeight:900}}>{s.name}</div>
+                      {s.myth&&<div style={{fontSize:9,color:"#6E6682",marginTop:1}}>{s.myth.slice(0,40)}…</div>}
                     </button>
                   ))}
                 </div>
@@ -490,61 +491,61 @@ function App(){
         {/* 結果 */}
         {result&&(
           <div style={{display:"grid",gap:12}}>
-            <div style={{background:"#111827",border:"2px solid #fbbf24",borderRadius:12,padding:16}}>
-              <div style={{fontSize:11,color:"#fbbf24",fontWeight:"bold",marginBottom:6}}>★ 三角形の重心</div>
-              <div style={{fontSize:22,fontWeight:"bold",color:"#f1f5f9"}}>{result.c.lat.toFixed(4)}°N / {result.c.lon.toFixed(4)}°E</div>
+            <div style={{background:"#fff",border:"2.5px solid #FFB25A",boxShadow:"0 8px 22px rgba(240,112,58,.15)",borderRadius:20,padding:16}}>
+              <div style={{fontSize:11,color:"#B8650A",fontWeight:900,marginBottom:6}}>★ 三角形の重心</div>
+              <div style={{fontSize:22,fontWeight:900,color:"#2A2140"}}>{result.c.lat.toFixed(4)}°N / {result.c.lon.toFixed(4)}°E</div>
               {result.fa&&(
                 <div style={{marginTop:6,fontSize:12}}>
-                  <span style={{color:"#64748b"}}>天城→重心: </span>
-                  <span style={{color:"#fbbf24",fontWeight:"bold"}}>{result.fa.b.toFixed(1)}°（{result.fa.dir}、誤差{result.fa.err.toFixed(1)}°）</span>
-                  <span style={{color:"#64748b",marginLeft:6}}>{result.fa.d.toFixed(0)}km</span>
+                  <span style={{color:"#6E6682"}}>天城→重心: </span>
+                  <span style={{color:"#B8650A",fontWeight:900}}>{result.fa.b.toFixed(1)}°（{result.fa.dir}、誤差{result.fa.err.toFixed(1)}°）</span>
+                  <span style={{color:"#6E6682",marginLeft:6}}>{result.fa.d.toFixed(0)}km</span>
                 </div>
               )}
               <div style={{marginTop:10,display:"flex",gap:8,flexWrap:"wrap"}}>
                 <a href={`https://maps.gsi.go.jp/#12/${result.c.lat.toFixed(4)}/${result.c.lon.toFixed(4)}`} target="_blank" rel="noopener"
-                  style={{fontSize:11,color:"#60a5fa",background:"#080e1d",padding:"4px 12px",borderRadius:5,textDecoration:"none"}}>🗾 地理院地図</a>
+                  style={{fontSize:11,color:"#2E6BE6",background:"#FFF8EE",padding:"4px 12px",borderRadius:5,textDecoration:"none"}}>🗾 地理院地図</a>
                 <a href={`https://www.google.com/maps/@${result.c.lat.toFixed(4)},${result.c.lon.toFixed(4)},11z`} target="_blank" rel="noopener"
-                  style={{fontSize:11,color:"#4ade80",background:"#080e1d",padding:"4px 12px",borderRadius:5,textDecoration:"none"}}>📍 Googleマップ</a>
+                  style={{fontSize:11,color:"#2E9A5A",background:"#FFF8EE",padding:"4px 12px",borderRadius:5,textDecoration:"none"}}>📍 Googleマップ</a>
               </div>
             </div>
 
             <TriMap result={result}/>
 
-            <div style={{background:"#111827",border:"1px solid #1e3a5f",borderRadius:12,padding:14}}>
-              <div style={{fontSize:11,color:"#64748b",marginBottom:8,fontWeight:"bold"}}>各頂点 → 重心</div>
+            <div style={{background:"#fff",border:"1.5px solid #F0E4D2",borderRadius:20,padding:14}}>
+              <div style={{fontSize:11,color:"#6E6682",marginBottom:8,fontWeight:900}}>各頂点 → 重心</div>
               {result.toC.map((t,i)=>{
                 const s=SS[t.sym];
                 return(
-                  <div key={i} style={{padding:"6px 0",borderBottom:"1px solid #080e1d"}}>
+                  <div key={i} style={{padding:"6px 0",borderBottom:"1.5px dashed #F1E6D6"}}>
                     <div style={{display:"flex",alignItems:"center",gap:8}}>
-                      <span style={{background:s.bg,color:s.txt,borderRadius:4,padding:"2px 6px",fontSize:10,fontWeight:"bold",whiteSpace:"nowrap"}}>{s.em}{t.sym}</span>
-                      <span style={{fontSize:12,color:"#cbd5e1",flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{t.name}</span>
-                      <span style={{fontSize:12,color:"#fbbf24",fontWeight:"bold",whiteSpace:"nowrap"}}>{t.b.toFixed(1)}°</span>
-                      <span style={{fontSize:11,color:"#60a5fa",whiteSpace:"nowrap"}}>({t.dir}±{t.err.toFixed(1)}°)</span>
-                      <span style={{fontSize:11,color:"#475569",whiteSpace:"nowrap"}}>{t.d.toFixed(0)}km</span>
+                      <span style={{background:s.bg,color:s.txt,borderRadius:4,padding:"2px 6px",fontSize:10,fontWeight:900,whiteSpace:"nowrap"}}>{s.em}{t.sym}</span>
+                      <span style={{fontSize:12,color:"#3E3852",flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{t.name}</span>
+                      <span style={{fontSize:12,color:"#B8650A",fontWeight:900,whiteSpace:"nowrap"}}>{t.b.toFixed(1)}°</span>
+                      <span style={{fontSize:11,color:"#2E6BE6",whiteSpace:"nowrap"}}>({t.dir}±{t.err.toFixed(1)}°)</span>
+                      <span style={{fontSize:11,color:"#8A82A0",whiteSpace:"nowrap"}}>{t.d.toFixed(0)}km</span>
                     </div>
-                    {t.myth&&<div style={{fontSize:9,color:"#475569",marginTop:3,marginLeft:8,paddingLeft:8,borderLeft:"2px solid #1e3a5f"}}>{t.myth.slice(0,70)}…</div>}
+                    {t.myth&&<div style={{fontSize:9,color:"#8A82A0",marginTop:3,marginLeft:8,paddingLeft:8,borderLeft:"2px solid #F0E4D2"}}>{t.myth.slice(0,70)}…</div>}
                   </div>
                 );
               })}
             </div>
 
-            <div style={{background:"#111827",border:"1px solid #1e3a5f",borderRadius:12,padding:14}}>
-              <div style={{fontSize:11,color:"#64748b",marginBottom:8,fontWeight:"bold"}}>辺の方位・距離</div>
+            <div style={{background:"#fff",border:"1.5px solid #F0E4D2",borderRadius:20,padding:14}}>
+              <div style={{fontSize:11,color:"#6E6682",marginBottom:8,fontWeight:900}}>辺の方位・距離</div>
               {result.edges.map((e,i)=>(
-                <div key={i} style={{display:"flex",justifyContent:"space-between",padding:"4px 0",borderBottom:"1px solid #080e1d",fontSize:12}}>
-                  <span style={{color:"#94a3b8",flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{e.from.replace(/SV$|SVセンター$/,"")} → {e.to.replace(/SV$|SVセンター$/,"")}</span>
-                  <span style={{color:"#fbbf24",whiteSpace:"nowrap",marginLeft:8}}>{e.b.toFixed(1)}° / {e.d.toFixed(0)}km</span>
+                <div key={i} style={{display:"flex",justifyContent:"space-between",padding:"4px 0",borderBottom:"1.5px dashed #F1E6D6",fontSize:12}}>
+                  <span style={{color:"#6E6682",flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{e.from.replace(/SV$|SVセンター$/,"")} → {e.to.replace(/SV$|SVセンター$/,"")}</span>
+                  <span style={{color:"#B8650A",whiteSpace:"nowrap",marginLeft:8}}>{e.b.toFixed(1)}° / {e.d.toFixed(0)}km</span>
                 </div>
               ))}
             </div>
 
             {result.fa&&(
-              <div style={{background:"#080e1d",border:"1px solid #1e293b",borderRadius:10,padding:12}}>
-                <div style={{fontSize:11,color:"#475569",marginBottom:6}}>天城岩戸ログ 方位照合</div>
+              <div style={{background:"#FFF8EE",border:"1.5px solid #F0E4D2",borderRadius:18,padding:12}}>
+                <div style={{fontSize:11,color:"#8A82A0",marginBottom:6}}>天城岩戸ログ 方位照合</div>
                 {[{n:"ストーンヘンジ",b:336.7},{n:"富士山・宮下文書高天原",b:331.8},{n:"戸隠山（NNW 誤差0.4°）",b:337.9},{n:"籠神社（天火明命元宮）",b:286.0},{n:"今回の重心",b:result.fa.b,hi:true}]
                   .map(r=>(
-                    <div key={r.n} style={{display:"flex",justifyContent:"space-between",fontSize:11,color:r.hi?"#fbbf24":"#475569",fontWeight:r.hi?"bold":"normal",padding:"2px 0"}}>
+                    <div key={r.n} style={{display:"flex",justifyContent:"space-between",fontSize:11,color:r.hi?"#B8650A":"#8A82A0",fontWeight:r.hi?"bold":"normal",padding:"2px 0"}}>
                       <span>{r.n}</span><span>{r.b.toFixed(1)}°</span>
                     </div>
                   ))}
@@ -552,7 +553,7 @@ function App(){
             )}
           </div>
         )}
-        <div style={{fontSize:9,color:"#1e293b",textAlign:"center",marginTop:16}}>大円航路初期方位角・球面重心 / 天城岩戸ログ連動 v4</div>
+        <div style={{fontSize:9,color:"#A79FBF",textAlign:"center",marginTop:16}}>大円航路初期方位角・球面重心 / 天城岩戸ログ連動 v4</div>
       </div>
     </div>
   );
