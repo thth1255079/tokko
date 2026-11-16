@@ -355,7 +355,7 @@ nav.tabs a.on{color:var(--purple)}
     <div class="panel" id="japanmap">
       <div class="panel-h">🗾 日本地図<span class="en">国内研究</span></div>
       <div class="map" id="mapJapan"></div>
-      <div class="panel-b" style="padding-top:.7rem">日本各地の神社や遺跡が、天城山から見てどの方角にあるかを地図にしました。</div>
+      <div class="panel-b" style="padding-top:.7rem">日本各地の神社や遺跡が、天城山から見てどの方角にあるかを地図にしました。オレンジの点線は「はじまり」の三種の神器の三角形です。</div>
     </div>
     <div class="panel">
       <div class="panel-h">✨ 最近の更新<span class="en">UPDATES</span></div>
@@ -510,6 +510,12 @@ try{(function buildMaps(){
   const mj=miniMap("mapJapan",[37.6,137.8],4);
   MAP_SITES.filter(s=>s.type==="jp").forEach(s=>mark(mj,s,"#6FA8E8"));
   mark(mj,MAP_SITES[0],"#C9A227");
+  /* 三種の神器の三角形（はじまり） */
+  const tri=[[34.920,139.018],[43.5025,144.4242],[32.750,130.293]];
+  const v=tri.map(([a,b])=>{const f=a*Math.PI/180,l=b*Math.PI/180;return[Math.cos(f)*Math.cos(l),Math.cos(f)*Math.sin(l),Math.sin(f)];}).reduce((s,x)=>s.map((y,i)=>y+x[i]),[0,0,0]);
+  const cg=[Math.atan2(v[2],Math.hypot(v[0],v[1]))*180/Math.PI,Math.atan2(v[1],v[0])*180/Math.PI];
+  L.polygon(tri,{color:"#F0703A",weight:1.6,fillColor:"#F0703A",fillOpacity:.08,dashArray:"5 5"}).addTo(mj);
+  L.circleMarker(cg,{radius:5,color:"#FFE08A",weight:2,fillColor:"#F0703A",fillOpacity:1}).addTo(mj).bindTooltip("三角形の真ん中（能登沖）");
 })();}catch(e){console.warn("地図の読み込みに失敗",e);}
 
 /* ── 最近の更新・研究記録 ── */

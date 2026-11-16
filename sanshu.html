@@ -7,7 +7,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
+.tri-map{height:380px;border-radius:12px;overflow:hidden;border:1px solid #1e3a5f;background:#0d1829}
+.leaflet-tooltip.tri-tip{background:#111827;color:#f1f5f9;border:1px solid #334155;font-size:11px;font-weight:bold}
+.leaflet-tooltip.tri-tip:before{display:none}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:sans-serif;background:#080e1d;color:#e2e8f0;min-height:100vh}
 a{color:inherit}
@@ -325,6 +330,36 @@ const d16=d=>{const D=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW",
 const SYMS=["勾玉","鏡","剣"];
 const SS={"勾玉":{bg:"#4ade80",txt:"#14532d",em:"🌿"},"鏡":{bg:"#60a5fa",txt:"#1e3a5f",em:"🔵"},"剣":{bg:"#f87171",txt:"#7f1d1d",em:"⚔️"}};
 
+// ── 三角形マップ ──
+function TriMap({result}){
+  const ref=React.useRef(null), mapRef=React.useRef(null), layerRef=React.useRef(null);
+  useEffect(()=>{
+    if(!window.L||!ref.current)return;
+    if(!mapRef.current){
+      mapRef.current=L.map(ref.current,{scrollWheelZoom:false});
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+        {attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',subdomains:"abcd",maxZoom:19}).addTo(mapRef.current);
+    }
+    const m=mapRef.current;
+    if(layerRef.current)layerRef.current.remove();
+    const g=L.layerGroup().addTo(m); layerRef.current=g;
+    const ll=result.pts.map(p=>[p.lat,p.lon]);
+    L.polygon(ll,{color:"#fbbf24",weight:2,fillColor:"#fbbf24",fillOpacity:.08}).addTo(g);
+    ll.forEach(p=>L.polyline([p,[result.c.lat,result.c.lon]],{color:"#fbbf24",weight:1,opacity:.5,dashArray:"4 6"}).addTo(g));
+    result.pts.forEach((p,i)=>{
+      const st=SS[SYMS[i]];
+      L.circleMarker([p.lat,p.lon],{radius:8,color:"#fff",weight:2,fillColor:st.bg,fillOpacity:1}).addTo(g)
+        .bindTooltip(`${st.em} ${SYMS[i]}`,{permanent:true,direction:p.lat<result.c.lat?"bottom":"top",offset:[0,p.lat<result.c.lat?8:-8],className:"tri-tip"}).bindPopup(`<b>${SYMS[i]}</b><br>${p.name}`);
+    });
+    L.circleMarker([result.c.lat,result.c.lon],{radius:10,color:"#fbbf24",weight:3,fillColor:"#080e1d",fillOpacity:1}).addTo(g)
+      .bindTooltip("★ 真ん中",{permanent:true,direction:"right",offset:[10,0],className:"tri-tip"});
+    m.fitBounds(L.latLngBounds(ll).pad(0.25));
+    setTimeout(()=>m.invalidateSize(),50);
+  },[result]);
+  if(!window.L)return null;
+  return <div ref={ref} className="tri-map" aria-label="三角形の地図"></div>;
+}
+
 function App(){
   const[slots,setSlots]=useState({勾玉:"amagi",鏡:"motomiya",剣:"fugen"});
   const[result,setResult]=useState(null);
@@ -472,6 +507,8 @@ function App(){
                   style={{fontSize:11,color:"#4ade80",background:"#080e1d",padding:"4px 12px",borderRadius:5,textDecoration:"none"}}>📍 Googleマップ</a>
               </div>
             </div>
+
+            <TriMap result={result}/>
 
             <div style={{background:"#111827",border:"1px solid #1e3a5f",borderRadius:12,padding:14}}>
               <div style={{fontSize:11,color:"#64748b",marginBottom:8,fontWeight:"bold"}}>各頂点 → 重心</div>
