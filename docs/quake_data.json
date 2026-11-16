@@ -1,6 +1,73 @@
 {
-  "generated_at": "2026-11-15T18:35:13",
+  "generated_at": "2026-11-16T21:44:02",
   "quakes": [
+    {
+      "time": "2026/11/17 01:45:00",
+      "place": "宮古島近海",
+      "mag": 3.9,
+      "depth": 30.0,
+      "max_scale": "1",
+      "bearing": 232.14,
+      "dir16": "SW",
+      "distance_km": 1779.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/16 13:28:00",
+      "place": "静岡県東部",
+      "mag": 2.8,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 357.79,
+      "dir16": "N",
+      "distance_km": 42.3,
+      "matches": []
+    },
+    {
+      "time": "2026/11/16 13:24:00",
+      "place": "石川県能登地方",
+      "mag": 5.1,
+      "depth": 280.0,
+      "max_scale": "1",
+      "bearing": 326.18,
+      "dir16": "NW",
+      "distance_km": 320.8,
+      "matches": []
+    },
+    {
+      "time": "2026/11/16 06:08:00",
+      "place": "愛知県東部",
+      "mag": 3.4,
+      "depth": 40.0,
+      "max_scale": "1",
+      "bearing": 274.61,
+      "dir16": "W",
+      "distance_km": 120.4,
+      "matches": [
+        {
+          "name": "W277度軸(出雲・難波宮)",
+          "diff": 2.39,
+          "note": "国譲り軸"
+        }
+      ]
+    },
+    {
+      "time": "2026/11/16 04:34:00",
+      "place": "愛知県東部",
+      "mag": 2.6,
+      "depth": 40.0,
+      "max_scale": "1",
+      "bearing": 274.34,
+      "dir16": "W",
+      "distance_km": 129.5,
+      "matches": [
+        {
+          "name": "W277度軸(出雲・難波宮)",
+          "diff": 2.66,
+          "note": "国譲り軸"
+        }
+      ]
+    },
     {
       "time": "2026/11/16 02:43:00",
       "place": "薩摩半島西方沖",
@@ -1093,56 +1160,6 @@
           "note": "岩戸ログ中核軸"
         }
       ]
-    },
-    {
-      "time": "2026/11/03 14:40:00",
-      "place": "千葉県北東部",
-      "mag": 4.7,
-      "depth": 50.0,
-      "max_scale": "不明",
-      "bearing": 58.4,
-      "dir16": "ENE",
-      "distance_km": 167.7,
-      "matches": [
-        {
-          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
-          "diff": 1.4,
-          "note": "岩戸ログ中核軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/11/03 14:10:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.1,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 252.37,
-      "dir16": "WSW",
-      "distance_km": 849.2,
-      "matches": []
-    },
-    {
-      "time": "2026/11/03 02:50:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 1.6,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 251.68,
-      "dir16": "WSW",
-      "distance_km": 853.5,
-      "matches": []
-    },
-    {
-      "time": "2026/11/02 10:57:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 3.0,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 252.83,
-      "dir16": "WSW",
-      "distance_km": 836.3,
-      "matches": []
     }
   ]
 }
