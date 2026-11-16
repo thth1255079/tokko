@@ -3,14 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>岩戸ログ｜情報の岩戸開き</title>
-<meta name="description" content="神話・考古学・地理・方位研究のアーカイブ。天城山を起点に、失われた記憶を事実と仮説の分離を守りながら再構築する。">
+<title>天の岩戸開き｜岩戸ログ</title>
+<meta name="description" content="天城を中心に伝説を読み直す。天の岩戸開き、国譲り神話、上書きされた神々、日本の神様を、やさしい言葉で少しずつまとめていきます。">
 <meta name="theme-color" content="#3B2A8C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&family=Zen+Maru+Gothic:wght@500;700;900&family=Shippori+Mincho:wght@700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
 :root{
   --cream:#FFF8EE; --card:#fff; --line:#F0E4D2;
@@ -250,30 +248,58 @@ nav.tabs a.on{color:var(--purple)}
 .story-note{font-size:.78rem!important;color:var(--dim)}
 .story .panel-foot{margin:.6rem 0 1rem}
 </style>
+<style>
+.hero-in.top{min-height:min(78vh,680px);align-items:flex-end}
+.hero h1.big{font-size:clamp(2.8rem,14vw,5rem);letter-spacing:.06em}
+.reads{display:grid;gap:1rem}
+@media(min-width:760px){.reads{grid-template-columns:1fr 1fr}}
+.read{display:flex;gap:1rem;align-items:stretch;text-decoration:none;color:var(--ink);background:#fff;border:1.5px solid var(--line);
+  border-radius:var(--r);overflow:hidden;box-shadow:0 8px 22px rgba(120,90,50,.1);transition:transform .2s}
+.read:active{transform:scale(.98)}
+.read .tile{flex:0 0 108px;position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#3B2A8C,#171236)}
+.read .tile::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 30% 25%,rgba(255,255,255,.4) 0 1.5px,transparent 2px),
+  radial-gradient(circle at 75% 70%,rgba(255,255,255,.3) 0 1px,transparent 1.5px),
+  radial-gradient(circle at 80% 20%,rgba(255,255,255,.35) 0 1.5px,transparent 2px)}
+.read .tile span{position:relative;font-family:var(--serif);font-weight:800;font-size:2.9rem;background:var(--goldtx);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(255,200,100,.45))}
+.read .txt{padding:.9rem 1rem .9rem 0;display:flex;flex-direction:column;gap:.2rem}
+.read h3{font-size:1.12rem;font-weight:900;line-height:1.45}
+.read p{font-size:.84rem;color:var(--dim);line-height:1.7}
+.soon{align-self:flex-start;font-size:.7rem;font-weight:900;color:var(--orange);background:#FFF0E3;border-radius:999px;padding:0 .7rem}
+.t2{background:linear-gradient(160deg,#B4472E,#3A1420)!important}
+.t3{background:linear-gradient(160deg,#1E7FA6,#103352)!important}
+.t4{background:linear-gradient(160deg,#8E2F5E,#2A0E22)!important}
+.osusume{background:#fff;border-radius:var(--r);padding:1.2rem 1.25rem;border:3px solid transparent;
+  background-image:linear-gradient(#fff,#fff),linear-gradient(100deg,#E9B949,#F0703A);background-origin:border-box;background-clip:padding-box,border-box;box-shadow:0 10px 26px rgba(240,112,58,.12)}
+.osusume p{font-size:.92rem;margin-bottom:.6rem}
+.links{list-style:none;display:grid;gap:.6rem}
+.links .empty{padding:1rem;border-radius:16px;border:2px dashed #EADBC6;text-align:center;color:var(--dim);font-size:.86rem}
+.tools{display:grid;grid-template-columns:1fr;gap:.8rem}
+@media(min-width:760px){.tools{grid-template-columns:repeat(3,1fr)}}
+.tool{display:flex;gap:.8rem;align-items:center;text-decoration:none;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:.8rem 1rem;box-shadow:0 6px 16px rgba(120,90,50,.08)}
+.tool .ic{font-size:1.8rem}
+.tool b{display:block;font-weight:900}
+.tool small{color:var(--dim);font-size:.78rem;line-height:1.5;display:block}
+</style>
 </head>
 <body>
 
 <nav class="nav" id="top">
   <div class="nav-in">
     <div class="logo" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M20 5 L23 20 L20 35 L17 20 Z" fill="#FFE08A"/><path d="M5 20 L20 17 L35 20 L20 23 Z" fill="#fff" opacity=".85"/></svg></div>
-    <a class="brand" href="index.html"><span>情報の岩戸開き</span><b>岩戸ログ</b></a>
+    <a class="brand" href="index.html"><span>天城を中心に伝説を読み直す</span><b>岩戸ログ</b></a>
     <button class="nav-btn" aria-label="メニュー" onclick="document.querySelector('.nav').classList.toggle('open')">☰</button>
     <div class="nav-links">
-      <a href="#hajimari">📜 はじまり</a>
-      <a href="#worldmap">🌏 世界地図</a>
-      <a href="#japanmap">🗾 日本地図</a>
-      <a href="#cats">📚 研究カテゴリ</a>
+      <a href="#yomu">📖 読む</a>
+      <a href="#osusume">🎎 おすすめ</a>
+      <a href="kenkyu-archive.html">📚 研究アーカイブ</a>
       <a href="iwato-log.html">🌋 地震ログ</a>
-      <a href="#field">🥾 現地調査ログ</a>
-      <a href="https://thth1255079.github.io/kage-chikei/">🔮 守護神鑑定</a>
-      <a href="#about">🧭 このサイトについて</a>
     </div>
   </div>
 </nav>
 
 <div class="hero">
   <div class="sky" aria-hidden="true"></div>
-  <div class="hero-photo" aria-hidden="true"></div>
   <svg id="stars" aria-hidden="true" preserveAspectRatio="none"></svg>
   <div class="hero-dial" aria-hidden="true"><svg id="bgDial" viewBox="0 0 420 420"></svg></div>
   <svg class="mount" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true">
@@ -282,161 +308,68 @@ nav.tabs a.on{color:var(--purple)}
     <path d="M0 260 Q150 200 300 230 T620 150 Q700 120 760 140 T980 210 Q1100 230 1200 200 L1200 400 L0 400 Z" fill="url(#mg2)" opacity=".85"/>
     <path d="M0 320 Q200 270 380 300 Q520 320 640 250 Q720 205 800 240 Q930 300 1200 280 L1200 400 L0 400 Z" fill="url(#mg)"/>
   </svg>
-  <div class="hero-in">
+  <div class="hero-in top">
     <div class="hero-main">
-      <div class="pill"><span>ARCHIVE</span>方角で読む古代の記憶</div>
-      <p class="kicker">天城山から、世界の伝承をたどる</p>
-      <h1>16人の王子を<em>探せ。</em></h1>
-      <p class="hero-desc">古代日本から、16人の王子が世界へ旅立ったという言い伝えがあります。王子たちは、どこへ消えたのか？<br>伊豆の天城山から16の方角に線を引き、世界に残る伝承の記憶をたどっています。</p>
-      <div class="searchbar">
-        <input id="q" type="search" placeholder="キーワード（例：麻賀多神社、月、黒又山）" aria-label="サイト内を検索">
-        <button onclick="doSearch()">検索</button>
-      </div>
-      <div class="hot-tags">
-        <a href="#" data-q="月">#月メジャースタンドスティル</a>
-        <a href="#" data-q="印旛沼">#印旛沼</a>
-        <a href="#" data-q="月読">#月読命</a>
-        <a href="#" data-q="海民">#海人族</a>
-        <a href="#" data-q="18">#18</a>
-      </div>
+      <div class="pill"><span>岩戸ログ</span>天城を中心に伝説を読み直す</div>
+      <h1 class="big">天の<em>岩戸開き</em></h1>
+      <p class="hero-desc">隠された神々、上書きされた伝説。<br>伊豆の天城山を中心に、日本と世界の神話や昔話を、もう一度ひらいて読み直していきます。</p>
       <div class="cta-row">
-        <a class="cta main" href="iwato-log.html">🌋 地震ログを見る</a>
-        <a class="cta sub" href="#hajimari">📜 はじまりを読む</a>
-      </div>
-      <div class="stats">
-        <div class="stat"><small>研究記録</small><b id="stRep">0</b><b><i>件</i></b></div>
-        <div class="stat"><small>地震ログ</small><b id="stLog">0</b><b><i>件</i></b></div>
-        <div class="stat"><small>カテゴリ</small><b id="stCat">0</b><b><i>分野</i></b></div>
+        <a class="cta main" href="#yomu">📖 読みはじめる</a>
+        <a class="cta sub" href="kenkyu-archive.html">📚 研究アーカイブ</a>
       </div>
     </div>
-    <aside class="method-panel" id="about">
-      <h2>🧭 書き方のルール（3つの色）</h2>
-      <div class="m-row"><span class="lv l1">L1</span><span><b>事実。</b>測ったり、資料で確かめたりできたこと。方角の計算はここ。</span></div>
-      <div class="m-row"><span class="lv l2">L2</span><span><b>読み取り。</b>いくつかの事実を並べて、見えてきたこと。</span></div>
-      <div class="m-row"><span class="lv l3">L3</span><span><b>推測・物語。</b>まだ確かめられていない考えや言い伝え。王子の伝説もここ。おもしろくても、事実とは混ぜません。</span></div>
-    </aside>
   </div>
 </div>
 
 <main>
-  <section class="story" id="hajimari">
-    <div class="story-card">
-      <span class="story-badge">📜 はじまり</span>
-      <h2>三種の神器の三角形</h2>
-      <p>天城山を中心に、地図に線を引いてみたのが始まりでした。</p>
-      <p>北の<b>摩周湖</b>を「鏡」、南の<b>雲仙・普賢岳</b>を「剣」、<b>天城山</b>を「勾玉」に見立てて、三種の神器の三角形を描くと、その真ん中は<b>能登半島の沖</b>に来ました。</p>
-      <p class="story-q">場所と場所は、方角でつながっているのでは？</p>
-      <p>このサイトは、その問いから始まった記録です。</p>
-      <a class="panel-foot" href="sanshu.html">🔺 三角形を見てみる →</a>
-    </div>
-    <div class="story-card s2">
-      <span class="story-badge">🧭 16の方角と16人の王子</span>
-      <h2>天城山から、16の方角へ</h2>
-      <p>東・西・南・北を、さらに細かく<b>16の方角</b>に分けて考えます。</p>
-      <p>16の方角それぞれに、一人ずつ王子が旅立った——。そう見立てて、その方角にある神社・遺跡・言い伝え・地震を一つずつ記録しています。</p>
-      <p class="story-note">※王子の話は言い伝え（L3）です。方角の計算（L1）とは分けて書いています。</p>
-      <a class="panel-foot" href="#cats">📚 たどった記録を見る →</a>
+  <section id="yomu">
+    <h2 class="sec"><span class="ico">📖</span>読む</h2>
+    <p class="sec-desc">ページは少しずつ増やしていきます。</p>
+    <div class="reads">
+      <a class="read" href="iwato-biraki.html">
+        <div class="tile"><span>岩</span></div>
+        <div class="txt"><span class="soon">準備中</span><h3>天の岩戸開きとは何か</h3><p>アマテラスが岩戸にこもり、世界が真っ暗になった。日本神話でいちばん有名な場面を、やさしく読み解きます。</p></div>
+      </a>
+      <a class="read" href="kuniyuzuri.html">
+        <div class="tile t2"><span>譲</span></div>
+        <div class="txt"><span class="soon">準備中</span><h3>国譲り神話とは何か</h3><p>出雲のオオクニヌシが、国を天の神々にゆずった話。なぜ「ゆずった」のかを考えます。</p></div>
+      </a>
+      <a class="read" href="uwagaki-kamigami.html">
+        <div class="tile t3"><span>書</span></div>
+        <div class="txt"><span class="soon">準備中</span><h3>世界中の上書きされた神々・伝説一覧</h3><p>あとから来た神や宗教に、名前や役目を塗りかえられた神々。世界の例を一覧にしていきます。</p></div>
+      </a>
+      <a class="read" href="nihon-kamisama.html">
+        <div class="tile t4"><span>神</span></div>
+        <div class="txt"><span class="soon">随時更新</span><h3>日本の神様まとめ</h3><p>日本の神様を、ひとりずつ、やさしい言葉で紹介します。少しずつ増やしていきます。</p></div>
+      </a>
     </div>
   </section>
-  <div id="searchSec">
-    <h2 class="sec"><span class="ico">🔍</span>検索結果</h2>
-    <div class="count" id="sCount"></div>
-    <div id="sList"></div>
-  </div>
 
-  <h2 class="sec"><span class="ico">🗺️</span>地図と最新情報</h2>
-  <p class="sec-desc">金色の線は、天城山から見た方角です。</p>
-  <div class="row3">
-    <div class="panel" id="worldmap">
-      <div class="panel-h">🌏 世界地図<span class="en">グローバル研究</span></div>
-      <div class="map" id="mapWorld"></div>
-      <div class="panel-b" style="padding-top:.7rem">世界の聖地が、天城山から見てどの方角にあるかを地図にしました。金色の線は天城山からの方角です。</div>
+  <section id="osusume">
+    <h2 class="sec"><span class="ico">🎎</span>日本むかしばなし</h2>
+    <div class="osusume">
+      <p>昔話には、神話や土地の記憶がこっそり残っています。親子で楽しめる、おすすめの昔話サイトを紹介します。</p>
+      <ul class="links">
+        <li class="empty">おすすめリンクを準備中です</li>
+      </ul>
     </div>
-    <div class="panel" id="japanmap">
-      <div class="panel-h">🗾 日本地図<span class="en">国内研究</span></div>
-      <div class="map" id="mapJapan"></div>
-      <div class="panel-b" style="padding-top:.7rem">日本各地の神社や遺跡が、天城山から見てどの方角にあるかを地図にしました。オレンジの点線は「はじまり」の三種の神器の三角形です。</div>
-    </div>
-    <div class="panel">
-      <div class="panel-h">✨ 最近の更新<span class="en">UPDATES</span></div>
-      <ul class="upd" id="updList"></ul>
-      <a class="panel-foot" href="#records">更新履歴をすべて見る →</a>
-    </div>
-  </div>
-
-  <section id="cats">
-    <h2 class="sec"><span class="ico">📚</span>研究カテゴリ<a class="en" href="#cats">すべて見る →</a></h2>
-    <p class="sec-desc">気になるテーマをタップすると、関係する記録が出てきます。</p>
-    <div class="cats" id="catGrid"></div>
   </section>
 
-  <div class="tagrow">
-    <div class="panel tags-panel">
-      <div class="panel-h">🏷️ タグから探す<span class="en">TAGS</span></div>
-      <div class="t-line"><span class="t-k">確度</span>
-        <button class="t-tag lv1" data-layer="L1">#L1（事実）</button>
-        <button class="t-tag lv2" data-layer="L2">#L2（読み取り）</button>
-        <button class="t-tag lv3" data-layer="L3">#L3（推測）</button>
-      </div>
-      <div class="t-line"><span class="t-k">地域</span>
-        <button class="t-tag" data-q="千葉">#千葉</button>
-        <button class="t-tag" data-q="東北">#東北</button>
-        <button class="t-tag" data-q="山形">#山形</button>
-        <button class="t-tag" data-q="世界">#世界</button>
-        <button class="t-tag" data-q="ベネズエラ">#ベネズエラ</button>
-      </div>
-      <div class="t-line" style="padding-bottom:1rem"><span class="t-k">テーマ</span>
-        <button class="t-tag" data-q="月">#月</button>
-        <button class="t-tag" data-q="海民">#海民</button>
-        <button class="t-tag" data-q="神">#神話</button>
-        <button class="t-tag" data-q="地震">#地震</button>
-        <button class="t-tag" data-q="封印">#封印</button>
-        <button class="t-tag" data-q="18">#18</button>
-      </div>
+  <section>
+    <h2 class="sec"><span class="ico">🧭</span>研究と道具</h2>
+    <div class="tools">
+      <a class="tool" href="kenkyu-archive.html"><span class="ic">📚</span><span><b>研究アーカイブ</b><small>16人の王子、三種の神器の三角形、地図、研究記録</small></span></a>
+      <a class="tool" href="iwato-log.html"><span class="ic">🌋</span><span><b>地震ログ</b><small>地震が起きた場所を、天城山からの方角で記録</small></span></a>
+      <a class="tool" href="sanshu.html"><span class="ic">🔺</span><span><b>三種の神器 三角形計算器</b><small>3つの場所を選んで、三角形の真ん中を地図で見る</small></span></a>
     </div>
-    <div class="panel">
-      <div class="panel-h">⛰️ 天城山 基準データ</div>
-      <div class="base-photo"></div>
-      <div class="base-row"><span class="k">北緯</span><span class="v">34.920°</span></div>
-      <div class="base-row"><span class="k">東経</span><span class="v">139.018°</span></div>
-      <div class="base-row"><span class="k">標高</span><span class="v">1,406 m</span></div>
-      <div class="base-row"><span class="k">役割</span><span class="v">すべての方角はここから測る</span></div>
-      <a class="panel-foot" href="amagi16.html">天城山から見た16の方角を見る →</a>
-    </div>
-  </div>
-
-  <div class="row4">
-    <div class="panel" id="records">
-      <div class="panel-h">📝 最新の研究記録</div>
-      <ul class="upd" id="recList"></ul>
-    </div>
-    <div class="panel" id="field">
-      <div class="panel-h">🥾 現地調査ログ<span class="en">最新3件</span></div>
-      <div id="fwList"></div>
-      <a class="panel-foot" href="#" onclick="tagFilterCat('field');return false;">すべての現地調査ログ →</a>
-    </div>
-    <div class="panel">
-      <div class="panel-h">🌋 地震ログ<span class="en">最新3件</span></div>
-      <div class="tbl"><table class="qk">
-        <thead><tr><th>発生日</th><th>場所</th><th>M</th><th>天城方位</th></tr></thead>
-        <tbody id="qkBody"></tbody>
-      </table></div>
-      <a class="panel-foot" href="iwato-log.html">すべての地震ログ →</a>
-    </div>
-    <div class="panel">
-      <div class="panel-h">🖼️ 最近追加された画像</div>
-      <div class="gal" id="gal"></div>
-      <div class="gal-empty" id="galEmpty">まだ画像がありません。data.js の IMAGES に追加してください。</div>
-    </div>
-  </div>
+  </section>
 </main>
 
 <footer>
   <div class="foot-in">
-    <span style="font-weight:900;color:#fff;font-size:1rem">岩戸ログ<span style="font-size:.7rem;color:#B9B2D6;margin-left:.6em">情報の岩戸開き</span></span>
-    <a href="#about">このサイトについて</a>
+    <span style="font-weight:900;color:#fff;font-size:1rem">岩戸ログ<span style="font-size:.7rem;color:#B9B2D6;margin-left:.6em">天城を中心に伝説を読み直す</span></span>
+    <a href="kenkyu-archive.html">研究アーカイブ</a>
     <a href="iwato-log.html">地震ログ</a>
-    <a href="https://thth1255079.github.io/kage-chikei/">守護神鑑定</a>
     <a href="https://note.com/tokko_geo" target="_blank" rel="noopener">note</a>
     <span class="foot-c">© 2026 岩戸ログ（陽光文明同好会）</span>
   </div>
@@ -445,21 +378,13 @@ nav.tabs a.on{color:var(--purple)}
 <a class="up" href="#top" aria-label="上へ">↑</a>
 <nav class="tabs">
   <a class="on" href="#top"><span>🏡</span>ホーム</a>
-  <a href="#worldmap"><span>🗺️</span>地図</a>
-  <a href="#cats"><span>📚</span>研究</a>
+  <a href="#yomu"><span>📖</span>読む</a>
+  <a href="#osusume"><span>🎎</span>おすすめ</a>
+  <a href="kenkyu-archive.html"><span>📚</span>研究</a>
   <a href="iwato-log.html"><span>🌋</span>地震</a>
-  <a href="#field"><span>🥾</span>調査</a>
 </nav>
 
-<div class="lightbox" id="lightbox" role="dialog" aria-label="写真の拡大表示">
-  <img id="lbImg" src="" alt="">
-  <p class="lb-cap" id="lbCap"></p>
-  <p class="lb-x">タップで閉じる</p>
-</div>
-
-<script src="data.js"></script>
 <script>
-/* ── 星空 ── */
 (function(){
   let s="";
   for(let i=0;i<90;i++){
@@ -467,179 +392,13 @@ nav.tabs a.on{color:var(--purple)}
     s+=`<circle cx="${x}%" cy="${y}%" r="${r}" fill="#fff" opacity="${o}"><animate attributeName="opacity" values="${o};.15;${o}" dur="${(Math.random()*4+3).toFixed(1)}s" repeatCount="indefinite"/></circle>`;
   }
   document.getElementById("stars").innerHTML=s;
+  const D=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+  let d='<g fill="none" stroke="#C9A227" stroke-width="1">';
+  [200,150,90].forEach(r=>d+=`<circle cx="210" cy="210" r="${r}"/>`);
+  D.forEach((n,i)=>{const a=(i*22.5-90)*Math.PI/180;d+=`<line x1="210" y1="210" x2="${210+200*Math.cos(a)}" y2="${210+200*Math.sin(a)}" opacity=".5"/>`;});
+  d+='</g>';
+  document.getElementById("bgDial").innerHTML=d;
 })();
-
-/* ── 背景の方位盤 ── */
-(function(){
-  const cx=210,cy=210,r1=70,r2=180;
-  let s="";
-  for(let i=0;i<16;i++){
-    const a=(i*22.5-90)*Math.PI/180;
-    s+=`<line x1="${cx+r1*Math.cos(a)}" y1="${cy+r1*Math.sin(a)}" x2="${cx+r2*Math.cos(a)}" y2="${cy+r2*Math.sin(a)}" stroke="#C9A227" stroke-width="${i%4===0?1.5:0.6}" opacity=".8"/>`;
-  }
-  [r1,120,r2].forEach(r=>{ s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#C9A227" stroke-width="0.6" opacity=".8"/>`; });
-  const DIRS=["N","NE","E","SE","S","SW","W","NW"];
-  DIRS.forEach((d,i)=>{
-    const a=(i*45-90)*Math.PI/180;
-    s+=`<text x="${cx+(r2+16)*Math.cos(a)}" y="${cy+(r2+16)*Math.sin(a)+4}" text-anchor="middle" fill="#C9A227" font-size="12" font-family="monospace" opacity=".9">${d}</text>`;
-  });
-  document.getElementById("bgDial").innerHTML=s;
-})();
-
-/* ── 地図（Leaflet／CARTOダークタイル） ── */
-const TILE="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
-const ATTR='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>';
-function miniMap(id, center, zoom){
-  const m=L.map(id,{zoomControl:false,dragging:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,touchZoom:false,attributionControl:true});
-  L.tileLayer(TILE,{attribution:ATTR,subdomains:"abcd",maxZoom:19}).addTo(m);
-  m.setView(center,zoom);
-  return m;
-}
-try{(function buildMaps(){
-  const gold={color:"#C9A227",weight:1.4,opacity:.85};
-  const mark=(m,site,color)=>L.circleMarker(site.ll,{radius:5,color:color,weight:1.5,fillColor:color,fillOpacity:.55})
-      .addTo(m).bindTooltip(`${site.name}${site.note?"｜"+site.note:""}`);
-  // 世界
-  const mw=miniMap("mapWorld",[48,60],1);
-  MAP_SITES.filter(s=>s.type==="world").forEach(s=>{
-    L.polyline([AMAGI_LL,s.ll],gold).addTo(mw);
-    mark(mw,s,"#E58CA0");
-  });
-  mark(mw,MAP_SITES[0],"#C9A227");
-  // 日本
-  const mj=miniMap("mapJapan",[37.6,137.8],4);
-  MAP_SITES.filter(s=>s.type==="jp").forEach(s=>mark(mj,s,"#6FA8E8"));
-  mark(mj,MAP_SITES[0],"#C9A227");
-  /* 三種の神器の三角形（はじまり） */
-  const tri=[[34.920,139.018],[43.5025,144.4242],[32.750,130.293]];
-  const v=tri.map(([a,b])=>{const f=a*Math.PI/180,l=b*Math.PI/180;return[Math.cos(f)*Math.cos(l),Math.cos(f)*Math.sin(l),Math.sin(f)];}).reduce((s,x)=>s.map((y,i)=>y+x[i]),[0,0,0]);
-  const cg=[Math.atan2(v[2],Math.hypot(v[0],v[1]))*180/Math.PI,Math.atan2(v[1],v[0])*180/Math.PI];
-  L.polygon(tri,{color:"#F0703A",weight:1.6,fillColor:"#F0703A",fillOpacity:.08,dashArray:"5 5"}).addTo(mj);
-  L.circleMarker(cg,{radius:5,color:"#FFE08A",weight:2,fillColor:"#F0703A",fillOpacity:1}).addTo(mj).bindTooltip("三角形の真ん中（能登沖）");
-})();}catch(e){console.warn("地図の読み込みに失敗",e);}
-
-/* ── 最近の更新・研究記録 ── */
-const catName = id => (CATS.find(c=>c.id===id)||{}).name || id;
-function updLine(r){
-  return `<li>
-    <div class="u-top"><span class="lv ${r.layer.toLowerCase()}">${r.layer}</span><span class="u-date">${r.date}</span>${r.plan?'<span class="plan-tag">予定</span>':""}</div>
-    <div class="u-title"><a href="#" data-open="${r.title}">${r.title}</a></div>
-  </li>`;
-}
-document.getElementById("updList").innerHTML = REPORTS.slice(0,5).map(updLine).join("");
-document.getElementById("recList").innerHTML = REPORTS.slice(0,6).map(updLine).join("");
-
-/* ── カテゴリタイル ── */
-const GLYPH={tsuki:"月",shio:"海",fuin:"封",world:"星",iwato:"震",field:"調",chiba:"千",kami:"神"};
-document.getElementById("catGrid").innerHTML = CATS.map(c=>{
-  const tag=c.href?"a":"div";
-  const href=c.href?` href="${c.href}"`:` data-cat="${c.id}" role="button" tabindex="0"`;
-  return `<${tag} class="cat"${href}>
-    <div class="cat-ph g-${c.id}"><span class="glyph">${GLYPH[c.id]||"◈"}</span><img src="${c.photo}" alt="" loading="lazy" onerror="this.remove()"><span class="cat-badge">${c.id==="iwato"?LOGS.length:REPORTS.filter(r=>r.cats&&r.cats.includes(c.id)).length}件</span></div>
-    <span class="cat-name">${c.name}</span>
-    <span class="cat-desc">${c.desc}</span>
-  </${tag}>`;
-}).join("");
-document.querySelectorAll("#catGrid [data-cat]").forEach(el=>{
-  const act=()=>tagFilterCat(el.dataset.cat);
-  el.addEventListener("click",act);
-  el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();act();}});
-});
-
-/* ── 現地調査ログ（photosつき優先で最新3件） ── */
-(function(){
-  const fw=REPORTS.filter(r=>r.cats.includes("field")).slice(0,3);
-  document.getElementById("fwList").innerHTML = fw.length ? fw.map(r=>{
-    const ph=r.photos && r.photos[0];
-    return `<div class="fw-item">
-      <div class="fw-th"><span>調</span>${ph?`<img src="${ph.src}" alt="" loading="lazy" onerror="this.remove()">`:""}</div>
-      <div class="fw-t"><span class="d">${r.date}${r.plan?"（予定）":""}</span>${r.title}</div>
-    </div>`;
-  }).join("") : `<div class="empty" style="padding:1rem">現地調査の報告はまだありません。</div>`;
-})();
-
-/* ── 地震ログ最新3件 ── */
-document.getElementById("qkBody").innerHTML = LOGS.slice(0,3).map(l=>{
-  const mag=String(l.mag).includes("要確認")?"—":l.mag;
-  const b=l.bearing.split("（")[0].replace("■要確認","—");
-  return `<tr><td class="m">${l.date}</td><td>${l.epicenter.replace("■要確認","—").split("／")[0]}</td><td class="m">${mag.split("（")[0].split("／")[0]}</td><td class="m">${b}</td></tr>`;
-}).join("");
-
-/* ── 画像ギャラリー ── */
-(function(){
-  const g=document.getElementById("gal");
-  if(IMAGES.length){
-    document.getElementById("galEmpty").remove();
-    g.innerHTML=IMAGES.slice(0,6).map(im=>`<figure><img src="${im.src}" alt="${im.cap||""}" loading="lazy" data-cap="${im.cap||""}"><figcaption>${im.cap||""}</figcaption></figure>`).join("");
-  }
-})();
-
-/* ── 数字タイル ── */
-document.getElementById("stRep").textContent=REPORTS.length;
-document.getElementById("stLog").textContent=LOGS.length;
-document.getElementById("stCat").textContent=CATS.length;
-
-/* ── 検索 ── */
-function doSearch(){
-  const q=document.getElementById("q").value.trim();
-  runSearch(rows=>rows.filter(r=>(r.title+r.body+(r.cats||[]).map(catName).join("")).includes(q)),
-            q?`検索: "${q}"`:null);
-}
-function tagFilterCat(id){
-  runSearch(rows=>rows.filter(r=>r.cats && r.cats.includes(id)), `テーマ: ${catName(id)}`);
-}
-function tagFilterLayer(lv){
-  runSearch(rows=>rows.filter(r=>r.layer===lv), `確度: ${lv}`);
-}
-function runSearch(filter, label){
-  const sec=document.getElementById("searchSec");
-  if(!label){ sec.classList.remove("on"); return; }
-  const rows=filter(REPORTS);
-  document.getElementById("sCount").textContent=`${rows.length} 件 ／ ${label}`;
-  document.getElementById("sList").innerHTML = rows.length ? rows.map(r=>`
-    <div class="report">
-      <div class="r-top">
-        <span class="lv ${r.layer.toLowerCase()}">${r.layer}</span>
-        <span class="r-date">${r.date}</span>${r.plan?'<span class="plan-tag">予定</span>':""}
-      </div>
-      <div class="r-title">${r.title}</div>
-      <div class="r-body">${r.body}</div>
-      ${r.photos && r.photos.length ? `<div class="r-photos">${r.photos.map(p=>`
-        <figure><img src="${p.src}" alt="${p.cap||""}" loading="lazy" data-cap="${p.cap||""}">${p.cap?`<figcaption>${p.cap}</figcaption>`:""}</figure>`).join("")}</div>` : ""}
-      ${r.files && r.files.length ? `<div class="r-files">${r.files.map(f=>`
-        <a class="r-file" href="${f.href}" target="_blank" rel="noopener">${f.label||"添付資料"}</a>`).join("")}</div>` : ""}
-      <div class="r-tags">
-        ${r.cats.map(c=>`<span class="tag">${catName(c)}</span>`).join("")}
-        ${r.link?`<a class="r-link" href="${r.link}" ${r.link.startsWith("http")?'target="_blank" rel="noopener"':""}>詳細 →</a>`:""}
-      </div>
-    </div>`).join("") : `<div class="empty">該当する記録はありません。</div>`;
-  sec.classList.add("on");
-  sec.scrollIntoView({behavior:"smooth"});
-}
-document.getElementById("q").addEventListener("keydown",e=>{ if(e.key==="Enter") doSearch(); });
-document.querySelectorAll(".hot-tags a").forEach(a=>{
-  a.addEventListener("click",e=>{e.preventDefault();document.getElementById("q").value=a.dataset.q;doSearch();});
-});
-document.querySelectorAll(".t-tag").forEach(b=>{
-  b.addEventListener("click",()=>{
-    if(b.dataset.layer) tagFilterLayer(b.dataset.layer);
-    else { document.getElementById("q").value=b.dataset.q; doSearch(); }
-  });
-});
-document.querySelectorAll("#updList a, #recList a").forEach(a=>{
-  a.addEventListener("click",e=>{e.preventDefault();document.getElementById("q").value=a.dataset.open;doSearch();});
-});
-
-/* ── ライトボックス ── */
-const lb=document.getElementById("lightbox");
-document.addEventListener("click",e=>{
-  const img=e.target.closest(".r-photos img, .gal img"); if(!img) return;
-  document.getElementById("lbImg").src=img.src;
-  document.getElementById("lbCap").textContent=img.dataset.cap||"";
-  lb.classList.add("on");
-});
-lb.addEventListener("click",()=>lb.classList.remove("on"));
-document.addEventListener("keydown",e=>{ if(e.key==="Escape") lb.classList.remove("on"); });
 </script>
 </body>
 </html>
