@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>研究アーカイブ｜岩戸ログ</title>
-<meta name="description" content="神話・考古学・地理・方位研究のアーカイブ。天城山を起点に、失われた記憶を事実と仮説の分離を守りながら再構築する。">
+<title>検証アーカイブ｜岩戸ログ</title>
+<meta name="description" content="神話・考古学・地理・方位検証のアーカイブ。天城山を起点に、失われた記憶を事実と仮説の分離を守りながら再構築する。">
 <meta name="theme-color" content="#3B2A8C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -256,14 +256,14 @@ nav.tabs a.on{color:var(--purple)}
 <nav class="nav" id="top">
   <div class="nav-in">
     <div class="logo" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M20 5 L23 20 L20 35 L17 20 Z" fill="#FFE08A"/><path d="M5 20 L20 17 L35 20 L20 23 Z" fill="#fff" opacity=".85"/></svg></div>
-    <a class="brand" href="index.html"><span>研究アーカイブ</span><b>岩戸ログ</b></a>
+    <a class="brand" href="index.html"><span>検証アーカイブ</span><b>岩戸ログ</b></a>
     <button class="nav-btn" aria-label="メニュー" onclick="document.querySelector('.nav').classList.toggle('open')">☰</button>
     <div class="nav-links">
       <a href="index.html">🏡 トップ</a>
       <a href="#hajimari">📜 はじまり</a>
       <a href="#worldmap">🌏 世界地図</a>
       <a href="#japanmap">🗾 日本地図</a>
-      <a href="#cats">📚 研究カテゴリ</a>
+      <a href="#cats">📚 検証カテゴリ</a>
       <a href="iwato-log.html">🌋 地震ログ</a>
       <a href="#field">🥾 現地調査ログ</a>
       <a href="https://thth1255079.github.io/kage-chikei/">🔮 守護神鑑定</a>
@@ -305,7 +305,7 @@ nav.tabs a.on{color:var(--purple)}
         <a class="cta sub" href="#hajimari">📜 はじまりを読む</a>
       </div>
       <div class="stats">
-        <div class="stat"><small>研究記録</small><b id="stRep">0</b><b><i>件</i></b></div>
+        <div class="stat"><small>検証記録</small><b id="stRep">0</b><b><i>件</i></b></div>
         <div class="stat"><small>地震ログ</small><b id="stLog">0</b><b><i>件</i></b></div>
         <div class="stat"><small>カテゴリ</small><b id="stCat">0</b><b><i>分野</i></b></div>
       </div>
@@ -349,12 +349,12 @@ nav.tabs a.on{color:var(--purple)}
   <p class="sec-desc">金色の線は、天城山から見た方角です。</p>
   <div class="row3">
     <div class="panel" id="worldmap">
-      <div class="panel-h">🌏 世界地図<span class="en">グローバル研究</span></div>
+      <div class="panel-h">🌏 世界地図<span class="en">グローバル検証</span></div>
       <div class="map" id="mapWorld"></div>
       <div class="panel-b" style="padding-top:.7rem">世界の聖地が、天城山から見てどの方角にあるかを地図にしました。金色の線は天城山からの方角です。</div>
     </div>
     <div class="panel" id="japanmap">
-      <div class="panel-h">🗾 日本地図<span class="en">国内研究</span></div>
+      <div class="panel-h">🗾 日本地図<span class="en">国内検証</span></div>
       <div class="map" id="mapJapan"></div>
       <div class="panel-b" style="padding-top:.7rem">日本各地の神社や遺跡が、天城山から見てどの方角にあるかを地図にしました。オレンジの点線は「はじまり」の三種の神器の三角形です。</div>
     </div>
@@ -366,7 +366,7 @@ nav.tabs a.on{color:var(--purple)}
   </div>
 
   <section id="cats">
-    <h2 class="sec"><span class="ico">📚</span>研究カテゴリ<a class="en" href="#cats">すべて見る →</a></h2>
+    <h2 class="sec"><span class="ico">📚</span>検証カテゴリ<a class="en" href="#cats">すべて見る →</a></h2>
     <p class="sec-desc">気になるテーマをタップすると、関係する記録が出てきます。</p>
     <div class="cats" id="catGrid"></div>
   </section>
@@ -408,7 +408,7 @@ nav.tabs a.on{color:var(--purple)}
 
   <div class="row4">
     <div class="panel" id="records">
-      <div class="panel-h">📝 最新の研究記録</div>
+      <div class="panel-h">📝 最新の検証記録</div>
       <ul class="upd" id="recList"></ul>
     </div>
     <div class="panel" id="field">
@@ -447,7 +447,7 @@ nav.tabs a.on{color:var(--purple)}
 <nav class="tabs">
   <a href="index.html"><span>🏡</span>ホーム</a>
   <a href="#worldmap"><span>🗺️</span>地図</a>
-  <a class="on" href="#top"><span>📚</span>研究</a>
+  <a class="on" href="#top"><span>📚</span>検証</a>
   <a href="iwato-log.html"><span>🌋</span>地震</a>
   <a href="#field"><span>🥾</span>調査</a>
 </nav>
@@ -519,7 +519,7 @@ try{(function buildMaps(){
   L.circleMarker(cg,{radius:5,color:"#FFE08A",weight:2,fillColor:"#F0703A",fillOpacity:1}).addTo(mj).bindTooltip("三角形の真ん中（能登沖）");
 })();}catch(e){console.warn("地図の読み込みに失敗",e);}
 
-/* ── 最近の更新・研究記録 ── */
+/* ── 最近の更新・検証記録 ── */
 const catName = id => (CATS.find(c=>c.id===id)||{}).name || id;
 function updLine(r){
   return `<li>
