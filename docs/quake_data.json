@@ -1,6 +1,226 @@
 {
-  "generated_at": "2026-11-19T20:07:03",
+  "generated_at": "2026-11-20T19:42:42",
   "quakes": [
+    {
+      "time": "2026/11/21 04:01:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.2,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/21 02:14:00",
+      "place": "トカラ列島近海",
+      "mag": 2.2,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 237.73,
+      "dir16": "WSW",
+      "distance_km": 1091.9,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 22:25:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.7,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.37,
+      "dir16": "WSW",
+      "distance_km": 849.2,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 21:59:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.4,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 21:46:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 4.1,
+      "depth": 0.0,
+      "max_scale": "4",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 21:46:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 4.1,
+      "depth": 0.0,
+      "max_scale": "不明",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 20:40:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.5,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 18:28:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.2,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.37,
+      "dir16": "WSW",
+      "distance_km": 849.2,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 16:31:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.6,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 15:31:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.5,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 13:50:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 3.9,
+      "depth": 10.0,
+      "max_scale": "3",
+      "bearing": 252.37,
+      "dir16": "WSW",
+      "distance_km": 849.2,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 13:50:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 3.9,
+      "depth": 10.0,
+      "max_scale": "不明",
+      "bearing": 252.37,
+      "dir16": "WSW",
+      "distance_km": 849.2,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 13:22:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.3,
+      "depth": 0.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 11:58:00",
+      "place": "宮城県沖",
+      "mag": 3.7,
+      "depth": 60.0,
+      "max_scale": "1",
+      "bearing": 31.39,
+      "dir16": "NNE",
+      "distance_km": 497.1,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 11:11:00",
+      "place": "日向灘",
+      "mag": 3.1,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 247.36,
+      "dir16": "WSW",
+      "distance_km": 725.3,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 10:46:00",
+      "place": "和歌山県北部",
+      "mag": 2.6,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 258.19,
+      "dir16": "WSW",
+      "distance_km": 358.6,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 10:40:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.2,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 09:38:00",
+      "place": "沖縄本島近海",
+      "mag": 3.0,
+      "depth": 30.0,
+      "max_scale": "1",
+      "bearing": 231.14,
+      "dir16": "SW",
+      "distance_km": 1355.8,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 07:49:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 3.2,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 252.37,
+      "dir16": "WSW",
+      "distance_km": 849.2,
+      "matches": []
+    },
+    {
+      "time": "2026/11/20 07:27:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.8,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
     {
       "time": "2026/11/20 05:02:00",
       "place": "熊本県天草・芦北地方",
@@ -802,277 +1022,6 @@
       "bearing": 347.35,
       "dir16": "NNW",
       "distance_km": 442.7,
-      "matches": []
-    },
-    {
-      "time": "2026/11/18 10:52:00",
-      "place": "岐阜県飛騨地方",
-      "mag": 2.1,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 316.47,
-      "dir16": "NW",
-      "distance_km": 197.8,
-      "matches": []
-    },
-    {
-      "time": "2026/11/18 09:41:00",
-      "place": "茨城県南部",
-      "mag": 3.5,
-      "depth": 50.0,
-      "max_scale": "2",
-      "bearing": 33.38,
-      "dir16": "NNE",
-      "distance_km": 144.2,
-      "matches": []
-    },
-    {
-      "time": "2026/11/18 02:54:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 3.3,
-      "depth": 0.0,
-      "max_scale": "3",
-      "bearing": 252.83,
-      "dir16": "WSW",
-      "distance_km": 836.3,
-      "matches": []
-    },
-    {
-      "time": "2026/11/18 02:54:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 3.3,
-      "depth": 0.0,
-      "max_scale": "不明",
-      "bearing": 252.83,
-      "dir16": "WSW",
-      "distance_km": 836.3,
-      "matches": []
-    },
-    {
-      "time": "2026/11/18 02:35:00",
-      "place": "島根県西部",
-      "mag": 3.2,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 270.77,
-      "dir16": "W",
-      "distance_km": 631.2,
-      "matches": []
-    },
-    {
-      "time": "2026/11/18 01:29:00",
-      "place": "熊本県阿蘇地方",
-      "mag": 2.4,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 255.38,
-      "dir16": "WSW",
-      "distance_km": 773.0,
-      "matches": []
-    },
-    {
-      "time": "2026/11/17 21:22:00",
-      "place": "熊本県熊本地方",
-      "mag": 2.8,
-      "depth": 10.0,
-      "max_scale": "2",
-      "bearing": 253.8,
-      "dir16": "WSW",
-      "distance_km": 810.8,
-      "matches": []
-    },
-    {
-      "time": "2026/11/17 19:33:00",
-      "place": "三陸沖",
-      "mag": 4.5,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 31.68,
-      "dir16": "NNE",
-      "distance_km": 753.6,
-      "matches": []
-    },
-    {
-      "time": "2026/11/17 17:00:00",
-      "place": "千葉県北東部",
-      "mag": 3.1,
-      "depth": 50.0,
-      "max_scale": "1",
-      "bearing": 59.91,
-      "dir16": "ENE",
-      "distance_km": 175.5,
-      "matches": [
-        {
-          "name": "銚子・銚港神社",
-          "diff": 0.94,
-          "note": ""
-        },
-        {
-          "name": "ENE57度軸(鹿島・香取/タケミカヅチ・フツヌシ)",
-          "diff": 2.91,
-          "note": "岩戸ログ中核軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/11/17 10:40:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.6,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 252.13,
-      "dir16": "WSW",
-      "distance_km": 840.5,
-      "matches": []
-    },
-    {
-      "time": "2026/11/17 08:27:00",
-      "place": "島根県東部",
-      "mag": 2.8,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 276.29,
-      "dir16": "W",
-      "distance_km": 521.8,
-      "matches": [
-        {
-          "name": "W277度軸(出雲・難波宮)",
-          "diff": 0.71,
-          "note": "国譲り軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/11/17 01:45:00",
-      "place": "宮古島近海",
-      "mag": 3.9,
-      "depth": 30.0,
-      "max_scale": "1",
-      "bearing": 232.14,
-      "dir16": "SW",
-      "distance_km": 1779.5,
-      "matches": []
-    },
-    {
-      "time": "2026/11/16 13:28:00",
-      "place": "静岡県東部",
-      "mag": 2.8,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 357.79,
-      "dir16": "N",
-      "distance_km": 42.3,
-      "matches": []
-    },
-    {
-      "time": "2026/11/16 13:24:00",
-      "place": "石川県能登地方",
-      "mag": 5.1,
-      "depth": 280.0,
-      "max_scale": "1",
-      "bearing": 326.18,
-      "dir16": "NW",
-      "distance_km": 320.8,
-      "matches": []
-    },
-    {
-      "time": "2026/11/16 06:08:00",
-      "place": "愛知県東部",
-      "mag": 3.4,
-      "depth": 40.0,
-      "max_scale": "1",
-      "bearing": 274.61,
-      "dir16": "W",
-      "distance_km": 120.4,
-      "matches": [
-        {
-          "name": "W277度軸(出雲・難波宮)",
-          "diff": 2.39,
-          "note": "国譲り軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/11/16 04:34:00",
-      "place": "愛知県東部",
-      "mag": 2.6,
-      "depth": 40.0,
-      "max_scale": "1",
-      "bearing": 274.34,
-      "dir16": "W",
-      "distance_km": 129.5,
-      "matches": [
-        {
-          "name": "W277度軸(出雲・難波宮)",
-          "diff": 2.66,
-          "note": "国譲り軸"
-        }
-      ]
-    },
-    {
-      "time": "2026/11/16 02:43:00",
-      "place": "薩摩半島西方沖",
-      "mag": 2.5,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 250.42,
-      "dir16": "WSW",
-      "distance_km": 892.9,
-      "matches": []
-    },
-    {
-      "time": "2026/11/16 00:57:00",
-      "place": "大阪府北部",
-      "mag": 2.7,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 270.57,
-      "dir16": "W",
-      "distance_km": 311.7,
-      "matches": []
-    },
-    {
-      "time": "2026/11/15 16:23:00",
-      "place": "熊本県熊本地方",
-      "mag": 3.1,
-      "depth": 10.0,
-      "max_scale": "2",
-      "bearing": 253.31,
-      "dir16": "WSW",
-      "distance_km": 823.5,
-      "matches": []
-    },
-    {
-      "time": "2026/11/15 14:00:00",
-      "place": "茨城県沖",
-      "mag": 3.6,
-      "depth": 40.0,
-      "max_scale": "1",
-      "bearing": 44.56,
-      "dir16": "NE",
-      "distance_km": 264.9,
-      "matches": [
-        {
-          "name": "龍神社(海神)",
-          "diff": 0.14,
-          "note": ""
-        },
-        {
-          "name": "NE45度軸(香取・江ノ島・熱田)",
-          "diff": 0.44,
-          "note": "NE45度corridor/貝塚"
-        }
-      ]
-    },
-    {
-      "time": "2026/11/15 13:16:00",
-      "place": "渡島地方東部",
-      "mag": 2.6,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 11.35,
-      "dir16": "NNE",
-      "distance_km": 793.2,
       "matches": []
     }
   ]
