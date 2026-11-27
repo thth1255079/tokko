@@ -1,6 +1,67 @@
 {
-  "generated_at": "2026-11-26T21:03:27",
+  "generated_at": "2026-11-27T20:48:11",
   "quakes": [
+    {
+      "time": "2026/11/28 04:32:00",
+      "place": "根室地方南部",
+      "mag": 3.1,
+      "depth": 80.0,
+      "max_scale": "1",
+      "bearing": 28.24,
+      "dir16": "NNE",
+      "distance_km": 1077.2,
+      "matches": []
+    },
+    {
+      "time": "2026/11/28 02:19:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 2.3,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 252.37,
+      "dir16": "WSW",
+      "distance_km": 849.2,
+      "matches": []
+    },
+    {
+      "time": "2026/11/27 21:58:00",
+      "place": "秋田県内陸北部",
+      "mag": 2.6,
+      "depth": 10.0,
+      "max_scale": "1",
+      "bearing": 12.39,
+      "dir16": "NNE",
+      "distance_km": 625.0,
+      "matches": []
+    },
+    {
+      "time": "2026/11/27 17:23:00",
+      "place": "熊本県天草・芦北地方",
+      "mag": 3.3,
+      "depth": 10.0,
+      "max_scale": "2",
+      "bearing": 252.13,
+      "dir16": "WSW",
+      "distance_km": 840.5,
+      "matches": []
+    },
+    {
+      "time": "2026/11/27 14:10:00",
+      "place": "福島県沖",
+      "mag": 4.3,
+      "depth": 30.0,
+      "max_scale": "1",
+      "bearing": 42.33,
+      "dir16": "NE",
+      "distance_km": 378.1,
+      "matches": [
+        {
+          "name": "NE45度軸(香取・江ノ島・熱田)",
+          "diff": 2.67,
+          "note": "NE45度corridor/貝塚"
+        }
+      ]
+    },
     {
       "time": "2026/11/27 04:33:00",
       "place": "父島近海",
@@ -1007,61 +1068,6 @@
       "bearing": 252.13,
       "dir16": "WSW",
       "distance_km": 840.5,
-      "matches": []
-    },
-    {
-      "time": "2026/11/20 04:10:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.5,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 252.37,
-      "dir16": "WSW",
-      "distance_km": 849.2,
-      "matches": []
-    },
-    {
-      "time": "2026/11/20 04:04:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.7,
-      "depth": 0.0,
-      "max_scale": "1",
-      "bearing": 252.13,
-      "dir16": "WSW",
-      "distance_km": 840.5,
-      "matches": []
-    },
-    {
-      "time": "2026/11/20 03:43:00",
-      "place": "新潟県上越地方",
-      "mag": 2.4,
-      "depth": 20.0,
-      "max_scale": "2",
-      "bearing": 347.82,
-      "dir16": "NNW",
-      "distance_km": 259.5,
-      "matches": []
-    },
-    {
-      "time": "2026/11/19 21:29:00",
-      "place": "熊本県天草・芦北地方",
-      "mag": 2.5,
-      "depth": 10.0,
-      "max_scale": "1",
-      "bearing": 252.13,
-      "dir16": "WSW",
-      "distance_km": 840.5,
-      "matches": []
-    },
-    {
-      "time": "2026/11/19 21:18:00",
-      "place": "山梨県東部・富士五湖",
-      "mag": 2.2,
-      "depth": 20.0,
-      "max_scale": "1",
-      "bearing": 345.39,
-      "dir16": "NNW",
-      "distance_km": 78.2,
       "matches": []
     }
   ]
